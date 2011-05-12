@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/share/calendar-indicator/calendar-indicator.py
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[es_ES]=Calendar-Indicator
+Name=Calendar-Indicator
+Comment[es_ES]=Calendar-Indicator official shortcut
+Comment=Calendar-Indicator official shortcut

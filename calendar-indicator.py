@@ -94,11 +94,12 @@ class RememberIndicator(dbus.service.Object):
 		bus_name = dbus.service.BusName('es.atareao.remember_me_indicator_service', bus=dbus.SessionBus())
 		dbus.service.Object.__init__(self, bus_name, '/es/atareao/remember_me_indicator_service')
 		#
-		glib.timeout_add_seconds(300, self.work)
+		glib.timeout_add_seconds(int(self.time*60), self.work)
 
 	def read_preferences(self):
 		self.user = self.load_key('user','')
 		self.password = self.load_key('password','')
+		self.time = self.load_key('time',5)
 		encoder = Encoder()
 		if self.user == None or self.password == None or len(encoder.decode(self.user)) == 0 or len(encoder.decode(self.password)) == 0:
 			p = Preferences()
@@ -107,6 +108,7 @@ class RememberIndicator(dbus.service.Object):
 				exit(1)
 			self.user = self.load_key('user','')
 			self.password = self.load_key('password','')
+			self.time = self.load_key('time',5)
 		error = True
 		while error:
 			try:
@@ -126,6 +128,7 @@ class RememberIndicator(dbus.service.Object):
 				p = Preferences()
 				self.user = self.load_key('user','')
 				self.password = self.load_key('password','')
+				self.time = self.load_key('time',5)
 
 	def work(self):
 		self.set_menu(check=True)
@@ -223,6 +226,7 @@ class RememberIndicator(dbus.service.Object):
 		if p.ok == True:
 			self.user = self.load_key('user','')
 			self.password = self.load_key('password','')
+			self.time = self.load_key('time',5)
 		self.menu_preferences.set_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
