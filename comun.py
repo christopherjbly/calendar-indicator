@@ -24,7 +24,7 @@ __date__ ="$29-ene-2011$"
 #
 #
 #
-VERSION = '0.0.1.1'
+VERSION = '0.0.1.2'
 APP = 'calendar-indicator'
 APPNAME = 'Calendar-Indicator'
 LANGDIR = '/usr/share/locale-langpack'
