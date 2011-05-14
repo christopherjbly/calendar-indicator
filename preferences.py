@@ -27,7 +27,7 @@ __date__ ='$06-jun-2010 12:34:44$'
 
 import gtk
 import os
-import shuttil
+import shutil
 import locale
 import gettext
 from configurator import GConf
