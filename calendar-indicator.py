@@ -37,6 +37,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 import glib
 import datetime
 import pynotify
+import webbrowser
 #
 import comun
 from gcal import GCal
@@ -174,6 +175,8 @@ class RememberIndicator(dbus.service.Object):
 		self.menu_exit=gtk.MenuItem(_('Exit'))
 		self.menu_separator1=gtk.MenuItem()
 		self.menu_about=gtk.MenuItem(_('About...'))
+		self.menu_separator2=gtk.MenuItem()
+		self.menu_bugs=gtk.MenuItem(_('Report bugs...'))
 		#
 		for i in range(len(self.menu_events)):
 			self.menu.append(self.menu_events[i])
@@ -182,7 +185,9 @@ class RememberIndicator(dbus.service.Object):
 		self.menu.append(self.menu_preferences)
 		self.menu.append(self.menu_exit)
 		self.menu.append(self.menu_separator1)
-		self.menu.append(self.menu_about)	
+		self.menu.append(self.menu_about)
+		self.menu.append(self.menu_bugs)
+		
 		#
 		now = datetime.datetime.now()
 		if self.events[0].when[0].start.find('T') != -1:
@@ -212,13 +217,17 @@ class RememberIndicator(dbus.service.Object):
 		self.menu_exit.show()
 		self.menu_separator1.show()
 		self.menu_about.show()
+		self.menu_bugs.show()
 		#
 		self.menu_show_calendar.connect('activate', self.menu_show_calendar_response)
 		self.menu_preferences.connect('activate',self.menu_preferences_response)
 		self.menu_exit.connect('activate', self.menu_exit_response)
 		self.menu_about.connect('activate', self.menu_about_response)
+		self.menu_bugs.connect('activate',self.menu_bugs_response)
 		#menu.show()
 		self.indicator.set_menu(self.menu)
+	def menu_bugs_response(self,wiget):
+		webbrowser.open('https://bugs.launchpad.net/calendar-indicator')
 	
 	def menu_preferences_response(self,widget):
 		self.menu_preferences.set_sensitive(False)
@@ -261,8 +270,7 @@ class RememberIndicator(dbus.service.Object):
 		ad.set_website_label('http://www.atareao.es')
 		ad.set_authors(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
 		ad.set_documenters(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-		#ad.set_logo(logo)
-		ad.set_logo_icon_name(comun.ICON)
+		ad.set_logo(gtk.gdk.pixbuf_new_from_file(comun.ICON))
 		ad.set_program_name(comun.APPNAME)
 		ad.run()
 		ad.destroy()
