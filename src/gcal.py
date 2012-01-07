@@ -177,7 +177,6 @@ if __name__ == '__main__':
 	gcal.PrintUserCalendars()
 	# gcal.PrintOwnCalendars()
 	# gcal.PrintAllEventsOnDefaultCalendar()
-	print gcal.eventsOnDay(29,4,2011)[0].title.text
 	for event in gcal.getFirstTenEventsOnDefaultCalendar():
 		print event.title.text
 		for a_when in event.when:

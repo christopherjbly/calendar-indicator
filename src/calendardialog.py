@@ -74,21 +74,20 @@ class CalendarDialog(Gtk.Dialog):
 		self.show_all()
 	def on_day_selected(self,widget):
 		date = self.calendar.get_date()
-		print 'dia -> %s' %(date[2])
-		print 'mes -> %s' %(date[1]+1)
-		print 'año -> %s' %(date[0])
+		print 'day -> %s' %(date[2])
+		print 'month -> %s' %(date[1]+1)
+		print 'year -> %s' %(date[0])
 		if date[2] in self.selecteds.keys():
-			print 'Si'
 			self.calendar.set_tooltip_text(self.selecteds[date[2]])
 		else:
 			self.calendar.set_tooltip_text('')
 
 	def on_month_changed(self,widget):
 		date = self.calendar.get_date()
+		self.selecteds = {}
+		self._clear_marks()
 		if self.googlecalendar != None:
 			events = self.googlecalendar.getAllEventsOnMonthOnDefaultCalendar(date[1]+1,date[0])
-			self.selecteds = {}
-			self._clear_marks()
 			for event in events:
 				if len(event.when)>0:
 					dia = getDay(event.when[0].start)
@@ -101,6 +100,7 @@ class CalendarDialog(Gtk.Dialog):
 
 	def _mark_days(self):
 		for key in self.selecteds.keys():
+			print key
 			self.calendar.mark_day(key)
 	def _clear_marks(self):
 		self.calendar.clear_marks()

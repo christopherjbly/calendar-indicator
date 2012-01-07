@@ -1,3 +1,16 @@
+calendar-indicator (0.0.2.2-1ubuntu1) oneiric; urgency=low
+
+  * Fixed a simple bug
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 07 Jan 2012 21:14:53 +0100
+
+calendar-indicator (0.0.2.1-1ubuntu2) oneiric; urgency=low
+
+  * Fixed a bug with calendar events
+  * Fixed times to check eventes
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 07 Jan 2012 21:13:10 +0100
+
 calendar-indicator (0.0.1.7-1ubuntu1) oneiric; urgency=low
 
   * Ported to Gtk+-3.0

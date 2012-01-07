@@ -34,11 +34,13 @@ from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Notify
 
+import time
 import dbus
 import locale
 import gettext
 import datetime
 import webbrowser
+from calendardialog import CalendarDialog
 #
 import comun
 import gkconfiguration
@@ -126,8 +128,8 @@ class CalendarIndicator():
 		#bus_name = dbus.service.BusName('es.atareao.calendar_indicator_service', bus=dbus.SessionBus())
 		#dbus.service.Object.__init__(self, bus_name, '/es/atareao/calendar_indicator_service')
 		#
-		self.work()
-		GObject.timeout_add_seconds(int(float(self.time))*60, self.work)
+		self.set_menu()
+		GObject.timeout_add_seconds(60, self.work)
 		
 
 	def read_preferences(self):
@@ -174,8 +176,14 @@ class CalendarIndicator():
 				self.time = configuration['time']
 
 	def work(self):
-		self.set_menu(check=True)
+		if (time.time()-self.actualization_time) > self.time*60:
+			while internet_on() == False:
+				time.sleep(1)
+			self.actualization_time = time.time()
+			self.set_menu(check=True)
 		return True
+		
+		
 
 	def set_menu(self,check=False):
 		self.menu = Gtk.Menu()
@@ -198,9 +206,8 @@ class CalendarIndicator():
 					self.notification.show()
 
 		self.events = events2
-		self.menu_events = []
 		for event in self.events:
-			add2menu(self.menu_events, text = (getTimeAndDate(event.when[0].start)+' - '+event.title.text))
+			add2menu(self.menu, text = (getTimeAndDate(event.when[0].start)+' - '+event.title.text))
 			'''
 			print '##############################################'
 			print event.title.text
@@ -212,8 +219,8 @@ class CalendarIndicator():
 			'''
 		#
 		add2menu(self.menu)
-		add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
-		add2menu(self.menu, text = _('Preferences'), conector_event = 'activate',conector_action = self.menu_preferences_response)
+		self.menu_show_calendar = add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
+		self.menu_preferences = add2menu(self.menu, text = _('Preferences'), conector_event = 'activate',conector_action = self.menu_preferences_response)
 		add2menu(self.menu)
 		menu_help = add2menu(self.menu, text =_('Help'))
 		menu_help.set_submenu(self.get_help_menu())
@@ -241,6 +248,7 @@ class CalendarIndicator():
 			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 		#
 		self.menu.show()
+		print 'aqui'
 		self.indicator.set_menu(self.menu)
 		while Gtk.events_pending():
 			Gtk.main_iteration()
@@ -321,5 +329,4 @@ if __name__ == "__main__":
 	Notify.init("calendar-indicator")
 	ci=CalendarIndicator()
 	Gtk.main()
-	exit(0)
 
