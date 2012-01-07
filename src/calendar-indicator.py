@@ -25,31 +25,41 @@ __date__ ='$25/04/2011'
 #
 #
 #
-import gobject
-import gtk
-import appindicator
-import pynotify
+import os
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import GObject
+from gi.repository import AppIndicator3 as appindicator
+from gi.repository import Gtk
+from gi.repository import GdkPixbuf
+from gi.repository import Notify
+
+import dbus
 import locale
 import gettext
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
-import glib
 import datetime
-import pynotify
 import webbrowser
 #
 import comun
+import gkconfiguration
+
 from gcal import GCal
-from preferences import Preferences
-from configurator import GConf
-from encoderapi import Encoder
-from calendardialog import CalendarDialog
+from preferences_dialog import Preferences
+#from calendardialog import CalendarDialog
 #
 locale.setlocale(locale.LC_ALL, '')
 gettext.bindtextdomain(comun.APP, comun.LANGDIR)
 gettext.textdomain(comun.APP)
 _ = gettext.gettext
+
+def internet_on():
+	try:
+		response=urllib2.urlopen('http://google.com',timeout=1)
+		return True
+	except:
+		pass
+	return False
+
 
 def getTimeAndDate(cadena):
 	if cadena.find('T')==-1:
@@ -75,68 +85,100 @@ def is_event_in_events(an_event,events):
 			return True
 	return False
 
+def add2menu(menu, text = None, icon = None, conector_event = None, conector_action = None):
+	if text != None:
+		if icon == None:
+			menu_item = Gtk.MenuItem.new_with_label(text)
+		else:
+			menu_item = Gtk.ImageMenuItem.new_with_label(text)
+			image = Gtk.Image.new_from_stock(icon, Gtk.IconSize.MENU)
+			menu_item.set_image(image)
+			menu_item.set_always_show_image(True)
+	else:
+		if icon == None:
+			menu_item = Gtk.SeparatorMenuItem()
+		else:
+			menu_item = Gtk.ImageMenuItem.new_from_stock(icon, None)
+			menu_item.set_always_show_image(True)
+	if conector_event != None and conector_action != None:				
+		menu_item.connect(conector_event,conector_action)
+	menu_item.show()
+	menu.append(menu_item)
+	return menu_item
 
-
-class RememberIndicator(dbus.service.Object):
+class CalendarIndicator():
 	def __init__(self):
-		if dbus.SessionBus().request_name("es.atareao.RememberIndicator") != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+		if dbus.SessionBus().request_name("es.atareao.calendar-indicator") != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
 			print "application already running"
 			exit(0)
-		self.indicator = appindicator.Indicator ('Remember-me-Indicator', 'indicator-messages', appindicator.CATEGORY_APPLICATION_STATUS)
+		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
+		print '12'
 		#
 		self.indicator.set_icon(comun.ICON_ENABLED)
 		self.indicator.set_attention_icon(comun.ICON_DISABLED)
 		#
+		
 		self.read_preferences()
 		#
 		self.events = []
 		self.set_menu()
 		#
-		bus_name = dbus.service.BusName('es.atareao.remember_me_indicator_service', bus=dbus.SessionBus())
-		dbus.service.Object.__init__(self, bus_name, '/es/atareao/remember_me_indicator_service')
+		#bus_name = dbus.service.BusName('es.atareao.calendar_indicator_service', bus=dbus.SessionBus())
+		#dbus.service.Object.__init__(self, bus_name, '/es/atareao/calendar_indicator_service')
 		#
-		glib.timeout_add_seconds(int(self.time*60), self.work)
+		self.work()
+		GObject.timeout_add_seconds(int(float(self.time))*60, self.work)
+		
 
 	def read_preferences(self):
-		self.user = self.load_key('user','')
-		self.password = self.load_key('password','')
-		self.time = self.load_key('time',5)
-		encoder = Encoder()
-		if self.user == None or self.password == None or len(encoder.decode(self.user)) == 0 or len(encoder.decode(self.password)) == 0:
+		configuration = gkconfiguration.get_configuration()
+		self.user = configuration['user']
+		self.password = configuration['password']
+		self.time = configuration['time']
+		
+		if self.user == None or self.password == None:
 			p = Preferences()
-			print p.ok
-			if p.ok == False:
+			if p.run() == Gtk.ResponseType.ACCEPT:
+				p.save_preferences()
+			else:
 				exit(1)
-			self.user = self.load_key('user','')
-			self.password = self.load_key('password','')
-			self.time = self.load_key('time',5)
+			p.destroy()
+			self.user = configuration['user']
+			self.password = configuration['password']
+			self.time = configuration['time']
 		error = True
 		while error:
 			try:
-				self.gcal=GCal(encoder.decode(self.user),encoder.decode(self.password))
+				self.gcal=GCal(self.user,self.password)
 				error = False
 			except Exception,e:
 				print e
 				error = True
-				md = gtk.MessageDialog(	parent = None,
-										flags = gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-										type = gtk.MESSAGE_ERROR,
-										buttons = gtk.BUTTONS_OK_CANCEL,
-										message_format = _('The email or/and the password are incorrect\nplease, try again?'))
-				if md.run() == gtk.RESPONSE_CANCEL:
+				md = Gtk.MessageDialog(
+					None,
+					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+					Gtk.MessageType.ERROR,
+					Gtk.ButtonsType.OK_CANCEL,
+					_('The email or/and the password are incorrect\nplease, try again?'))
+				if md.run() == Gtk.ResponseType.CANCEL:
 					exit(3)
 				md.destroy()
 				p = Preferences()
-				self.user = self.load_key('user','')
-				self.password = self.load_key('password','')
-				self.time = self.load_key('time',5)
+				if p.run() == Gtk.ResponseType.ACCEPT:
+					p.save_preferences()
+				else:
+					exit(1)
+				p.destroy()
+				self.user = configuration['user']
+				self.password = configuration['password']
+				self.time = configuration['time']
 
 	def work(self):
 		self.set_menu(check=True)
 		return True
 
 	def set_menu(self,check=False):
-		self.menu = gtk.Menu()
+		self.menu = Gtk.Menu()
 		#
 		events2 = self.gcal.getFirstTenEventsOnDefaultCalendar()
 		if check and len(self.events)>0:
@@ -145,20 +187,20 @@ class RememberIndicator(dbus.service.Object):
 					msg = _('New event:')+'\n'
 					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
 					print msg
-					self.notification = pynotify.Notification ('Google Calendar Indicator',msg,comun.ICON_NEW_EVENT)
+					self.notification = Notify.Notification ('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
 					self.notification.show()
 			for event in self.events:
 				if not is_event_in_events(event,events2):
 					msg = _('Event finished:')+'\n'
 					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
 					print msg
-					self.notification = pynotify.Notification ('Google Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
+					self.notification = Notify.Notification ('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
 					self.notification.show()
 
 		self.events = events2
 		self.menu_events = []
 		for event in self.events:
-			self.menu_events.append(gtk.MenuItem(getTimeAndDate(event.when[0].start)+' - '+event.title.text))
+			add2menu(self.menu_events, text = (getTimeAndDate(event.when[0].start)+' - '+event.title.text))
 			'''
 			print '##############################################'
 			print event.title.text
@@ -169,25 +211,14 @@ class RememberIndicator(dbus.service.Object):
 			print '##############################################'
 			'''
 		#
-		self.menu_separator0=gtk.MenuItem()		
-		self.menu_show_calendar=gtk.MenuItem(_('Show Calendar'))
-		self.menu_preferences=gtk.MenuItem(_('Preferences'))
-		self.menu_exit=gtk.MenuItem(_('Exit'))
-		self.menu_separator1=gtk.MenuItem()
-		self.menu_about=gtk.MenuItem(_('About...'))
-		self.menu_separator2=gtk.MenuItem()
-		self.menu_bugs=gtk.MenuItem(_('Report bugs...'))
-		#
-		for i in range(len(self.menu_events)):
-			self.menu.append(self.menu_events[i])
-		self.menu.append(self.menu_separator0)
-		self.menu.append(self.menu_show_calendar)
-		self.menu.append(self.menu_preferences)
-		self.menu.append(self.menu_exit)
-		self.menu.append(self.menu_separator1)
-		self.menu.append(self.menu_about)
-		self.menu.append(self.menu_bugs)
-		
+		add2menu(self.menu)
+		add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
+		add2menu(self.menu, text = _('Preferences'), conector_event = 'activate',conector_action = self.menu_preferences_response)
+		add2menu(self.menu)
+		menu_help = add2menu(self.menu, text =_('Help'))
+		menu_help.set_submenu(self.get_help_menu())
+		add2menu(self.menu)
+		add2menu(self.menu, text = _('Exit'), conector_event = 'activate',conector_action = self.menu_exit_response)
 		#
 		now = datetime.datetime.now()
 		if self.events[0].when[0].start.find('T') != -1:
@@ -201,34 +232,34 @@ class RememberIndicator(dbus.service.Object):
 			com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%d')
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
 			print 'coinciden'
-			self.indicator.set_status (appindicator.STATUS_ACTIVE)
+			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
 		else:
 			print now.hour
 			print com.hour
 			print 'no coinciden'
 			print self.events[0].when[0].start
-			self.indicator.set_status (appindicator.STATUS_ATTENTION)
+			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 		#
-		for i in range(len(self.menu_events)):
-			self.menu_events[i].show()
-		self.menu_separator0.show()
-		self.menu_show_calendar.show()
-		self.menu_preferences.show()
-		self.menu_exit.show()
-		self.menu_separator1.show()
-		self.menu_about.show()
-		self.menu_bugs.show()
-		#
-		self.menu_show_calendar.connect('activate', self.menu_show_calendar_response)
-		self.menu_preferences.connect('activate',self.menu_preferences_response)
-		self.menu_exit.connect('activate', self.menu_exit_response)
-		self.menu_about.connect('activate', self.menu_about_response)
-		self.menu_bugs.connect('activate',self.menu_bugs_response)
-		#menu.show()
+		self.menu.show()
 		self.indicator.set_menu(self.menu)
-	def menu_bugs_response(self,wiget):
-		webbrowser.open('https://bugs.launchpad.net/calendar-indicator')
-	
+		while Gtk.events_pending():
+			Gtk.main_iteration()
+		
+
+	def get_help_menu(self):
+		help_menu =Gtk.Menu()
+		#		
+		add2menu(help_menu,text = _('Web...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://launchpad.net/calendar-indicator'))
+		add2menu(help_menu,text = _('Get help online...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://answers.launchpad.net/calendar-indicator'))
+		add2menu(help_menu,text = _('Translate this application...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://translations.launchpad.net/calendar-indicator'))
+		add2menu(help_menu,text = _('Report a bug...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://bugs.launchpad.net/calendar-indicator'))
+		add2menu(help_menu)
+		add2menu(help_menu,text = _('About'),conector_event = 'activate',conector_action = self.menu_about_response)
+		#
+		help_menu.show()
+		#
+		return help_menu
+
 	def menu_preferences_response(self,widget):
 		self.menu_preferences.set_sensitive(False)
 		p = Preferences()
@@ -250,10 +281,10 @@ class RememberIndicator(dbus.service.Object):
 
 	def menu_about_response(self,widget):
 		self.menu_about.set_sensitive(False)
-		ad=gtk.AboutDialog()
+		ad=Gtk.AboutDialog()
 		ad.set_name(comun.APPNAME)
 		ad.set_version(comun.VERSION)
-		ad.set_copyright('Copyrignt (c) 2011\nLorenzo Carbonell')
+		ad.set_copyright('Copyrignt (c) 2011,2012\nLorenzo Carbonell')
 		ad.set_comments(_('An indicator for Google Calendar'))
 		ad.set_license(''+
 		'This program is free software: you can redistribute it and/or modify it\n'+
@@ -270,7 +301,7 @@ class RememberIndicator(dbus.service.Object):
 		ad.set_website_label('http://www.atareao.es')
 		ad.set_authors(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
 		ad.set_documenters(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-		ad.set_logo(gtk.gdk.pixbuf_new_from_file(comun.ICON))
+		ad.set_logo(Gtk.gdk.pixbuf_new_from_file(comun.ICON))
 		ad.set_program_name(comun.APPNAME)
 		ad.run()
 		ad.destroy()
@@ -287,8 +318,8 @@ class RememberIndicator(dbus.service.Object):
 		return defecto
 
 if __name__ == "__main__":
-	DBusGMainLoop(set_as_default=True)
-	tpi=RememberIndicator()
-	gtk.main()
+	Notify.init("calendar-indicator")
+	ci=CalendarIndicator()
+	Gtk.main()
 	exit(0)
 

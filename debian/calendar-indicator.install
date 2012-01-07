@@ -1,0 +1,5 @@
+src/* /usr/share/calendar-indicator
+data/calendar-indicator-autostart.desktop /usr/share/calendar-indicator
+data/Calendar-Indicator.desktop /usr/share/applications
+data/icons/*.svg /usr/share/icons/hicolor/24x24/status
+data/icons/calendar-indicator.svg /usr/share/pixmaps

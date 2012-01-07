@@ -24,14 +24,14 @@ __date__ ='$06-jun-2010 12:34:44$'
 #
 #
 #
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
 import locale
 import gettext
 #
 import comun
-from configurator import GConf
-from encoderapi import Encoder
-#from gcal import GCal
 
 
 locale.setlocale(locale.LC_ALL, '')
@@ -45,25 +45,27 @@ def getDay(cadena):
 	else:
 		return cadena.split('T')[0].split('-')[2]
 
-class CalendarDialog(gtk.Dialog):
+class CalendarDialog(Gtk.Dialog):
 	def __init__(self,title,parent = None,googlecalendar = None):
 		self.ok = False
 		self.googlecalendar = googlecalendar
 		self.selecteds = {}
 		#
 		title = comun.APP + ' | '+_('Preferences')
-		gtk.Dialog.__init__(self,title,parent,gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT)
+		Gtk.Dialog.__init__(self,title,parent,Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL))
 		self.set_default_size(50, 450)
 		self.set_resizable(False)
-		self.set_icon(gtk.gdk.pixbuf_new_from_file(comun.ICON))		
+		#self.set_icon_from_file(comun.ICON)		
 		self.connect('destroy', self.close_application)
 		#
-		vbox0 = gtk.VBox(spacing = 5)
+		vbox0 = Gtk.VBox(spacing = 5)
 		vbox0.set_border_width(5)
 		self.get_content_area().add(vbox0)
 		#
-		self.calendar = gtk.Calendar()
-		self.calendar.set_display_options(gtk.CALENDAR_SHOW_DAY_NAMES | gtk.CALENDAR_SHOW_HEADING | gtk.CALENDAR_SHOW_WEEK_NUMBERS)
+		self.calendar = Gtk.Calendar()
+		self.calendar.set_property('show-day-names',True)
+		self.calendar.set_property('show-heading',True)
+		self.calendar.set_property('show-week-numbers',True)
 		self.calendar.connect('month-changed',self.on_month_changed)
 		self.calendar.connect('day-selected',self.on_day_selected)
 		vbox0.add(self.calendar)

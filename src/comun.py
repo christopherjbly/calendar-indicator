@@ -24,14 +24,39 @@ __date__ ="$29-ene-2011$"
 #
 #
 #
-VERSION = '0.0.1.6'
+__author__ = 'Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'
+__date__ ='$24/09/2011'
+__copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
+__license__ = 'GPLV3'
+__url__ = 'http://www.atareao.es'
+__version__ = '0.0.2.0'
+
+import os
+
+######################################
+
+def is_package():
+    return __file__.find('src') < 0
+
+######################################
+
+
+VERSION = __version__
 APP = 'calendar-indicator'
 APPNAME = 'Calendar-Indicator'
-LANGDIR = '/usr/share/locale-langpack'
-APPDIR = '/usr/share/'+APP+'/'
-ICON = '/usr/share/pixmaps/'+APP+'.svg'
+ICON = '/usr/share/pixmaps/calendar-indicator.svg'
+
+# check if running from source
+if is_package():
+    ROOTDIR = '/usr/share/'
+    LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
+    APPDIR = os.path.join(ROOTDIR, APP)
+else:
+    VERSION = VERSION + '-src'
+    ROOTDIR = os.path.dirname(__file__)
+    LANGDIR = os.path.normpath(os.path.join(ROOTDIR, '../template1'))
+    APPDIR = ROOTDIR  
 ICON_ENABLED = APPDIR+'calendar-indicator-enabled.svg'
 ICON_DISABLED = APPDIR+'calendar-indicator-disabled.svg'
 ICON_NEW_EVENT = APPDIR+'event-new.svg'
 ICON_FINISHED_EVENT = APPDIR+'event-finished.svg'
-

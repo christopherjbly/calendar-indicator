@@ -1,0 +1,5 @@
+calendar-indicator (0.0.1.7-1ubuntu1) oneiric; urgency=low
+
+  * Ported to Gtk+-3.0
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 07 Jan 2012 09:24:46 +0100

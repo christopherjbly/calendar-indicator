@@ -173,8 +173,8 @@ class GCal(object):
 				print '\t\tEnd time:   %s' % (a_when.end,)
 
 if __name__ == '__main__':
-	gcal = GCal('lorenzo.carbonell.cerezo@gmail.com', '9m3no5NU6ve0')
-	# gcal.PrintUserCalendars()
+	gcal = GCal('user','password')
+	gcal.PrintUserCalendars()
 	# gcal.PrintOwnCalendars()
 	# gcal.PrintAllEventsOnDefaultCalendar()
 	print gcal.eventsOnDay(29,4,2011)[0].title.text
