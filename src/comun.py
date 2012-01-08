@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.0.2.2'
+__version__ = '0.0.2.3'
 
 import os
 
@@ -56,7 +56,7 @@ else:
     ROOTDIR = os.path.dirname(__file__)
     LANGDIR = os.path.normpath(os.path.join(ROOTDIR, '../template1'))
     APPDIR = ROOTDIR  
-ICON_ENABLED = APPDIR+'calendar-indicator-enabled.svg'
-ICON_DISABLED = APPDIR+'calendar-indicator-disabled.svg'
-ICON_NEW_EVENT = APPDIR+'event-new.svg'
-ICON_FINISHED_EVENT = APPDIR+'event-finished.svg'
+ICON_ENABLED = 'calendar-indicator-enabled'
+ICON_DISABLED = 'calendar-indicator-disabled'
+ICON_NEW_EVENT = 'event-new'
+ICON_FINISHED_EVENT = 'event-finished'

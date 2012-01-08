@@ -44,10 +44,8 @@ from calendardialog import CalendarDialog
 #
 import comun
 import gkconfiguration
-
 from gcal import GCal
 from preferences_dialog import Preferences
-#from calendardialog import CalendarDialog
 #
 locale.setlocale(locale.LC_ALL, '')
 gettext.bindtextdomain(comun.APP, comun.LANGDIR)
@@ -123,11 +121,6 @@ class CalendarIndicator():
 		self.read_preferences()
 		#
 		self.events = []
-		self.set_menu()
-		#
-		#bus_name = dbus.service.BusName('es.atareao.calendar_indicator_service', bus=dbus.SessionBus())
-		#dbus.service.Object.__init__(self, bus_name, '/es/atareao/calendar_indicator_service')
-		#
 		self.set_menu()
 		GObject.timeout_add_seconds(60, self.work)
 		
@@ -208,15 +201,6 @@ class CalendarIndicator():
 		self.events = events2
 		for event in self.events:
 			add2menu(self.menu, text = (getTimeAndDate(event.when[0].start)+' - '+event.title.text))
-			'''
-			print '##############################################'
-			print event.title.text
-			print event.recurrence
-			if len(event.when)>0:
-				print event.when[0].start
-				print event.when[0].end				
-			print '##############################################'
-			'''
 		#
 		add2menu(self.menu)
 		self.menu_show_calendar = add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
@@ -238,17 +222,14 @@ class CalendarIndicator():
 		else:
 			com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%d')
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
-			print 'coinciden'
 			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
 		else:
 			print now.hour
 			print com.hour
-			print 'no coinciden'
 			print self.events[0].when[0].start
 			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 		#
 		self.menu.show()
-		print 'aqui'
 		self.indicator.set_menu(self.menu)
 		while Gtk.events_pending():
 			Gtk.main_iteration()
@@ -271,10 +252,9 @@ class CalendarIndicator():
 	def menu_preferences_response(self,widget):
 		self.menu_preferences.set_sensitive(False)
 		p = Preferences()
-		if p.ok == True:
-			self.user = self.load_key('user','')
-			self.password = self.load_key('password','')
-			self.time = self.load_key('time',5)
+		if p.run() == Gtk.ResponseType.ACCEPT:
+			p.save_preferences()
+		p.destroy()
 		self.menu_preferences.set_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
