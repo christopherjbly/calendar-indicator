@@ -1,3 +1,9 @@
+calendar-indicator (0.0.2.4-1ubuntu1) oneiric; urgency=low
+
+  * Fixed a bug with passwords
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 10 Jan 2012 06:26:29 +0100
+
 calendar-indicator (0.0.2.3-1ubuntu1) oneiric; urgency=low
 
   * Fixed a bug with icons
