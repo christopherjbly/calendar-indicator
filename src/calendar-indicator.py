@@ -112,7 +112,6 @@ class CalendarIndicator():
 			print "application already running"
 			exit(0)
 		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
-		print '12'
 		#
 		self.indicator.set_icon(comun.ICON_ENABLED)
 		self.indicator.set_attention_icon(comun.ICON_DISABLED)
@@ -126,47 +125,45 @@ class CalendarIndicator():
 		
 
 	def read_preferences(self):
-		configuration = gkconfiguration.get_configuration()
-		self.user = configuration['user']
-		self.password = configuration['password']
-		self.time = configuration['time']
-		
-		if self.user == None or self.password == None:
+		configuration = gkconfiguration.get_configuration()		
+		if configuration and configuration['user'] and configuration['password'] and configuration['time']:
+			self.user = configuration['user']
+			self.password = configuration['password']
+			self.time = configuration['time']
+		else:
 			p = Preferences()
 			if p.run() == Gtk.ResponseType.ACCEPT:
 				p.save_preferences()
 			else:
 				exit(1)
 			p.destroy()
-			self.user = configuration['user']
-			self.password = configuration['password']
-			self.time = configuration['time']
-		error = True
-		while error:
-			try:
-				self.gcal=GCal(self.user,self.password)
-				error = False
-			except Exception,e:
-				print e
-				error = True
-				md = Gtk.MessageDialog(
-					None,
-					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-					Gtk.MessageType.ERROR,
-					Gtk.ButtonsType.OK_CANCEL,
-					_('The email or/and the password are incorrect\nplease, try again?'))
-				if md.run() == Gtk.ResponseType.CANCEL:
-					exit(3)
-				md.destroy()
-				p = Preferences()
-				if p.run() == Gtk.ResponseType.ACCEPT:
-					p.save_preferences()
-				else:
-					exit(1)
-				p.destroy()
-				self.user = configuration['user']
-				self.password = configuration['password']
-				self.time = configuration['time']
+			error = True
+			while error:
+				try:
+					configuration = gkconfiguration.get_configuration()		
+					self.user = configuration['user']
+					self.password = configuration['password']
+					self.time = configuration['time']
+					self.gcal=GCal(self.user,self.password)
+					error = False
+				except Exception,e:
+					print e
+					error = True
+					md = Gtk.MessageDialog(
+						None,
+						Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+						Gtk.MessageType.ERROR,
+						Gtk.ButtonsType.OK_CANCEL,
+						_('The email or/and the password are incorrect\nplease, try again?'))
+					if md.run() == Gtk.ResponseType.CANCEL:
+						exit(3)
+					md.destroy()
+					p = Preferences()
+					if p.run() == Gtk.ResponseType.ACCEPT:
+						p.save_preferences()
+					else:
+						exit(1)
+					p.destroy()
 
 	def work(self):
 		if (time.time()-self.actualization_time) > self.time*60:

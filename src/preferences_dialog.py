@@ -112,13 +112,10 @@ class Preferences(Gtk.Dialog):
 
 	def load_preferences(self):
 		configuration = gkconfiguration.get_configuration()
-		self.user = configuration['user']
-		self.password = configuration['password']
-		self.time = configuration['time']
-		#
-		self.entry1.set_text(self.user)
-		self.entry2.set_text(self.password)
-		self.spin3.set_value(int(float(self.time)))
+		if configuration and configuration['user'] and configuration['password'] and configuration['time']:
+			self.entry1.set_text(configuration['user'])
+			self.entry2.set_text(configuration['password'])
+			self.spin3.set_value(int(float(configuration['time'])))
 		if not os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
 	
