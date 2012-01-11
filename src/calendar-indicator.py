@@ -144,7 +144,6 @@ class CalendarIndicator():
 					self.user = configuration['user']
 					self.password = configuration['password']
 					self.time = configuration['time']
-					self.gcal=GCal(self.user,self.password)
 					error = False
 				except Exception,e:
 					print e
@@ -164,6 +163,7 @@ class CalendarIndicator():
 					else:
 						exit(1)
 					p.destroy()
+		self.gcal=GCal(self.user,self.password)
 
 	def work(self):
 		if (time.time()-self.actualization_time) > self.time*60:
