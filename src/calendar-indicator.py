@@ -43,7 +43,7 @@ import webbrowser
 from calendardialog import CalendarDialog
 #
 import comun
-import gkconfiguration
+from configurator import Configuration
 from gcal import GCal
 from preferences_dialog import Preferences
 #
@@ -113,57 +113,43 @@ class CalendarIndicator():
 			exit(0)
 		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
 		#
-		self.indicator.set_icon(comun.ICON_ENABLED)
-		self.indicator.set_attention_icon(comun.ICON_DISABLED)
+		# self.indicator.set_icon(comun.ICON_ENABLED)
+		# self.indicator.set_attention_icon(comun.ICON_DISABLED)
 		#
-		
 		self.read_preferences()
 		#
 		self.events = []
 		self.set_menu()
 		GObject.timeout_add_seconds(60, self.work)
-		
 
 	def read_preferences(self):
-		configuration = gkconfiguration.get_configuration()		
-		if configuration and configuration['user'] and configuration['password'] and configuration['time']:
-			self.user = configuration['user']
-			self.password = configuration['password']
-			self.time = configuration['time']
-		else:
-			p = Preferences()
-			if p.run() == Gtk.ResponseType.ACCEPT:
-				p.save_preferences()
-			else:
-				exit(1)
-			p.destroy()
-			error = True
-			while error:
-				try:
-					configuration = gkconfiguration.get_configuration()		
-					self.user = configuration['user']
-					self.password = configuration['password']
-					self.time = configuration['time']
-					error = False
-				except Exception,e:
-					print e
-					error = True
-					md = Gtk.MessageDialog(
-						None,
-						Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-						Gtk.MessageType.ERROR,
-						Gtk.ButtonsType.OK_CANCEL,
-						_('The email or/and the password are incorrect\nplease, try again?'))
-					if md.run() == Gtk.ResponseType.CANCEL:
-						exit(3)
-					md.destroy()
-					p = Preferences()
-					if p.run() == Gtk.ResponseType.ACCEPT:
-						p.save_preferences()
-					else:
-						exit(1)
-					p.destroy()
-		self.gcal=GCal(self.user,self.password)
+		error = True
+		while error:
+			try:
+				configuration = Configuration()
+				self.gcal=GCal(configuration.get('user'), configuration.get('password'))
+				self.time = configuration.get('time')
+				self.theme = configuration.get('theme')
+				error = False
+			except Exception,e:
+				print e
+				error = True
+				md = Gtk.MessageDialog(
+					None,
+					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+					Gtk.MessageType.ERROR,
+					Gtk.ButtonsType.OK_CANCEL,
+					_('The email or/and the password are incorrect\nplease, try again?'))
+				if md.run() == Gtk.ResponseType.CANCEL:
+					exit(3)
+				md.destroy()
+				p = Preferences()
+				if p.run() == Gtk.ResponseType.ACCEPT:
+					p.save_preferences()
+				else:
+					exit(1)
+				p.destroy()
+		
 
 	def work(self):
 		if (time.time()-self.actualization_time) > self.time*60:
@@ -172,10 +158,18 @@ class CalendarIndicator():
 			self.actualization_time = time.time()
 			self.set_menu(check=True)
 		return True
-		
-		
 
 	def set_menu(self,check=False):
+		#
+		now = datetime.datetime.now()
+		normal_icon = os.path.join(comun.ICONDIR,'%s-%s-normal.svg'%(now.day,self.theme))
+		starred_icon = os.path.join(comun.ICONDIR,'%s-%s-starred.svg'%(now.day,self.theme))
+		#
+		self.indicator.set_icon(normal_icon)
+		self.indicator.set_attention_icon(starred_icon)		
+		#self.indicator.set_icon(comun.ICON_ENABLED)
+		#self.indicator.set_attention_icon(comun.ICON_DISABLED)		
+		#
 		self.menu = Gtk.Menu()
 		#
 		events2 = self.gcal.getFirstTenEventsOnDefaultCalendar()
@@ -219,12 +213,12 @@ class CalendarIndicator():
 		else:
 			com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%d')
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
-			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
+			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 		else:
 			print now.hour
 			print com.hour
 			print self.events[0].when[0].start
-			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
+			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
 		#
 		self.menu.show()
 		self.indicator.set_menu(self.menu)
@@ -252,6 +246,32 @@ class CalendarIndicator():
 		if p.run() == Gtk.ResponseType.ACCEPT:
 			p.save_preferences()
 		p.destroy()
+		error = True
+		while error:
+			try:
+				configuration = Configuration()
+				self.gcal=GCal(configuration.get('user'), configuration.get('password'))
+				self.time = configuration.get('time')
+				self.theme = configuration.get('theme')
+				error = False
+			except Exception,e:
+				print e
+				error = True
+				md = Gtk.MessageDialog(
+					None,
+					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+					Gtk.MessageType.ERROR,
+					Gtk.ButtonsType.OK_CANCEL,
+					_('The email or/and the password are incorrect\nplease, try again?'))
+				if md.run() == Gtk.ResponseType.CANCEL:
+					exit(3)
+				md.destroy()
+				p = Preferences()
+				if p.run() == Gtk.ResponseType.ACCEPT:
+					p.save_preferences()
+				else:
+					exit(1)
+				p.destroy()		
 		self.menu_preferences.set_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
@@ -291,16 +311,6 @@ class CalendarIndicator():
 		ad.run()
 		ad.destroy()
 		self.menu_about.set_sensitive(True)
-
-	def load_key(self,key,defecto):
-		gconfi = GConf()
-		PATH = '/apps/remember-me/options/'+key
-		try:
-			valor = gconfi.get_key(PATH)
-			return valor
-		except ValueError:
-			gconfi.set_key(PATH,defecto)
-		return defecto
 
 if __name__ == "__main__":
 	Notify.init("calendar-indicator")

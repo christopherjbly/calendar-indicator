@@ -1,3 +1,11 @@
+calendar-indicator (0.0.2.6-1ubuntu1) oneiric; urgency=low
+
+  * Using introspection for Gnome Keyring
+  * Now day appear in panel
+  * Using configuration file
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 19 Feb 2012 08:25:07 +0100
+
 calendar-indicator (0.0.2.5-1ubuntu1) oneiric; urgency=low
 
   * Fixed a bug with initiation

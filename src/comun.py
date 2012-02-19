@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.0.2.5'
+__version__ = '0.0.2.6'
 
 import os
 
@@ -43,6 +43,7 @@ def is_package():
 
 VERSION = __version__
 APP = 'calendar-indicator'
+APPCONF = APP + '.conf'
 APPNAME = 'Calendar-Indicator'
 ICON = '/usr/share/pixmaps/calendar-indicator.svg'
 
@@ -51,12 +52,13 @@ if is_package():
     ROOTDIR = '/usr/share/'
     LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
     APPDIR = os.path.join(ROOTDIR, APP)
+    ICONDIR = os.path.join(APPDIR, 'icons')
 else:
     VERSION = VERSION + '-src'
-    ROOTDIR = os.path.dirname(__file__)
-    LANGDIR = os.path.normpath(os.path.join(ROOTDIR, '../template1'))
-    APPDIR = ROOTDIR  
-ICON_ENABLED = 'calendar-indicator-enabled'
-ICON_DISABLED = 'calendar-indicator-disabled'
+    ROOTDIR = os.path.split(os.path.dirname(__file__))[0]
+    LANGDIR = os.path.join(ROOTDIR, 'template1')
+    APPDIR = os.path.join(ROOTDIR, APP)
+    ICONDIR = os.path.join(ROOTDIR, 'data/icons')
+
 ICON_NEW_EVENT = 'event-new'
 ICON_FINISHED_EVENT = 'event-finished'

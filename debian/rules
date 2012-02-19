@@ -35,9 +35,11 @@ install: build
 	dh_install
 	# Create languages directories
 	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/es/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/it/LC_MESSAGES
 	# End create languages directories
 	# Compile languages
 	msgfmt template1/es.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/es/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/it.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/it/LC_MESSAGES/calendar-indicator.mo
 	# End comile languages
 
 	# Add here commands to install the package into debian/<packagename>.

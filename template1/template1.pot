@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-01-07 20:15+0100\n"
+"POT-Creation-Date: 2012-02-19 08:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,81 +18,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:216
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:43
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Preferences"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:58
 msgid "Login"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:66
 msgid "User"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:70
 msgid "Password"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:84
 msgid "Options"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:91
 msgid "Time between updates"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:100
 msgid "Autostart"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:162
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:107
+msgid "Theme light"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:142
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:265
 msgid ""
 "The email or/and the password are incorrect\n"
 "please, try again?"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:187
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:179
 msgid "New event:"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:194
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:186
 msgid "Event finished:"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:215
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Show Calendar"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:218
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:200
 msgid "Help"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:221
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:203
 msgid "Exit"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:252
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:232
 msgid "Web..."
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:253
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:233
 msgid "Get help online..."
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:254
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:234
 msgid "Translate this application..."
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:255
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
 msgid "Report a bug..."
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:257
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:237
 msgid "About"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:288
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:293
 msgid "An indicator for Google Calendar"
 msgstr ""

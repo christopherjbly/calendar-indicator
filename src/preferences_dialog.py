@@ -2,11 +2,10 @@
 # -*- coding: iso-8859-15 -*-
 #
 __author__='atareao'
-__date__ ='$06-jun-2010 12:34:44$'
+__date__ ='$19/02/2012$'
 #
-# <one line to give the program's name and a brief idea of what it does.>
 #
-# Copyright (C) 2010 Lorenzo Carbonell
+# Copyright (C) 2011,2012 Lorenzo Carbonell
 # lorenzo.carbonell.cerezo@gmail.com
 #
 # This program is free software: you can redistribute it and/or modify
@@ -30,7 +29,7 @@ import os
 import shutil
 import locale
 import gettext
-import gkconfiguration
+from configurator import Configuration
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -102,25 +101,42 @@ class Preferences(Gtk.Dialog):
 		label22.set_alignment(0,.5)
 		table2.attach(label22,0,1,1,2, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
-		self.switch4 = Gtk.Switch()
-		
+		self.switch4 = Gtk.Switch()		
 		table2.attach(self.switch4,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		#
+		label23 = Gtk.Label(_('Theme light')+':')
+		label23.set_alignment(0,.5)
+		table2.attach(label23,0,1,2,3, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+		#
+		self.switch5 = Gtk.Switch()		
+		table2.attach(self.switch5,1,2,2,3, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		self.load_preferences()
 		#
 		self.show_all()
 
 	def load_preferences(self):
-		configuration = gkconfiguration.get_configuration()
-		if configuration and configuration['user'] and configuration['password'] and configuration['time']:
-			self.entry1.set_text(configuration['user'])
-			self.entry2.set_text(configuration['password'])
-			self.spin3.set_value(int(float(configuration['time'])))
-		if not os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
+		configuration = Configuration()
+		self.entry1.set_text(configuration.get('user'))
+		self.entry2.set_text(configuration.get('password'))
+		self.spin3.set_value(int(float(configuration.get('time'))))
+		if os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
+		if configuration.get('theme') == 'light':
+			self.switch5.set_active(True)
+		else:
+			self.switch5.set_active(False)
 	
 	def save_preferences(self):
-		gkconfiguration.set_configuration(self.entry1.get_text(),self.entry2.get_text(),str(self.spin3.get_value()))
+		configuration = Configuration()
+		configuration.set('user',self.entry1.get_text())
+		configuration.set('password',self.entry2.get_text())
+		configuration.set('time',str(self.spin3.get_value()))
+		if self.switch5.get_active():
+			configuration.set('theme','light')
+		else:
+			configuration.set('theme','dark')
+		configuration.save()
 		filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
 		if self.switch4.get_active():
 			if not os.path.exists(filestart):

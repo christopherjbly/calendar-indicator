@@ -1,0 +1,105 @@
+# Italian-Switzerland translations for calendar-indicator package.
+# Copyright (C) 2012 Nicola Jelmorini
+# This file is distributed under the same license as the calendar-indicator package.
+# Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator 0.0.2.6\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2012-02-19 08:29+0100\n"
+"PO-Revision-Date: 2012-02-17 10:21+0100\n"
+"Last-Translator: Nicola Jelmorini <jelmorini@linux.com>\n"
+"Language-Team: Italiano-Svizzera\n"
+"Language: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:43
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:58
+msgid "Login"
+msgstr "Accesso"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:66
+msgid "User"
+msgstr "Utente"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:70
+msgid "Password"
+msgstr "Password"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:84
+msgid "Options"
+msgstr "Opzioni"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:91
+msgid "Time between updates"
+msgstr "Tempo fra gli aggiornamenti"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:100
+msgid "Autostart"
+msgstr "Autostart"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:107
+msgid "Theme light"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:142
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:265
+msgid ""
+"The email or/and the password are incorrect\n"
+"please, try again?"
+msgstr ""
+"l'indirizzo email  o/e la password sono errati\n"
+"per favore, riprovare?"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:179
+msgid "New event:"
+msgstr "Nuovo evento:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:186
+msgid "Event finished:"
+msgstr "Evento terminato:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Show Calendar"
+msgstr "Mostra il calendario"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:200
+msgid "Help"
+msgstr "Aiuto"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:203
+msgid "Exit"
+msgstr "Esci"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:232
+msgid "Web..."
+msgstr "Web..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:233
+msgid "Get help online..."
+msgstr "Ottenere aiuto in linea..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:234
+msgid "Translate this application..."
+msgstr "Tradurre questa applicazione..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Report a bug..."
+msgstr "Segnalare un problema..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:237
+msgid "About"
+msgstr "Informazioni su..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:293
+msgid "An indicator for Google Calendar"
+msgstr "Un indicatore per Google Calendar"

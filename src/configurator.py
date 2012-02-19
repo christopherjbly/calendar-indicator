@@ -1,12 +1,11 @@
 #! /usr/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding: iso-8859-1 -*-
 #
-__author__="Lorenzo Carbonell"
-__date__ ="$6-sept-2011$"
+__author__='atareao'
+__date__ ='$19/02/2012'
 #
-# Configurator for access to gconf
 #
-# Copyright (C) 2011 Lorenzo Carbonell
+# Copyright (C) 2012 Lorenzo Carbonell
 # lorenzo.carbonell.cerezo@gmail.com
 #
 # This program is free software: you can redistribute it and/or modify
@@ -24,45 +23,123 @@ __date__ ="$6-sept-2011$"
 #
 #
 #
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gio
-from gi.repository import GLib
-import types
 
-class Configurator():
-	def __init__(self,base_key):
-		self.settings = Gio.Settings.new(base_key)
+#install gir1.2-gnomekeyring-1.0
+from gi.repository import GnomeKeyring, GLib
+import ConfigParser
+import comun
+import os
 
-	def get(self,key):
-		casts = { 'b': GLib.Variant.get_boolean,
-				  'i': GLib.Variant.get_int16,
-				  'd': GLib.Variant.get_double,
-				  's': GLib.Variant.get_string}
+config_dir = os.path.join(os.path.expanduser('~'),'.config')
+config_app_dir = os.path.join(config_dir, comun.APP)
+config_file = os.path.join(config_app_dir, comun.APPCONF)
+
+DEFAULTS = {'user':'', 
+			'password':'********',
+			'time':'5',
+			'theme':'light',
+			'keyring':GnomeKeyring.get_default_keyring_sync()[1]}
+
+class Configuration(object):
+	
+	def __init__(self):
+		self.config = ConfigParser.RawConfigParser()
+		self.conf = DEFAULTS
+		if not os.path.exists(config_file):
+			self.create()
+			self.save()
+		self.read()
+	'''
+	####################################################################
+	Keyring Functions
+	####################################################################
+	'''
+	def _get_item(self, keyring, name):
+		for id in GnomeKeyring.list_item_ids_sync(keyring)[1]:
+			item = GnomeKeyring.item_get_info_sync(keyring, id)[1]
+			if item.get_display_name() == name:
+				return id,item
+		return None
+
+	def _set_password(self, keyring, name, password):
+		item = self._get_item(keyring, name)
+		if item:
+			id,item = item
+			info = GnomeKeyring.item_get_info_sync(keyring, id)[1]
+			info.set_secret(password)
+			GnomeKeyring.item_set_info_sync(keyring,id, info)
+		else:
+			GnomeKeyring.item_create_sync(keyring, GnomeKeyring.ItemType.GENERIC_SECRET, name, GLib.Array(), password, False)	
+
+	def _get_password(self, keyring, name):
+		for id in GnomeKeyring.list_item_ids_sync(keyring)[1]:
+			item = GnomeKeyring.item_get_info_sync(keyring, id)[1]
+			if item.get_display_name() == name:
+				return item.get_secret()
+		return None
+
+	'''
+	####################################################################
+	Config Functions
+	####################################################################
+	'''
+		 
+	def _get(self,key):
 		try:
-			res = self.settings.get_value(key)
-			tip = res.get_type_string()
-			return casts[tip](res)
-		except AttributeError:
-			return None
-
-	def set(self,key,value):
-		casts = {types.BooleanType: Gio.Settings.set_boolean,
-				types.IntType:      Gio.Settings.set_int,
-				types.FloatType:    Gio.Settings.set_double,
-				types.StringType:   Gio.Settings.set_string,
-				types.UnicodeType:  Gio.Settings.set_string}
-		try:
-			if casts[type(value)](self.settings,key,value) == True:
-				self.settings.sync()
-				return True
-		except AttributeError:
-			pass
-		return False
+			value = self.config.get('Configuration',key)
+		except ConfigParser.NoOptionError:
+			value = DEFAULTS[key]
+		if value == 'None':
+			value = None
+		return value
 		
-if __name__ == '__main__':
-	configurator = Configurator('org.gwibber.preferences')
-	print configurator.get('autostart')
-	configurator.set('autostart',True)
-	print configurator.get('autostart')
-	exit(0)
+	def set(self, key, value):
+		if key in self.conf.keys():
+			self.conf[key] = value
+			
+	def get(self,key):
+		if key in self.conf.keys():
+			return self.conf[key]
+		return None
+
+	'''
+	####################################################################
+	Operations
+	####################################################################
+	'''
+	def read(self):
+		self.config.read(config_file)
+		for key in self.conf.keys():
+			self.conf[key] =  self._get(key)
+		self.conf['password'] = self._get_password(self.conf['keyring'],comun.APP)
+		
+
+	def create(self):
+		if not self.config.has_section('Configuration'):
+			self.config.add_section('Configuration')
+		self.set_defaults()
+	
+	def set_defaults(self):
+		self.conf = {}
+		for key in DEFAULTS.keys():
+			self.conf[key] = DEFAULTS[key]
+		self.password = ''
+
+	def save(self):
+		for key in self.conf.keys():
+			if key == 'password':
+				self._set_password(self.conf['keyring'], comun.APP, self.conf['password'])
+				self.config.set('Configuration', 'password', '********')
+			else:
+				self.config.set('Configuration', key, self.conf[key])
+		if not os.path.exists(config_app_dir):
+			os.makedirs(config_app_dir)
+		self.config.write(open(config_file, 'w'))
+		
+
+if __name__=='__main__':
+	configuration = Configuration()
+	#configuration.set('password','armadillo')
+	#configuration.save()
+	print '############################################################'
+	print configuration.get('password')
