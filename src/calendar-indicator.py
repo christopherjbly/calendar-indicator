@@ -234,7 +234,7 @@ class CalendarIndicator():
 		add2menu(help_menu,text = _('Translate this application...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://translations.launchpad.net/calendar-indicator'))
 		add2menu(help_menu,text = _('Report a bug...'),conector_event = 'activate',conector_action = lambda x: webbrowser.open('https://bugs.launchpad.net/calendar-indicator'))
 		add2menu(help_menu)
-		add2menu(help_menu,text = _('About'),conector_event = 'activate',conector_action = self.menu_about_response)
+		self.menu_about = add2menu(help_menu,text = _('About'),conector_event = 'activate',conector_action = self.menu_about_response)
 		#
 		help_menu.show()
 		#
@@ -306,7 +306,7 @@ class CalendarIndicator():
 		ad.set_website_label('http://www.atareao.es')
 		ad.set_authors(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
 		ad.set_documenters(['Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>'])
-		ad.set_logo(Gtk.gdk.pixbuf_new_from_file(comun.ICON))
+		ad.set_logo(GdkPixbuf.Pixbuf.new_from_file(comun.ICON))
 		ad.set_program_name(comun.APPNAME)
 		ad.run()
 		ad.destroy()
