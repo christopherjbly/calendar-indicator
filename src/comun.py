@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.0.2.8'
+__version__ = '0.0.2.10'
 
 import os
 

@@ -251,36 +251,38 @@ class CalendarIndicator():
 
 	def menu_preferences_response(self,widget):
 		self.menu_preferences.set_sensitive(False)
-		p = Preferences()
-		if p.run() == Gtk.ResponseType.ACCEPT:
-			p.save_preferences()
-		p.destroy()
-		error = True
-		while error:
-			try:
-				configuration = Configuration()
-				self.gcal=GCal(configuration.get('user'), configuration.get('password'))
-				self.time = configuration.get('time')
-				self.theme = configuration.get('theme')
-				error = False
-			except Exception,e:
-				print e
-				error = True
-				md = Gtk.MessageDialog(
-					None,
-					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-					Gtk.MessageType.ERROR,
-					Gtk.ButtonsType.OK_CANCEL,
-					_('The email or/and the password are incorrect\nplease, try again?'))
-				if md.run() == Gtk.ResponseType.CANCEL:
-					exit(3)
-				md.destroy()
-				p = Preferences()
-				if p.run() == Gtk.ResponseType.ACCEPT:
-					p.save_preferences()
-				else:
-					exit(1)
-				p.destroy()		
+		p1 = Preferences()
+		if p1.run() == Gtk.ResponseType.ACCEPT:
+			p1.save_preferences()			
+			p1.destroy()
+			error = True
+			while error:
+				try:
+					configuration = Configuration()
+					self.gcal=GCal(configuration.get('user'), configuration.get('password'))
+					self.time = configuration.get('time')
+					self.theme = configuration.get('theme')
+					error = False
+				except Exception,e:
+					print e
+					error = True
+					md = Gtk.MessageDialog(
+						None,
+						Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+						Gtk.MessageType.ERROR,
+						Gtk.ButtonsType.OK_CANCEL,
+						_('The email or/and the password are incorrect\nplease, try again?'))
+					if md.run() == Gtk.ResponseType.CANCEL:
+						exit(3)
+					md.destroy()
+					p = Preferences()
+					if p.run() == Gtk.ResponseType.ACCEPT:
+						p.save_preferences()
+					else:
+						exit(1)
+					p.destroy()	
+		else:
+			p1.destroy()
 		self.menu_preferences.set_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
