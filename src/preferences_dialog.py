@@ -30,6 +30,7 @@ import shutil
 import locale
 import gettext
 from configurator import Configuration
+from gkeyring import MyGnomeKeyring, NoPasswordFound, GnomeKeyringLocked
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -117,12 +118,22 @@ class Preferences(Gtk.Dialog):
 
 	def load_preferences(self):
 		configuration = Configuration()
-		self.entry1.set_text(configuration.get('user'))
-		self.entry2.set_text(configuration.get('password'))
-		self.spin3.set_value(int(float(configuration.get('time'))))
+		user = configuration.get('user')
+		time = configuration.get('time')
+		theme = configuration.get('theme')
+		try:
+			ssk = MyGnomeKeyring(comun.APP)
+			password = ssk.get_password()
+		except NoPasswordFound:
+			password = ''
+		except GnomeKeyringLocked:
+			password = ''		
+		self.entry1.set_text(user)
+		self.entry2.set_text(password)
+		self.spin3.set_value(time)
 		if os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
-		if configuration.get('theme') == 'light':
+		if theme == 'light':
 			self.switch5.set_active(True)
 		else:
 			self.switch5.set_active(False)
@@ -130,13 +141,17 @@ class Preferences(Gtk.Dialog):
 	def save_preferences(self):
 		configuration = Configuration()
 		configuration.set('user',self.entry1.get_text())
-		configuration.set('password',self.entry2.get_text())
-		configuration.set('time',str(self.spin3.get_value()))
+		configuration.set('time',self.spin3.get_value())
 		if self.switch5.get_active():
 			configuration.set('theme','light')
 		else:
 			configuration.set('theme','dark')
 		configuration.save()
+		try:
+			ssk = MyGnomeKeyring(comun.APP)
+			password = ssk.set_password(self.entry2.get_text())
+		except GnomeKeyringLocked:
+			password = ''				
 		filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
 		if self.switch4.get_active():
 			if not os.path.exists(filestart):

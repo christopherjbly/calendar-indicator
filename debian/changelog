@@ -1,3 +1,10 @@
+calendar-indicator (0.0.2.8-1ubuntu1) precise; urgency=low
+
+  * Improved configuration file
+  * Changed GnomeKeyring Access
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 21 Jul 2012 18:15:07 +0200
+
 calendar-indicator (0.0.2.7-1ubuntu1) oneiric; urgency=low
 
   * Fixed a bug with about dialog

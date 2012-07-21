@@ -1,5 +1,5 @@
 #! /usr/bin/python
-# -*- coding: iso-8859-15 -*-
+# -*- coding: utf-8 -*-
 #
 __author__='atareao'
 __date__ ='$25/04/2011'
@@ -34,6 +34,7 @@ from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Notify
 
+import urllib2
 import time
 import dbus
 import locale
@@ -41,9 +42,11 @@ import gettext
 import datetime
 import webbrowser
 from calendardialog import CalendarDialog
+import gdata.client
 #
 import comun
 from configurator import Configuration
+from gkeyring import MyGnomeKeyring, NoPasswordFound, GnomeKeyringLocked
 from gcal import GCal
 from preferences_dialog import Preferences
 #
@@ -115,41 +118,49 @@ class CalendarIndicator():
 		#
 		# self.indicator.set_icon(comun.ICON_ENABLED)
 		# self.indicator.set_attention_icon(comun.ICON_DISABLED)
-		#
+		#	
 		self.read_preferences()
 		#
 		self.events = []
 		self.set_menu()
-		GObject.timeout_add_seconds(60, self.work)
+		GObject.timeout_add_seconds(60, self.work)		
 
 	def read_preferences(self):
-		error = True
-		while error:
+		user = self.get_user()
+		password = self.get_password()
+		incorrect = True
+		while incorrect:
 			try:
+				self.gcal=GCal(user,password)
 				configuration = Configuration()
-				self.gcal=GCal(configuration.get('user'), configuration.get('password'))
 				self.time = configuration.get('time')
 				self.theme = configuration.get('theme')
-				error = False
-			except Exception,e:
-				print e
-				error = True
-				md = Gtk.MessageDialog(
-					None,
-					Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-					Gtk.MessageType.ERROR,
-					Gtk.ButtonsType.OK_CANCEL,
-					_('The email or/and the password are incorrect\nplease, try again?'))
-				if md.run() == Gtk.ResponseType.CANCEL:
+				incorrect = False
+			except gdata.client.BadAuthentication, e2:
+				md = Gtk.MessageDialog(	parent = None,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('The email or/and the password are incorrect\nplease, try again?'))
+				if md.run() != Gtk.ResponseType.OK:
 					exit(3)
 				md.destroy()
 				p = Preferences()
-				if p.run() == Gtk.ResponseType.ACCEPT:
-					p.save_preferences()
-				else:
+				if p.run() != Gtk.ResponseType.ACCEPT:
 					exit(1)
+				p.save_preferences()
 				p.destroy()
-		
+				user = self.get_user()
+				password = self.get_password()
+			except urllib2.URLError,e:
+				md = Gtk.MessageDialog(	parent = None,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('There is no connection\ntry again?'))
+				if md.run() == Gtk.ResponseType.CANCEL:
+					exit(3)
+				md.destroy()					
 
 	def work(self):
 		if (time.time()-self.actualization_time) > self.time*60:
@@ -215,9 +226,7 @@ class CalendarIndicator():
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
 			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 		else:
-			print now.hour
-			print com.hour
-			print self.events[0].when[0].start
+			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
 			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
 		#
 		self.menu.show()
@@ -311,7 +320,47 @@ class CalendarIndicator():
 		ad.run()
 		ad.destroy()
 		self.menu_about.set_sensitive(True)
-
+	def get_password(self):
+		gk = MyGnomeKeyring(comun.APP)
+		incorrect = True
+		while incorrect:
+			try:
+				password = gk.get('password')
+				incorrect  = False
+			except NoPasswordFound,e:
+				print e
+				p = Preferences(self)
+				if p.run() != Gtk.ResponseType.ACCEPT:
+					exit(1)
+				p.save_preferences()
+				p.destroy()
+			except GnomeKeyringLocked,e:
+				print e
+				md = Gtk.MessageDialog(	parent = self,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('You must unlock the Gnome Keyring. Try again?'))
+				if md.run() != Gtk.ResponseType.OK:
+					exit(3)
+				md.destroy()
+			except Exception,e:
+				print e
+		return password
+		
+	def get_user(self):
+		conf = Configuration()
+		user = conf.get('user')
+		while user == None or user == '':
+			p = Preferences(self)
+			if p.run() != Gtk.ResponseType.ACCEPT:
+				exit(1)
+			p.save_preferences()
+			p.destroy()
+			conf = Configuration()
+			user = conf.get('user')
+		return user
+		
 if __name__ == "__main__":
 	Notify.init("calendar-indicator")
 	ci=CalendarIndicator()

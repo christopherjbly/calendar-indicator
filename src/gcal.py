@@ -27,6 +27,7 @@ __date__ ='$30/10/2010'
 #
 #
 #
+import gdata
 import gdata.calendar.client
 import datetime
 
@@ -49,26 +50,34 @@ def addOneYear(start_date):
 	return end_date
 
 class GCal(object):
-	def __init__(self,email,password):
+	def __init__(self,email,password,calendar = None):
 		self.email = email
 		self.password = password
+		self.calendar = calendar
 		self._create()
 	
 	def _create(self):
 		self.client = gdata.calendar.client.CalendarClient(source='calendar-indicator')
 		self.client.ClientLogin(self.email,self.password, self.client.source)
+		if not self.calendar:
+			self.calendar = self.getDefaultCalendarSrc()
 
+	def getDefaultCalendarSrc(self):
+		feed = self.client.GetAllCalendarsFeed()
+		return feed.entry[0].content.src
+		
 	def PrintUserCalendars(self):
 		feed = self.client.GetAllCalendarsFeed()
 		print feed.title.text
 		for i, a_calendar in enumerate(feed.entry):
-			print '\t%s. %s' % (i, a_calendar.title.text,)
-
+			print '\t%s. %s src=%s' % (i, a_calendar.title.text,a_calendar.content.src)
+			
 	def PrintOwnCalendars(self):
 		feed = self.client.GetOwnCalendarsFeed()
 		print feed.title.text
 		for i, a_calendar in enumerate(feed.entry):
-			print '\t%s. %s' % (i, a_calendar.title.text,)   
+			print '\t%s. %s src=%s' % (i, a_calendar.title.text,a_calendar.content.src)   
+			
 
 	def PrintAllEventsOnDefaultCalendar(self):
 		feed = self.client.GetCalendarEventFeed()
@@ -77,6 +86,13 @@ class GCal(object):
 			print '\t%s. %s' % (i, an_event.title.text,)
 			for p, a_participant in enumerate(an_event.who):
 				print '\t\t%s. %s' % (p, a_participant.email,)
+	
+	def addEvent(self):
+		event = self.client.calendar.CalendarEventEntry()
+		event.content = atom.Content(text='Tennis with John 30.12.2009 15:00-16:00')
+		event.quick_add = gdata.calendar.QuickAdd(value='true')
+		feed = self.client.GetOwnCalendarsFeed()
+		new_event = calendar_service.InsertEvent(event, self.calendar)
 	
 	def getAllEventsOnDefaultCalendar(self):
 		feed = self.client.GetCalendarEventFeed()
@@ -173,14 +189,17 @@ class GCal(object):
 				print '\t\tEnd time:   %s' % (a_when.end,)
 
 if __name__ == '__main__':
-	gcal = GCal('user','password')
+	from configurator import Configuration
+	configuration = Configuration()
+	gcal = GCal(configuration.get('user'),configuration.get_password())
 	gcal.PrintUserCalendars()
-	# gcal.PrintOwnCalendars()
+	gcal.PrintOwnCalendars()
 	# gcal.PrintAllEventsOnDefaultCalendar()
+	'''
 	for event in gcal.getFirstTenEventsOnDefaultCalendar():
 		print event.title.text
 		for a_when in event.when:
 			print '\t\tStart time: %s' % (a_when.start,)
-	
+	'''
 	#gcal.DateRangeQuery()
 	exit(0)

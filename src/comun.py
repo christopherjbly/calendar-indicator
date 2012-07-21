@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.0.2.7'
+__version__ = '0.0.2.8'
 
 import os
 
@@ -44,6 +44,9 @@ def is_package():
 VERSION = __version__
 APP = 'calendar-indicator'
 APPCONF = APP + '.conf'
+CONFIG_DIR = os.path.join(os.path.expanduser('~'),'.config')
+CONFIG_APP_DIR = os.path.join(CONFIG_DIR, APP)
+CONFIG_FILE = os.path.join(CONFIG_APP_DIR, APPCONF)
 APPNAME = 'Calendar-Indicator'
 ICON = '/usr/share/pixmaps/calendar-indicator.svg'
 
