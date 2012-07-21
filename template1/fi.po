@@ -1,57 +1,56 @@
-# Italian-Switzerland translations for calendar-indicator package.
-# Copyright (C) 2012 Nicola Jelmorini
+# Finnish translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the calendar-indicator package.
-# Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.2.8\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
 "POT-Creation-Date: 2012-07-21 18:22+0200\n"
-"PO-Revision-Date: 2012-02-20 18:57+0000\n"
-"Last-Translator: Nicola Jelmorini <Unknown>\n"
-"Language-Team: Italiano-Svizzera\n"
-"Language: Spanish\n"
+"PO-Revision-Date: 2012-02-24 10:39+0000\n"
+"Last-Translator: Jiri Grönroos <Unknown>\n"
+"Language-Team: Finnish <fi@li.org>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
 "X-Generator: Launchpad (build 15654)\n"
-"X-Poedit-Language: Italian\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
 msgid "Preferences"
-msgstr "Preferenze"
+msgstr "Asetukset"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
 msgid "Login"
-msgstr "Accesso"
+msgstr "Kirjautuminen"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
 msgid "User"
-msgstr "Utente"
+msgstr "Käyttäjä"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
 msgid "Password"
-msgstr "Password"
+msgstr "Salasana"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
 msgid "Options"
-msgstr "Opzioni"
+msgstr "Valinnat"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
 msgid "Time between updates"
-msgstr "Tempo fra gli aggiornamenti"
+msgstr "Aikaa päivitysten välillä"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
 msgid "Autostart"
-msgstr "Autostart"
+msgstr "Automaattinen käynnistys"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
 msgid "Theme light"
-msgstr "Luce del tema"
+msgstr "Vaalea teema"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
@@ -59,8 +58,8 @@ msgid ""
 "The email or/and the password are incorrect\n"
 "please, try again?"
 msgstr ""
-"l'indirizzo email  o/e la password sono errati\n"
-"per favore, riprovare?"
+"Sähköpostiosoite tai salasana on väärin.\n"
+"Yritetäänkö uudelleen?"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
 msgid ""
@@ -70,47 +69,47 @@ msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
 msgid "New event:"
-msgstr "Nuovo evento:"
+msgstr "Uusi tapahtuma:"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Event finished:"
-msgstr "Evento terminato:"
+msgstr "Tapahtuma valmis:"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
 msgid "Show Calendar"
-msgstr "Mostra il calendario"
+msgstr "Näytä kalenteri"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
 msgid "Help"
-msgstr "Aiuto"
+msgstr "Ohje"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
 msgid "Exit"
-msgstr "Esci"
+msgstr "Sulje"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
 msgid "Web..."
-msgstr "Web..."
+msgstr "Verkossa..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
 msgid "Get help online..."
-msgstr "Ottenere aiuto in linea..."
+msgstr "Hae apua verkosta..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
 msgid "Translate this application..."
-msgstr "Tradurre questa applicazione..."
+msgstr "Käännä tämä ohjelma..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
 msgid "Report a bug..."
-msgstr "Segnalare un problema..."
+msgstr "Raportoi ongelmasta..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
 msgid "About"
-msgstr "Informazioni su..."
+msgstr "Tietoja"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
 msgid "An indicator for Google Calendar"
-msgstr "Un indicatore per Google Calendar"
+msgstr "Ilmaisin Google-kalenteria varten"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
 msgid "You must unlock the Gnome Keyring. Try again?"

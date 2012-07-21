@@ -36,10 +36,44 @@ install: build
 	# Create languages directories
 	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/es/LC_MESSAGES
 	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/it/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/nb/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/sl/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/pt_BR/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/uk/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/pt/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/cs/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/tr/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/hu/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/zh_CN/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/ru/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/gl/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/nl/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/ca/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/hr/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/de/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/el/LC_MESSAGES
+	mkdir -p ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/fi/LC_MESSAGES
 	# End create languages directories
 	# Compile languages
 	msgfmt template1/es.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/es/LC_MESSAGES/calendar-indicator.mo
 	msgfmt template1/it.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/it/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/nb.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/nb/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/sl.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/sl/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/pt_BR.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/pt_BR/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/uk.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/uk/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/pt.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/pt/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/cs.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/cs/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/tr.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/tr/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/hu.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/hu/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/zh_CN.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/zh_CN/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/ru.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/ru/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/gl.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/gl/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/nl.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/nl/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/ca.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/ca/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/hr.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/hr/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/de.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/de/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/el.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/el/LC_MESSAGES/calendar-indicator.mo
+	msgfmt template1/fi.po -o ${CURDIR}/debian/calendar-indicator/usr/share/locale-langpack/fi/LC_MESSAGES/calendar-indicator.mo
 	# End comile languages
 
 	# Add here commands to install the package into debian/<packagename>.

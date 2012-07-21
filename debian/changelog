@@ -1,3 +1,9 @@
+calendar-indicator (0.0.2.9-1ubuntu1) precise; urgency=low
+
+  * Updated translations
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sat, 21 Jul 2012 18:22:31 +0200
+
 calendar-indicator (0.0.2.8-1ubuntu1) precise; urgency=low
 
   * Improved configuration file

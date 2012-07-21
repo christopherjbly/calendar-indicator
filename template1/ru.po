@@ -1,57 +1,56 @@
-# Italian-Switzerland translations for calendar-indicator package.
-# Copyright (C) 2012 Nicola Jelmorini
+# Russian translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the calendar-indicator package.
-# Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.2.8\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
 "POT-Creation-Date: 2012-07-21 18:22+0200\n"
-"PO-Revision-Date: 2012-02-20 18:57+0000\n"
-"Last-Translator: Nicola Jelmorini <Unknown>\n"
-"Language-Team: Italiano-Svizzera\n"
-"Language: Spanish\n"
+"PO-Revision-Date: 2012-02-25 10:54+0000\n"
+"Last-Translator: irbinix <Unknown>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
 "X-Generator: Launchpad (build 15654)\n"
-"X-Poedit-Language: Italian\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
 msgid "Preferences"
-msgstr "Preferenze"
+msgstr "Настройки"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
 msgid "Login"
-msgstr "Accesso"
+msgstr "Авторизация"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
 msgid "User"
-msgstr "Utente"
+msgstr "Пользователь"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
 msgid "Password"
-msgstr "Password"
+msgstr "Пароль"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
 msgid "Options"
-msgstr "Opzioni"
+msgstr "Параметры"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
 msgid "Time between updates"
-msgstr "Tempo fra gli aggiornamenti"
+msgstr "Время между обновлениями"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
 msgid "Autostart"
-msgstr "Autostart"
+msgstr "Автозапуск"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
 msgid "Theme light"
-msgstr "Luce del tema"
+msgstr "Светлая тема"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
@@ -59,8 +58,8 @@ msgid ""
 "The email or/and the password are incorrect\n"
 "please, try again?"
 msgstr ""
-"l'indirizzo email  o/e la password sono errati\n"
-"per favore, riprovare?"
+"Неправильная электронная почта и / или пароль\n"
+"попробовать снова?"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
 msgid ""
@@ -70,47 +69,47 @@ msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
 msgid "New event:"
-msgstr "Nuovo evento:"
+msgstr "Новое событие"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Event finished:"
-msgstr "Evento terminato:"
+msgstr "Событие завершено"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
 msgid "Show Calendar"
-msgstr "Mostra il calendario"
+msgstr "Показать календарь"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
 msgid "Help"
-msgstr "Aiuto"
+msgstr "Помощь"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
 msgid "Exit"
-msgstr "Esci"
+msgstr "Выйти"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
 msgid "Web..."
-msgstr "Web..."
+msgstr "Веб-сайт..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
 msgid "Get help online..."
-msgstr "Ottenere aiuto in linea..."
+msgstr "Помощь онлайн..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
 msgid "Translate this application..."
-msgstr "Tradurre questa applicazione..."
+msgstr "Перевод этого приложения..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
 msgid "Report a bug..."
-msgstr "Segnalare un problema..."
+msgstr "Сообщить об ошибке..."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
 msgid "About"
-msgstr "Informazioni su..."
+msgstr "Об апплете"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
 msgid "An indicator for Google Calendar"
-msgstr "Un indicatore per Google Calendar"
+msgstr "Индикатор для Календаря Google"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
 msgid "You must unlock the Gnome Keyring. Try again?"

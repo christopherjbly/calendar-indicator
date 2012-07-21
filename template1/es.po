@@ -3,56 +3,57 @@
 # This file is distributed under the same license as the calendar-indicator package.
 # Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.2.6\n"
+"Project-Id-Version: calendar-indicator 0.0.2.8\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-02-19 08:29+0100\n"
-"PO-Revision-Date: 2011-05-12 21:38+0200\n"
-"Last-Translator: Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>\n"
+"POT-Creation-Date: 2012-07-21 18:22+0200\n"
+"PO-Revision-Date: 2012-05-23 15:41+0000\n"
+"Last-Translator: mgomezbuceta <Unknown>\n"
 "Language-Team: Spanish\n"
 "Language: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
+"X-Generator: Launchpad (build 15654)\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:43
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:58
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
 msgid "Login"
 msgstr "Inicio de sesión"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:66
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
 msgid "User"
 msgstr "Usuario"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:70
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
 msgid "Password"
 msgstr "Contraseña"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:84
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
 msgid "Options"
 msgstr "Opciones"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:91
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
 msgid "Time between updates"
 msgstr "Tiempo entre actualizaciones"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:100
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
 msgid "Autostart"
 msgstr "Autostart"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:107
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
 msgid "Theme light"
-msgstr ""
+msgstr "Tema claro"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:142
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:265
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
 msgid ""
 "The email or/and the password are incorrect\n"
 "please, try again?"
@@ -60,47 +61,56 @@ msgstr ""
 "El correo electrónico y/o la contraseña son incorrectos\n"
 "por favor, inténtalo de nuevo"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:179
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
+msgid ""
+"There is no connection\n"
+"try again?"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
 msgid "New event:"
 msgstr "Nuevo evento:"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:186
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Event finished:"
 msgstr "Evento terminó"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
 msgid "Show Calendar"
 msgstr "Mostrar el calendario"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:200
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:203
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
 msgid "Exit"
 msgstr "Salir"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:232
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
 msgid "Web..."
-msgstr ""
+msgstr "Web..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:233
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
 msgid "Get help online..."
-msgstr ""
+msgstr "Obtener ayuda en linea..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:234
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
 msgid "Translate this application..."
-msgstr ""
+msgstr "Ayuda a traducir esta aplicación..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
 msgid "Report a bug..."
-msgstr ""
+msgstr "Reportar un error..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:237
-#, fuzzy
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
 msgid "About"
-msgstr "Acerca de . . ."
+msgstr "Acerca de"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:293
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
 msgid "An indicator for Google Calendar"
 msgstr "Un indicador de Google Calendar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
+msgid "You must unlock the Gnome Keyring. Try again?"
+msgstr ""
