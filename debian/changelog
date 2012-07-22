@@ -1,3 +1,22 @@
+calendar-indicator (0.0.3.0-1ubuntu1) precise; urgency=low
+
+  * Changed Google API to version 3
+  * Changed to OAuth
+  * New method to access to Google Calendar
+  * Improved checking new events
+  * Fixed bug #914192
+  * Fixed bug #914659
+  * Fixed bug #938596 
+  * Fixed bug #939848 
+  * Fixed bug #939924
+  * Fixed bug #939931
+  * Fixed bug #948247
+  * Fixed bug #952672
+  * Fixed bug #986508
+  * Fixed bug #1027630
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 22 Jul 2012 21:28:56 +0200
+
 calendar-indicator (0.0.2.11-1ubuntu1) precise; urgency=low
 
   * Fixed some bugs

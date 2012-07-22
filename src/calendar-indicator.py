@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 __author__='atareao'
@@ -42,12 +42,10 @@ import gettext
 import datetime
 import webbrowser
 from calendardialog import CalendarDialog
-import gdata.client
+from googlecalendarapi import GCAService
 #
 import comun
 from configurator import Configuration
-from gkeyring import MyGnomeKeyring, NoPasswordFound, GnomeKeyringLocked
-from gcal import GCal
 from preferences_dialog import Preferences
 #
 locale.setlocale(locale.LC_ALL, '')
@@ -62,6 +60,33 @@ def internet_on():
 	except:
 		pass
 	return False
+def getTimeAndDateV2(time_string):
+	if time_string.find('T')!=-1:
+		temp = time_string.split('T')
+		com = datetime.datetime.strptime(temp[0],'%Y-%m-%d')
+		if temp[1].find('+')!=-1:
+			temp2 = temp[1].split('+')
+			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
+			#com3 = datetime.datetime.strptime(temp2[1],'%H:%M')
+			thour = com2.hour# + com3.hour
+			tminute = com2.minute# + com3.minute
+			tsecond = com2.second
+		elif temp[1].find('-')!=-1:
+			temp2 = temp[1].split('-')
+			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
+			#com3 = datetime.datetime.strptime(temp2[1],'%H:%M')
+			thour = com2.hour# - com3.hour
+			tminute = com2.minute# - com3.minute
+			tsecond = com2.second
+		else:
+			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
+			thour = com2.hour
+			tminute = com2.minute
+			tsecond = com2.second
+		com = datetime.datetime(com.year, com.month, com.day, thour,tminute,tsecond)
+	else:
+		com = datetime.datetime.strptime(time_string,'%Y-%m-%d')
+	return com
 
 
 def getTimeAndDate(cadena):
@@ -75,13 +100,20 @@ def getTimeAndDate(cadena):
 	date = datetime.date(int(date[0]),int(date[1]),int(date[2]))
 	return date.strftime('%d/%m/%Y')+' - '+time.strftime('%H:%M')
 	
-def check_events(event1,event2):
-	if event1.when[0].start == event2.when[0].start:
-		if event1.when[0].end == event2.when[0].end:
-			if event1.title.text == event2.title.text:
-				return True
-	return False
+def get_date(event,start=True):
+	if start:
+		key = 'start'
+	else:
+		key = 'end'
+	if 'dateTime' in event[key]:		
+		return event[key]['dateTime']
+	else:
+		return event[key]['date']
 
+
+def check_events(event1,event2):
+	return event1['id'] == event2['id']
+	
 def is_event_in_events(an_event,events):
 	for event in events:
 		if check_events(an_event,event):
@@ -126,41 +158,26 @@ class CalendarIndicator():
 
 	def read_preferences(self):
 		configuration = Configuration()
+		firsttime = configuration.get('first-time')
+		if firsttime or not os.path.exists(comun.COOKIE_FILE):
+			preferences = Preferences()
+			if preferences.run() != Gtk.ResponseType.ACCEPT:
+				exit(1)
+			preferences.save_preferences()
+			if not os.path.exists(comun.COOKIE_FILE):
+				md = Gtk.MessageDialog(	parent = None,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('You must allow Calendar-Indicator to access your Google Calendar to work'))
+				md.run()
+				exit(0)
+		configuration.read()
+		self.gcal = GCAService()
 		self.time = configuration.get('time')
 		self.theme = configuration.get('theme')
-		user = self.get_user()
-		password = self.get_password()
-		incorrect = True
-		while incorrect:
-			try:
-				self.gcal=GCal(user,password)				
-				incorrect = False
-			except gdata.client.BadAuthentication, e2:
-				md = Gtk.MessageDialog(	parent = None,
-										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-										type = Gtk.MessageType.ERROR,
-										buttons = Gtk.ButtonsType.OK_CANCEL,
-										message_format = _('The email or/and the password are incorrect\nplease, try again?'))
-				if md.run() != Gtk.ResponseType.OK:
-					exit(3)
-				md.destroy()
-				p = Preferences()
-				if p.run() != Gtk.ResponseType.ACCEPT:
-					exit(1)
-				p.save_preferences()
-				p.destroy()
-				user = self.get_user()
-				password = self.get_password()
-			except urllib2.URLError,e:
-				md = Gtk.MessageDialog(	parent = None,
-										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-										type = Gtk.MessageType.ERROR,
-										buttons = Gtk.ButtonsType.OK_CANCEL,
-										message_format = _('There is no connection\ntry again?'))
-				if md.run() == Gtk.ResponseType.CANCEL:
-					exit(3)
-				md.destroy()					
-
+		self.calendar_id = configuration.get('calendar_id')
+				
 	def work(self):
 		if (time.time()-self.actualization_time) > self.time*60:
 			while internet_on() == False:
@@ -197,43 +214,52 @@ class CalendarIndicator():
 		self.indicator.set_icon(normal_icon)
 		self.indicator.set_attention_icon(starred_icon)		
 		#
-		events2 = self.gcal.getFirstTenEventsOnDefaultCalendar()
+		events2 = self.gcal.get_next_ten_events(self.calendar_id)
 		if check and len(self.events)>0:
 			for event in events2:
 				if not is_event_in_events(event,self.events):
-					msg = _('New event:')+'\n'
-					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
+					if 'dateTime' in event['start']:
+						key_event_time = 'dateTime'
+					else:
+						key_event_time = 'date'
+					msg = _('New event:').decode('utf-8')+'\n'
+					msg += getTimeAndDate(event['start'][key_event_time])+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
 					self.notification.show()
 			for event in self.events:
 				if not is_event_in_events(event,events2):
-					msg = _('Event finished:')+'\n'
-					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
+					if 'dateTime' in event['start']:
+						key_event_time = 'dateTime'
+					else:
+						key_event_time = 'date'
+					msg = _('Event finished:').decode('utf-8') + '\n'
+					msg += getTimeAndDate(event['start'][key_event_time])+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
 					self.notification.show()
 		self.events = events2
 		#for menu_event in self.menu_events:
 		#	menu_event.set_visible(False)
 		for i,event in enumerate(self.events):
-			self.menu_events[i].set_label(getTimeAndDate(event.when[0].start)+' - '+event.title.text)
+			if 'dateTime' in event['start']:
+				key_event_time = 'dateTime'
+			else:
+				key_event_time = 'date'
+			self.menu_events[i].set_label(getTimeAndDate(event['start'][key_event_time])+' - '+event['summary'])
 			self.menu_events[i].set_visible(True)
 		for i in range(len(self.events),10):
 			self.menu_events[i].set_visible(True)
 		now = datetime.datetime.now()
-		if self.events[0].when[0].start.find('T') != -1:
-			print self.events[0].when[0].start
-			if self.events[0].when[0].start.find('.') != -1:
-				com = datetime.datetime.strptime(self.events[0].when[0].start.split('.')[0],'%Y-%m-%dT%H:%M:%S')
-			else:
-				com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%dT%H:%M:%S')
-			
+		if 'dateTime' in self.events[0]['start']:
+			key_event_time = 'dateTime'
 		else:
-			com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%d')
+			key_event_time = 'date'		
+		com =getTimeAndDateV2(self.events[0]['start'][key_event_time])
+		print com
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
 			self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
 		else:
-			self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
 			self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
+		#self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
 		while Gtk.events_pending():
 			Gtk.main_iteration()
 		
@@ -257,40 +283,17 @@ class CalendarIndicator():
 		p1 = Preferences()
 		if p1.run() == Gtk.ResponseType.ACCEPT:
 			p1.save_preferences()			
-			p1.destroy()
-			error = True
-			while error:
-				try:
-					configuration = Configuration()
-					self.gcal=GCal(configuration.get('user'), configuration.get('password'))
-					self.time = configuration.get('time')
-					self.theme = configuration.get('theme')
-					error = False
-				except Exception,e:
-					print e
-					error = True
-					md = Gtk.MessageDialog(
-						None,
-						Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-						Gtk.MessageType.ERROR,
-						Gtk.ButtonsType.OK_CANCEL,
-						_('The email or/and the password are incorrect\nplease, try again?'))
-					if md.run() == Gtk.ResponseType.CANCEL:
-						exit(3)
-					md.destroy()
-					p = Preferences()
-					if p.run() == Gtk.ResponseType.ACCEPT:
-						p.save_preferences()
-					else:
-						exit(1)
-					p.destroy()	
-		else:
-			p1.destroy()
+			self.gcal = GCAService()
+			self.time = configuration.get('time')
+			self.theme = configuration.get('theme')
+			self.calendar_id = configuration.get('calendar_id')
+			self.events = []			
+		p1.destroy()
 		self.menu_preferences.set_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
 		self.menu_show_calendar.set_sensitive(False)
-		cd = CalendarDialog('Calendar',parent = None, googlecalendar = self.gcal)
+		cd = CalendarDialog('Calendar',parent = None, googlecalendar = self.gcal,calendar_id = self.calendar_id)
 		cd.run()
 		cd.destroy()
 		self.menu_show_calendar.set_sensitive(True)
@@ -328,47 +331,6 @@ class CalendarIndicator():
 		ad.run()
 		ad.destroy()
 		self.menu_about.set_sensitive(True)
-		
-	def get_password(self):
-		gk = MyGnomeKeyring(comun.APP)
-		incorrect = True
-		while incorrect:
-			try:
-				password = gk.get('password')
-				incorrect  = False
-			except NoPasswordFound,e:
-				print e
-				p = Preferences(self)
-				if p.run() != Gtk.ResponseType.ACCEPT:
-					exit(1)
-				p.save_preferences()
-				p.destroy()
-			except GnomeKeyringLocked,e:
-				print e
-				md = Gtk.MessageDialog(	parent = self,
-										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-										type = Gtk.MessageType.ERROR,
-										buttons = Gtk.ButtonsType.OK_CANCEL,
-										message_format = _('You must unlock the Gnome Keyring. Try again?'))
-				if md.run() != Gtk.ResponseType.OK:
-					exit(3)
-				md.destroy()
-			except Exception,e:
-				print e
-		return password
-		
-	def get_user(self):
-		conf = Configuration()
-		user = conf.get('user')
-		while user == None or user == '':
-			p = Preferences(self)
-			if p.run() != Gtk.ResponseType.ACCEPT:
-				exit(1)
-			p.save_preferences()
-			p.destroy()
-			conf = Configuration()
-			user = conf.get('user')
-		return user
 		
 if __name__ == "__main__":
 	Notify.init("calendar-indicator")

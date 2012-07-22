@@ -1,5 +1,5 @@
-#! /usr/bin/python
-# -*- coding: iso-8859-1 -*-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 __author__='atareao'
 __date__ ='$19/02/2012'
@@ -29,9 +29,10 @@ import os
 import json
 import comun
 
-PARAMS = {	'user':'',
+PARAMS = {	'first-time':True,
 			'time':5,
-			'theme':'light'
+			'theme':'light',
+			'calendar_id':''
 			}
 
 

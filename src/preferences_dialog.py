@@ -1,5 +1,5 @@
-#! /usr/bin/python
-# -*- coding: iso-8859-15 -*-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 __author__='atareao'
 __date__ ='$19/02/2012$'
@@ -30,7 +30,7 @@ import shutil
 import locale
 import gettext
 from configurator import Configuration
-from gkeyring import MyGnomeKeyring, NoPasswordFound, GnomeKeyringLocked
+from googlecalendarapi import GCAService
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -64,22 +64,27 @@ class Preferences(Gtk.Dialog):
 		table1.set_row_spacings(5)
 		frame1.add(table1)
 		#
-		label11 = Gtk.Label(_('User')+':')
+		label11 = Gtk.Label(_('Allow access to Google Calendar')+':')
 		label11.set_alignment(0,.5)
 		table1.attach(label11,0,1,0,1, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
-		label12 = Gtk.Label(_('Password')+':')
+		self.switch1 = Gtk.Switch()
+		self.switch1.connect('button-press-event',self.on_switch1_changed)
+		self.switch1.connect('activate',self.on_switch1_changed)
+		table1.attach(self.switch1,1,2,0,1, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		#
+		label12 = Gtk.Label(_('Calendar')+':')
 		label12.set_alignment(0,.5)
 		table1.attach(label12,0,1,1,2, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
-		self.entry1 = Gtk.Entry()
-		self.entry1.set_width_chars(30)
-		table1.attach(self.entry1,1,2,0,1, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
-		#
-		self.entry2 = Gtk.Entry()
-		self.entry2.set_visibility(False)
-		self.entry2.set_width_chars(30)
+		self.liststore = Gtk.ListStore(str,str)
+		self.entry2 = Gtk.ComboBox.new_with_model(model=self.liststore)
+		renderer_text = Gtk.CellRendererText()
+		self.entry2.pack_start(renderer_text, True)
+		self.entry2.add_attribute(renderer_text, "text", 0)
+		self.entry2.set_active(0)
 		table1.attach(self.entry2,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		
 		#
 		frame2 = Gtk.Frame()
 		notebook.append_page(frame2,tab_label = Gtk.Label(_('Options')))
@@ -115,21 +120,29 @@ class Preferences(Gtk.Dialog):
 		self.load_preferences()
 		#
 		self.show_all()
-
+	def on_switch1_changed(self,widget,data):
+		if self.switch1.get_active():
+			if os.path.exists(comun.COOKIE_FILE):
+				os.remove(comun.COOKIE_FILE)
+				exit(0)
+		else:
+			gca = GCAService()
+			if os.path.exists(comun.COOKIE_FILE):
+				self.switch1.get_active(True)
+		gca = GCAService()
+		if gca:
+			for calendar in gca.get_calendars():
+				self.liststore.append([calendar['summary'],calendar['id']])
+					
+			
+		
 	def load_preferences(self):
+		self.switch1.set_active(os.path.exists(comun.COOKIE_FILE))
 		configuration = Configuration()
-		user = configuration.get('user')
 		time = configuration.get('time')
 		theme = configuration.get('theme')
-		try:
-			ssk = MyGnomeKeyring(comun.APP)
-			password = ssk.get_password()
-		except NoPasswordFound:
-			password = ''
-		except GnomeKeyringLocked:
-			password = ''		
-		self.entry1.set_text(user)
-		self.entry2.set_text(password)
+		calendar_id = configuration.get('calendar_id')
+		print calendar_id
 		self.spin3.set_value(time)
 		if os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
@@ -137,21 +150,33 @@ class Preferences(Gtk.Dialog):
 			self.switch5.set_active(True)
 		else:
 			self.switch5.set_active(False)
+		if os.path.exists(comun.COOKIE_FILE):
+			gca = GCAService()
+			if gca:
+				for calendar in gca.get_calendars():
+					self.liststore.append([calendar['summary'],calendar['id']])
+				if len(calendar_id)>0:
+					for i,item in enumerate(self.liststore):
+						if calendar_id == item[1]:
+							self.entry2.set_active(i)
+							return
+				self.entry2.set_active(0)
+			
 	
 	def save_preferences(self):
 		configuration = Configuration()
-		configuration.set('user',self.entry1.get_text())
+		tree_iter = self.entry2.get_active_iter()
+		if tree_iter != None:
+			model = self.entry2.get_model()
+			calendar_id = model[tree_iter][1]	
+		configuration.set('calendar_id',calendar_id)
+		configuration.set('first-time',False)
 		configuration.set('time',self.spin3.get_value())
 		if self.switch5.get_active():
 			configuration.set('theme','light')
 		else:
 			configuration.set('theme','dark')
 		configuration.save()
-		try:
-			ssk = MyGnomeKeyring(comun.APP)
-			password = ssk.set_password(self.entry2.get_text())
-		except GnomeKeyringLocked:
-			password = ''				
 		filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
 		if self.switch4.get_active():
 			if not os.path.exists(filestart):

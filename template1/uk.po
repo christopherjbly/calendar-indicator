@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.2.8\n"
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-07-21 18:22+0200\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
 "PO-Revision-Date: 2012-07-15 23:17+0000\n"
 "Last-Translator: ma$terok <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
 "X-Generator: Launchpad (build 15654)\n"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
 msgid "Preferences"
 msgstr "Налаштування"
 
@@ -29,88 +29,93 @@ msgid "Login"
 msgstr "Увійти"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-msgid "User"
-msgstr "Користувач"
+#, fuzzy
+msgid "Allow access to Google Calendar"
+msgstr "Індикатор для  календаря Google"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
-msgid "Password"
-msgstr "Пароль"
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+#, fuzzy
+msgid "Calendar"
+msgstr "Показати календар"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
 msgstr "Опції"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
 msgid "Time between updates"
 msgstr "Час між оновленнями"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
 msgid "Autostart"
 msgstr "Автозапуск"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
 msgid "Theme light"
 msgstr "Світла тема"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
 msgid ""
-"The email or/and the password are incorrect\n"
-"please, try again?"
+"You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
-"Електронна пошта та/або пароль хибні.\n"
-"Спробувати ще раз?"
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
-msgid ""
-"There is no connection\n"
-"try again?"
-msgstr ""
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
-msgid "New event:"
-msgstr "Нова подія:"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
-msgid "Event finished:"
-msgstr "Подію завершено:"
+msgid "Refresh"
+msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
 msgstr "Показати календар"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
 msgid "Help"
 msgstr "Допомога"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
 msgid "Exit"
 msgstr "Вийти"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Нова подія:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Подію завершено:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
 msgid "Web..."
 msgstr "Сайт..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
 msgid "Get help online..."
 msgstr "Допомога онлайн..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
 msgid "Translate this application..."
 msgstr "Запропонувати переклад..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
 msgid "Report a bug..."
 msgstr "Повідомити про помилку..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
 msgid "About"
 msgstr "Про програму"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Індикатор для  календаря Google"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
-msgid "You must unlock the Gnome Keyring. Try again?"
-msgstr ""
+#~ msgid "User"
+#~ msgstr "Користувач"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#~ msgid ""
+#~ "The email or/and the password are incorrect\n"
+#~ "please, try again?"
+#~ msgstr ""
+#~ "Електронна пошта та/або пароль хибні.\n"
+#~ "Спробувати ще раз?"

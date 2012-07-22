@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.2.8\n"
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-07-21 18:22+0200\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
 "PO-Revision-Date: 2012-03-15 03:35+0000\n"
 "Last-Translator: Wang Dianjin <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
 "X-Generator: Launchpad (build 15654)\n"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
 msgid "Preferences"
 msgstr "首选项"
 
@@ -29,88 +29,93 @@ msgid "Login"
 msgstr "登陆"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-msgid "User"
-msgstr "用户名"
+#, fuzzy
+msgid "Allow access to Google Calendar"
+msgstr "Google 日历提示器"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
-msgid "Password"
-msgstr "密码"
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+#, fuzzy
+msgid "Calendar"
+msgstr "显示日历"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
 msgstr "选项"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
 msgid "Time between updates"
 msgstr "更新间隔"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
 msgid "Autostart"
 msgstr "开机启动"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
 msgid "Theme light"
 msgstr "浅色主题"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
 msgid ""
-"The email or/and the password are incorrect\n"
-"please, try again?"
+"You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
-"邮件地址或(和)密码错误\n"
-"请重试？"
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
-msgid ""
-"There is no connection\n"
-"try again?"
-msgstr ""
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
-msgid "New event:"
-msgstr "新事件："
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
-msgid "Event finished:"
-msgstr "事件结束："
+msgid "Refresh"
+msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
 msgstr "显示日历"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
 msgid "Help"
 msgstr "帮助"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
 msgid "Exit"
 msgstr "退出"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "新事件："
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "事件结束："
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
 msgid "Web..."
 msgstr "网络..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
 msgid "Get help online..."
 msgstr "获得在线帮助"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
 msgid "Translate this application..."
 msgstr "翻译此程序..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
 msgid "Report a bug..."
 msgstr "报告 Bug..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
 msgid "About"
 msgstr "关于"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Google 日历提示器"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
-msgid "You must unlock the Gnome Keyring. Try again?"
-msgstr ""
+#~ msgid "User"
+#~ msgstr "用户名"
+
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid ""
+#~ "The email or/and the password are incorrect\n"
+#~ "please, try again?"
+#~ msgstr ""
+#~ "邮件地址或(和)密码错误\n"
+#~ "请重试？"

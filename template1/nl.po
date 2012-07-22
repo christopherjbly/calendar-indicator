@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.2.8\n"
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-07-21 18:22+0200\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
 "PO-Revision-Date: 2012-06-28 08:29+0000\n"
 "Last-Translator: A.J. Baudrez <a.baudrez@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
 "X-Generator: Launchpad (build 15654)\n"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:54
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:209
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
 msgid "Preferences"
 msgstr "Instellingen"
 
@@ -29,88 +29,93 @@ msgid "Login"
 msgstr "Login"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-msgid "User"
-msgstr "Gebruiker"
+#, fuzzy
+msgid "Allow access to Google Calendar"
+msgstr "Een indicator voor Google Agenda"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:71
-msgid "Password"
-msgstr "Wachtwoord"
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+#, fuzzy
+msgid "Calendar"
+msgstr "Toon Agenda"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:85
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
 msgstr "Voorkeuren"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:92
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
 msgid "Time between updates"
 msgstr "Tijd tussen updates"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:101
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
 msgid "Autostart"
 msgstr "Start automatisch"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:108
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
 msgid "Theme light"
 msgstr "Thema licht"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:144
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:274
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
 msgid ""
-"The email or/and the password are incorrect\n"
-"please, try again?"
+"You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
-"Het emailadres en/of wachtwoord is onjuist.\n"
-"probeer je het opnieuw?"
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:160
-msgid ""
-"There is no connection\n"
-"try again?"
-msgstr ""
-
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:190
-msgid "New event:"
-msgstr "Nieuwe gebeurtenis"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
-msgid "Event finished:"
-msgstr "Gebeurtenis afgelopen"
+msgid "Refresh"
+msgstr ""
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:208
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
 msgstr "Toon Agenda"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:211
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
 msgid "Help"
 msgstr "Help"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:214
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
 msgid "Exit"
 msgstr "Sluiten"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:241
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Nieuwe gebeurtenis"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Gebeurtenis afgelopen"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
 msgid "Web..."
 msgstr "Web..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:242
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
 msgid "Get help online..."
 msgstr "Hulp online vragen..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:243
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
 msgid "Translate this application..."
 msgstr "Vertaal deze applicatie..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:244
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
 msgid "Report a bug..."
 msgstr "Meld een bug..."
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:246
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
 msgid "About"
 msgstr "Over"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:302
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Een indicator voor Google Agenda"
 
-#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:343
-msgid "You must unlock the Gnome Keyring. Try again?"
-msgstr ""
+#~ msgid "User"
+#~ msgstr "Gebruiker"
+
+#~ msgid "Password"
+#~ msgstr "Wachtwoord"
+
+#~ msgid ""
+#~ "The email or/and the password are incorrect\n"
+#~ "please, try again?"
+#~ msgstr ""
+#~ "Het emailadres en/of wachtwoord is onjuist.\n"
+#~ "probeer je het opnieuw?"

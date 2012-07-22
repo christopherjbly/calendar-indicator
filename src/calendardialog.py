@@ -1,5 +1,5 @@
-#! /usr/bin/python
-# -*- coding: iso-8859-15 -*-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 __author__='atareao'
 __date__ ='$06-jun-2010 12:34:44$'
@@ -39,16 +39,42 @@ gettext.bindtextdomain(comun.APP, comun.LANGDIR)
 gettext.textdomain(comun.APP)
 _ = gettext.gettext
 
+
+def get_date(event,start=True):
+	if start:
+		key = 'start'
+	else:
+		key = 'end'
+	if 'dateTime' in event[key]:		
+		return event[key]['dateTime']
+	else:
+		return event[key]['date']
+
 def getDay(cadena):
 	if cadena.find('T') == 0:
 		return cadena.split('-')[2]
 	else:
 		return cadena.split('T')[0].split('-')[2]
 
+def getMonth(cadena):
+	print cadena
+	if cadena.find('T') == 0:
+		return int(cadena.split('-')[1])
+	else:
+		return int(cadena.split('T')[0].split('-')[1])
+def getYear(cadena):
+	print cadena
+	if cadena.find('T') == 0:
+		return int(cadena.split('-')[0])
+	else:
+		return int(cadena.split('T')[0].split('-')[0])
+
+
 class CalendarDialog(Gtk.Dialog):
-	def __init__(self,title,parent = None,googlecalendar = None):
+	def __init__(self,title,parent = None,googlecalendar = None,calendar_id = None):
 		self.ok = False
 		self.googlecalendar = googlecalendar
+		self.calendar_id = calendar_id
 		self.selecteds = {}
 		#
 		title = comun.APP + ' | '+_('Preferences')
@@ -87,11 +113,13 @@ class CalendarDialog(Gtk.Dialog):
 		self.selecteds = {}
 		self._clear_marks()
 		if self.googlecalendar != None:
-			events = self.googlecalendar.getAllEventsOnMonthOnDefaultCalendar(date[1]+1,date[0])
+			events = self.googlecalendar.getAllEventsOnMonthOnDefaultCalendar(self.calendar_id,date[1]+1,date[0])
 			for event in events:
-				if len(event.when)>0:
-					dia = getDay(event.when[0].start)
-					self.selecteds[int(dia)] = event.title.text
+				month = getMonth(get_date(event))
+				year = getYear(get_date(event))
+				if month == date[1]+1 and date[0] == year:
+					dia = getDay(get_date(event))
+					self.selecteds[int(dia)] = event['summary']
 			self._mark_days()
 			
 	def _unmark_days(self):
