@@ -63,5 +63,5 @@ else:
     APPDIR = os.path.join(ROOTDIR, APP)
     ICONDIR = os.path.join(ROOTDIR, 'data/icons')
 
-ICON_NEW_EVENT = 'event-new'
-ICON_FINISHED_EVENT = 'event-finished'
+ICON_NEW_EVENT = os.path.join(ICONDIR,'event-new.svg')
+ICON_FINISHED_EVENT = os.path.join(ICONDIR,'event-finished.svg')

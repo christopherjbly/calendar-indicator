@@ -28,7 +28,7 @@ __date__ ='$25/04/2011'
 import os
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
@@ -115,26 +115,25 @@ class CalendarIndicator():
 			print "application already running"
 			exit(0)
 		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
-		#
-		# self.indicator.set_icon(comun.ICON_ENABLED)
-		# self.indicator.set_attention_icon(comun.ICON_DISABLED)
-		#	
+		self.notification = Notify.Notification.new('','', None)
 		self.read_preferences()
 		#
 		self.events = []
-		self.set_menu()
-		GObject.timeout_add_seconds(60, self.work)		
+		self.create_menu()
+		self.update_menu()
+		self.actualization_time = 0
+		GLib.timeout_add_seconds(60, self.work)
 
 	def read_preferences(self):
+		configuration = Configuration()
+		self.time = configuration.get('time')
+		self.theme = configuration.get('theme')
 		user = self.get_user()
 		password = self.get_password()
 		incorrect = True
 		while incorrect:
 			try:
-				self.gcal=GCal(user,password)
-				configuration = Configuration()
-				self.time = configuration.get('time')
-				self.theme = configuration.get('theme')
+				self.gcal=GCal(user,password)				
 				incorrect = False
 			except gdata.client.BadAuthentication, e2:
 				md = Gtk.MessageDialog(	parent = None,
@@ -167,44 +166,18 @@ class CalendarIndicator():
 			while internet_on() == False:
 				time.sleep(1)
 			self.actualization_time = time.time()
-			self.set_menu(check=True)
+			self.update_menu(check=True)
 		return True
 
-	def set_menu(self,check=False):
-		#
-		now = datetime.datetime.now()
-		normal_icon = os.path.join(comun.ICONDIR,'%s-%s-normal.svg'%(now.day,self.theme))
-		starred_icon = os.path.join(comun.ICONDIR,'%s-%s-starred.svg'%(now.day,self.theme))
-		#
-		self.indicator.set_icon(normal_icon)
-		self.indicator.set_attention_icon(starred_icon)		
-		#self.indicator.set_icon(comun.ICON_ENABLED)
-		#self.indicator.set_attention_icon(comun.ICON_DISABLED)		
-		#
+	def create_menu(self):
 		self.menu = Gtk.Menu()
-		#
-		events2 = self.gcal.getFirstTenEventsOnDefaultCalendar()
-		if check and len(self.events)>0:
-			for event in events2:
-				if not is_event_in_events(event,self.events):
-					msg = _('New event:')+'\n'
-					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
-					print msg
-					self.notification = Notify.Notification ('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
-					self.notification.show()
-			for event in self.events:
-				if not is_event_in_events(event,events2):
-					msg = _('Event finished:')+'\n'
-					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
-					print msg
-					self.notification = Notify.Notification ('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
-					self.notification.show()
-
-		self.events = events2
-		for event in self.events:
-			add2menu(self.menu, text = (getTimeAndDate(event.when[0].start)+' - '+event.title.text))
-		#
+		self.menu_events = []
+		for i in range(10):
+			menu_event = add2menu(self.menu, text = '')
+			menu_event.set_visible(False)
+			self.menu_events.append(menu_event)
 		add2menu(self.menu)
+		self.menu_refresh = add2menu(self.menu, text = _('Refresh'), conector_event = 'activate',conector_action = self.on_menu_refresh)
 		self.menu_show_calendar = add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
 		self.menu_preferences = add2menu(self.menu, text = _('Preferences'), conector_event = 'activate',conector_action = self.menu_preferences_response)
 		add2menu(self.menu)
@@ -212,7 +185,40 @@ class CalendarIndicator():
 		menu_help.set_submenu(self.get_help_menu())
 		add2menu(self.menu)
 		add2menu(self.menu, text = _('Exit'), conector_event = 'activate',conector_action = self.menu_exit_response)
+		self.menu.show()
+		self.indicator.set_menu(self.menu)		
+				
+	def update_menu(self,check=False):
 		#
+		now = datetime.datetime.now()
+		normal_icon = os.path.join(comun.ICONDIR,'%s-%s-normal.svg'%(now.day,self.theme))
+		starred_icon = os.path.join(comun.ICONDIR,'%s-%s-starred.svg'%(now.day,self.theme))
+		#
+		self.indicator.set_icon(normal_icon)
+		self.indicator.set_attention_icon(starred_icon)		
+		#
+		events2 = self.gcal.getFirstTenEventsOnDefaultCalendar()
+		if check and len(self.events)>0:
+			for event in events2:
+				if not is_event_in_events(event,self.events):
+					msg = _('New event:')+'\n'
+					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
+					self.notification.update('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
+					self.notification.show()
+			for event in self.events:
+				if not is_event_in_events(event,events2):
+					msg = _('Event finished:')+'\n'
+					msg += getTimeAndDate(event.when[0].start)+' - '+event.title.text
+					self.notification.update('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
+					self.notification.show()
+		self.events = events2
+		#for menu_event in self.menu_events:
+		#	menu_event.set_visible(False)
+		for i,event in enumerate(self.events):
+			self.menu_events[i].set_label(getTimeAndDate(event.when[0].start)+' - '+event.title.text)
+			self.menu_events[i].set_visible(True)
+		for i in range(len(self.events),10):
+			self.menu_events[i].set_visible(True)
 		now = datetime.datetime.now()
 		if self.events[0].when[0].start.find('T') != -1:
 			print self.events[0].when[0].start
@@ -224,13 +230,10 @@ class CalendarIndicator():
 		else:
 			com = datetime.datetime.strptime(self.events[0].when[0].start,'%Y-%m-%d')
 		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
-			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
+			self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
 		else:
-			self.indicator.set_status (appindicator.IndicatorStatus.ATTENTION)
-			self.indicator.set_status (appindicator.IndicatorStatus.ACTIVE)
-		#
-		self.menu.show()
-		self.indicator.set_menu(self.menu)
+			self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
+			self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
 		while Gtk.events_pending():
 			Gtk.main_iteration()
 		
@@ -292,6 +295,9 @@ class CalendarIndicator():
 		cd.destroy()
 		self.menu_show_calendar.set_sensitive(True)
 
+	def on_menu_refresh(self,widget):
+		self.update_menu(check=True)
+	
 	def menu_exit_response(self,widget):
 		exit(0)
 
@@ -322,6 +328,7 @@ class CalendarIndicator():
 		ad.run()
 		ad.destroy()
 		self.menu_about.set_sensitive(True)
+		
 	def get_password(self):
 		gk = MyGnomeKeyring(comun.APP)
 		incorrect = True

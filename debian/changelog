@@ -1,3 +1,9 @@
+calendar-indicator (0.0.2.11-1ubuntu1) precise; urgency=low
+
+  * Fixed some bugs
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 22 Jul 2012 17:44:08 +0200
+
 calendar-indicator (0.0.2.10-1ubuntu1) precise; urgency=low
 
   * Fixed a bug with preferences Dialog
