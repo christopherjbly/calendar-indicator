@@ -45,7 +45,7 @@ class Preferences(Gtk.Dialog):
 		Gtk.Dialog.__init__(self,title,None,Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL))
 		self.set_size_request(180, 170)
 		self.set_resizable(False)
-		#self.set_icon_from_file(comun.ICON)
+		self.set_icon_from_file(comun.ICON)
 		self.connect('destroy', self.close_application)
 		#
 		vbox0 = Gtk.VBox(spacing = 5)
@@ -125,12 +125,9 @@ class Preferences(Gtk.Dialog):
 			if os.path.exists(comun.COOKIE_FILE):
 				os.remove(comun.COOKIE_FILE)
 				exit(0)
-		else:
-			gca = GCAService()
-			if os.path.exists(comun.COOKIE_FILE):
-				self.switch1.set_active(True)
 		gca = GCAService()
 		if gca:
+			self.switch1.set_active(False)
 			for calendar in gca.get_calendars():
 				self.liststore.append([calendar['summary'],calendar['id']])
 			self.entry2.set_active(0)
