@@ -1,3 +1,9 @@
+calendar-indicator (0.0.3.1-1ubuntu1) precise; urgency=low
+
+  * Fixed a bug with preferences dialog
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 22 Jul 2012 22:17:16 +0200
+
 calendar-indicator (0.0.3.0-1ubuntu1) precise; urgency=low
 
   * Changed Google API to version 3

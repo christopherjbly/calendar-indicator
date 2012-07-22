@@ -128,13 +128,11 @@ class Preferences(Gtk.Dialog):
 		else:
 			gca = GCAService()
 			if os.path.exists(comun.COOKIE_FILE):
-				self.switch1.get_active(True)
+				self.switch1.set_active(True)
 		gca = GCAService()
 		if gca:
 			for calendar in gca.get_calendars():
 				self.liststore.append([calendar['summary'],calendar['id']])
-					
-			
 		
 	def load_preferences(self):
 		self.switch1.set_active(os.path.exists(comun.COOKIE_FILE))
