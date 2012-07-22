@@ -133,6 +133,7 @@ class Preferences(Gtk.Dialog):
 		if gca:
 			for calendar in gca.get_calendars():
 				self.liststore.append([calendar['summary'],calendar['id']])
+			self.entry2.set_active(0)
 		
 	def load_preferences(self):
 		self.switch1.set_active(os.path.exists(comun.COOKIE_FILE))
@@ -162,28 +163,29 @@ class Preferences(Gtk.Dialog):
 			
 	
 	def save_preferences(self):
-		configuration = Configuration()
-		tree_iter = self.entry2.get_active_iter()
-		if tree_iter != None:
-			model = self.entry2.get_model()
-			calendar_id = model[tree_iter][1]	
-		configuration.set('calendar_id',calendar_id)
-		configuration.set('first-time',False)
-		configuration.set('time',self.spin3.get_value())
-		if self.switch5.get_active():
-			configuration.set('theme','light')
-		else:
-			configuration.set('theme','dark')
-		configuration.save()
-		filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
-		if self.switch4.get_active():
-			if not os.path.exists(filestart):
-				if not os.path.exists(os.path.dirname(filestart)):
-					os.makedirs(os.path.dirname(filestart))
-				shutil.copyfile('/usr/share/calendar-indicator/calendar-indicator-autostart.desktop',filestart)
-		else:		
-			if os.path.exists(filestart):
-				os.remove(filestart)		
+		if os.path.exists(comun.COOKIE_FILE):
+			configuration = Configuration()
+			tree_iter = self.entry2.get_active_iter()
+			if tree_iter != None:
+				model = self.entry2.get_model()
+				calendar_id = model[tree_iter][1]	
+			configuration.set('calendar_id',calendar_id)
+			configuration.set('first-time',False)
+			configuration.set('time',self.spin3.get_value())
+			if self.switch5.get_active():
+				configuration.set('theme','light')
+			else:
+				configuration.set('theme','dark')
+			configuration.save()
+			filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
+			if self.switch4.get_active():
+				if not os.path.exists(filestart):
+					if not os.path.exists(os.path.dirname(filestart)):
+						os.makedirs(os.path.dirname(filestart))
+					shutil.copyfile('/usr/share/calendar-indicator/calendar-indicator-autostart.desktop',filestart)
+			else:		
+				if os.path.exists(filestart):
+					os.remove(filestart)		
 
 	def close_application(self,widget):
 		self.ok = False

@@ -164,6 +164,7 @@ class CalendarIndicator():
 			if preferences.run() != Gtk.ResponseType.ACCEPT:
 				exit(1)
 			preferences.save_preferences()
+			preferences.destroy()
 			if not os.path.exists(comun.COOKIE_FILE):
 				md = Gtk.MessageDialog(	parent = None,
 										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
@@ -247,19 +248,21 @@ class CalendarIndicator():
 			self.menu_events[i].set_label(getTimeAndDate(event['start'][key_event_time])+' - '+event['summary'])
 			self.menu_events[i].set_visible(True)
 		for i in range(len(self.events),10):
-			self.menu_events[i].set_visible(True)
+			self.menu_events[i].set_visible(False)
 		now = datetime.datetime.now()
-		if 'dateTime' in self.events[0]['start']:
-			key_event_time = 'dateTime'
-		else:
-			key_event_time = 'date'		
-		com =getTimeAndDateV2(self.events[0]['start'][key_event_time])
-		print com
-		if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
-			self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
+		if len(self.events)>0:
+			if 'dateTime' in self.events[0]['start']:
+				key_event_time = 'dateTime'
+			else:
+				key_event_time = 'date'		
+			com =getTimeAndDateV2(self.events[0]['start'][key_event_time])
+			print com
+			if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
+				self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
+			else:
+				self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
 		else:
 			self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
-		#self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
 		while Gtk.events_pending():
 			Gtk.main_iteration()
 		
@@ -284,10 +287,12 @@ class CalendarIndicator():
 		if p1.run() == Gtk.ResponseType.ACCEPT:
 			p1.save_preferences()			
 			self.gcal = GCAService()
+			configuration = Configuration()
 			self.time = configuration.get('time')
 			self.theme = configuration.get('theme')
 			self.calendar_id = configuration.get('calendar_id')
-			self.events = []			
+			self.events = []	
+			self.update_menu()		
 		p1.destroy()
 		self.menu_preferences.set_sensitive(True)
 					

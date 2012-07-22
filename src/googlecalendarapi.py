@@ -100,15 +100,22 @@ class GCAService():
 
 	def get_settings(self):
 		settings = self.service.settings().list().execute()
-		return settings['items']
+		if 'items' in settings.keys():
+			return settings['items']
+		return []
 
 	def get_acl(self,calendar_id):
 		acls = self.service.acl().list(calendarId=calendar_id).execute()
-		return acls['items']
+		if 'items' in acls.keys():
+			return acls['items']
+		return []
 
 	def get_calendars(self):
 		calendars = self.service.calendarList().list().execute()
-		return calendars['items']
+		if 'items' in calendars.keys():
+			return calendars['items']
+		return []
+
 		
 	def get_calendar(self,calendar_id):
 		calendar = self.service.calendars().get(calendarId=calendar_id).execute()
@@ -118,7 +125,10 @@ class GCAService():
 		events = self.service.events().list(calendarId=calendar_id,
 											singleEvents=True,
 											orderBy='startTime').execute()
-		return events['items']
+		if 'items' in events.keys():
+			return events['items']
+		return []
+
 	def getAllEventsOnMonthOnDefaultCalendar(self,calendar_id,month,year):
 		com = datetime.datetime(year, month, 1)
 		start_date = rfc3339.rfc3339(com)
@@ -126,7 +136,10 @@ class GCAService():
 											timeMin=start_date,
 											singleEvents=True,
 											orderBy='startTime').execute()
-		return events['items']
+		if 'items' in events.keys():
+			return events['items']
+		return []
+
 	def get_next_ten_events(self,calendar_id):
 		start_date = rfc3339.rfc3339(datetime.datetime.now())
 		events = self.service.events().list(calendarId=calendar_id,
@@ -134,7 +147,10 @@ class GCAService():
 											timeMin=start_date,
 											singleEvents=True,
 											orderBy='startTime').execute()
-		return events['items']
+		if 'items' in events.keys():
+			return events['items']
+		return []
+
 if __name__ == '__main__':	
 	gca = GCAService()
 	print gca.get_settings()
