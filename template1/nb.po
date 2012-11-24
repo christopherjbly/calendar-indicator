@@ -11,12 +11,12 @@ msgstr ""
 "PO-Revision-Date: 2012-03-01 17:13+0000\n"
 "Last-Translator: Simen <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
-"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
-"X-Generator: Launchpad (build 15654)\n"
+"X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
+"X-Generator: Launchpad (build 16293)\n"
+"Language: nb\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
@@ -29,14 +29,12 @@ msgid "Login"
 msgstr "Konto"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-#, fuzzy
 msgid "Allow access to Google Calendar"
-msgstr "En indikator for Google Kalender"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
-#, fuzzy
 msgid "Calendar"
-msgstr "Vis kalender"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
@@ -106,16 +104,3 @@ msgstr "Om"
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "En indikator for Google Kalender"
-
-#~ msgid "User"
-#~ msgstr "Brukernavn"
-
-#~ msgid "Password"
-#~ msgstr "Passord"
-
-#~ msgid ""
-#~ "The email or/and the password are incorrect\n"
-#~ "please, try again?"
-#~ msgstr ""
-#~ "Brukernavnet og/eller passordet er feil.\n"
-#~ "Vennligst prøv igjen."

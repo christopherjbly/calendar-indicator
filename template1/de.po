@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
 "POT-Creation-Date: 2012-07-22 21:38+0200\n"
-"PO-Revision-Date: 2012-03-20 01:13+0000\n"
-"Last-Translator: Dennis Peteranderl <d.peteranderl@googlemail.com>\n"
+"PO-Revision-Date: 2012-08-10 13:47+0000\n"
+"Last-Translator: Flames_in_Paradise <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
-"X-Generator: Launchpad (build 15654)\n"
+"X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
+"X-Generator: Launchpad (build 16293)\n"
+"Language: de\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
@@ -29,18 +29,16 @@ msgid "Login"
 msgstr "Anmeldung"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-#, fuzzy
 msgid "Allow access to Google Calendar"
-msgstr "Eine Indikatorapplet für Google Calendar"
+msgstr "Zugiff auf den Google Kalender gestatten"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
-#, fuzzy
 msgid "Calendar"
-msgstr "Kalender zeigen"
+msgstr "Kalender"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
-msgstr "Optionen"
+msgstr "Optionen:"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
 msgid "Time between updates"
@@ -58,10 +56,12 @@ msgstr "Theme light"
 msgid ""
 "You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
+"Sie müssen dem Kalender-Indikator den Zugriff auf Ihren Google-Kalender "
+"gestatten, damit er funktioniert."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Refresh"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
@@ -101,21 +101,8 @@ msgstr "Einen Fehler melden …"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
 msgid "About"
-msgstr "Info"
+msgstr "Über"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Eine Indikatorapplet für Google Calendar"
-
-#~ msgid "User"
-#~ msgstr "Benutzer"
-
-#~ msgid "Password"
-#~ msgstr "Passwort"
-
-#~ msgid ""
-#~ "The email or/and the password are incorrect\n"
-#~ "please, try again?"
-#~ msgstr ""
-#~ "Benutzername und/oder Passwort ungültig.\n"
-#~ "Versuchen Sie es bitte erneut"

@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
 "POT-Creation-Date: 2012-07-22 21:38+0200\n"
-"PO-Revision-Date: 2012-06-28 08:29+0000\n"
+"PO-Revision-Date: 2012-08-08 18:39+0000\n"
 "Last-Translator: A.J. Baudrez <a.baudrez@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
-"X-Generator: Launchpad (build 15654)\n"
+"X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
+"X-Generator: Launchpad (build 16293)\n"
+"Language: nl\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
@@ -29,14 +29,12 @@ msgid "Login"
 msgstr "Login"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-#, fuzzy
 msgid "Allow access to Google Calendar"
-msgstr "Een indicator voor Google Agenda"
+msgstr "Toegang tot Google Kalender geven"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
-#, fuzzy
 msgid "Calendar"
-msgstr "Toon Agenda"
+msgstr "Kalender"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
@@ -58,10 +56,12 @@ msgstr "Thema licht"
 msgid ""
 "You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
+"Je moet de Calendar-Indicator toegang geven tot je Google Kalender om te "
+"kunnen werken"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Refresh"
-msgstr ""
+msgstr "Vernieuwen"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
@@ -106,16 +106,3 @@ msgstr "Over"
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Een indicator voor Google Agenda"
-
-#~ msgid "User"
-#~ msgstr "Gebruiker"
-
-#~ msgid "Password"
-#~ msgstr "Wachtwoord"
-
-#~ msgid ""
-#~ "The email or/and the password are incorrect\n"
-#~ "please, try again?"
-#~ msgstr ""
-#~ "Het emailadres en/of wachtwoord is onjuist.\n"
-#~ "probeer je het opnieuw?"

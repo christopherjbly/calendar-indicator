@@ -410,10 +410,15 @@ class GoogleCalendar(GoogleService):
 			acalendar['events'] = events
 			self.calendars[key] = acalendar
 
-	def getNextTenEvents(self):
+	def getNextTenEvents(self,calendar_id=None):
 		events = []
 		adatetime = datetime.datetime.now(LocalTZ())
-		for calendar_id in self.calendars.keys():
+		if calendar_id is not None:
+			for calendar_id in self.calendars.keys():
+				for event in self.calendars[calendar_id]['events']:
+					if event.get_start_date() > adatetime:
+						events.append(event)
+		else:
 			for event in self.calendars[calendar_id]['events']:
 				if event.get_start_date() > adatetime:
 					events.append(event)

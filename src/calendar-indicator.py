@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 __author__='atareao'
@@ -42,6 +42,7 @@ import gettext
 import datetime
 import webbrowser
 from calendardialog import CalendarDialog
+from logindialog import LoginDialog
 from googlecalendarapi import GoogleCalendar
 #
 import comun
@@ -148,7 +149,31 @@ class CalendarIndicator():
 			exit(0)
 		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
 		self.notification = Notify.Notification.new('','', None)
-		self.read_preferences()
+		self.googlecalendar = GoogleCalendar(token_file = comun.TOKEN_FILE)
+		error = True
+		while(error):
+			if self.googlecalendar.do_refresh_authorization() is None:
+				authorize_url = self.googlecalendar.get_authorize_url()
+				ld = LoginDialog(authorize_url)
+				ld.run()
+				self.googlecalendar.get_authorization(ld.code)
+				ld.destroy()				
+				if self.googlecalendar.do_refresh_authorization() is None:
+					md = Gtk.MessageDialog(	parent = self,
+											flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+											type = Gtk.MessageType.ERROR,
+											buttons = Gtk.ButtonsType.OK_CANCEL,
+											message_format = _('You have to authorize Calendar-Indicator to use it, do you want to authorize?'))
+					if md.run() == Gtk.ResponseType.CANCEL:
+						exit(3)				
+				else:
+					self.googlecalendar = GoogleCalendar(token_file = comun.TOKEN_FILE)
+					if self.googlecalendar.do_refresh_authorization() is None:
+						error = False
+					self.load_preferences()
+			else:
+				self.load_preferences()
+				error = False
 		#
 		self.events = []
 		self.create_menu()
@@ -156,16 +181,16 @@ class CalendarIndicator():
 		self.actualization_time = 0
 		GLib.timeout_add_seconds(60, self.work)
 
-	def read_preferences(self):
+	def load_preferences(self):
 		configuration = Configuration()
 		firsttime = configuration.get('first-time')
-		if firsttime or not os.path.exists(comun.COOKIE_FILE):
+		if firsttime or not os.path.exists(comun.TOKEN_FILE):
 			preferences = Preferences()
 			if preferences.run() != Gtk.ResponseType.ACCEPT:
 				exit(1)
 			preferences.save_preferences()
 			preferences.destroy()
-			if not os.path.exists(comun.COOKIE_FILE):
+			if not os.path.exists(comun.TOKEN_FILE):
 				md = Gtk.MessageDialog(	parent = None,
 										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
 										type = Gtk.MessageType.ERROR,
@@ -174,7 +199,6 @@ class CalendarIndicator():
 				md.run()
 				exit(0)
 		configuration.read()
-		self.gcal = GCAService()
 		self.time = configuration.get('time')
 		self.theme = configuration.get('theme')
 		self.calendar_id = configuration.get('calendar_id')
@@ -215,7 +239,7 @@ class CalendarIndicator():
 		self.indicator.set_icon(normal_icon)
 		self.indicator.set_attention_icon(starred_icon)		
 		#
-		events2 = self.gcal.get_next_ten_events(self.calendar_id)
+		events2 = self.googlecalendar.getNextTenEvents(self.calendar_id)
 		if check and len(self.events)>0:
 			for event in events2:
 				if not is_event_in_events(event,self.events):

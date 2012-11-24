@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 __author__='atareao'
@@ -30,7 +30,7 @@ import shutil
 import locale
 import gettext
 from configurator import Configuration
-from googlecalendarapi import GCAService
+from googlecalendarapi import GoogleCalendar
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -147,7 +147,7 @@ class Preferences(Gtk.Dialog):
 		else:
 			self.switch5.set_active(False)
 		if os.path.exists(comun.TOKEN_FILE):
-			gca = GCAService()
+			gca = GoogleCalendar(token_file = comun.TOKEN_FILE)
 			if gca:
 				for calendar in gca.get_calendars():
 					self.liststore.append([calendar['summary'],calendar['id']])
@@ -160,7 +160,7 @@ class Preferences(Gtk.Dialog):
 			
 	
 	def save_preferences(self):
-		if os.path.exists(comun.COOKIE_FILE):
+		if os.path.exists(comun.TOKEN_FILE):
 			configuration = Configuration()
 			tree_iter = self.entry2.get_active_iter()
 			if tree_iter != None:

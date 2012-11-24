@@ -1,108 +1,105 @@
-# Spanish translations for calendar-indicator package.
-# Copyright (C) 2011 Lorenzo Carbonell
+# Korean translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the calendar-indicator package.
-# Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.3.0\n"
-"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"Project-Id-Version: calendar-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-07-22 21:38+0200\n"
-"PO-Revision-Date: 2012-07-23 05:04+0000\n"
-"Last-Translator: Lorenzo Carbonell <Unknown>\n"
-"Language-Team: Spanish\n"
+"PO-Revision-Date: 2012-07-22 04:04+0000\n"
+"Last-Translator: CJPark <pcjpcj2@gmail.com>\n"
+"Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
 "X-Generator: Launchpad (build 16293)\n"
-"Language: Spanish\n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
 msgid "Preferences"
-msgstr "Preferencias"
+msgstr "환경설정"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
 msgid "Login"
-msgstr "Inicio de sesión"
+msgstr "로그인"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
 msgid "Allow access to Google Calendar"
-msgstr "Permitir el acceso a Google Calendar"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
 msgid "Calendar"
-msgstr "Calendario"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
-msgstr "Opciones"
+msgstr "옵션"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
 msgid "Time between updates"
-msgstr "Tiempo entre actualizaciones"
+msgstr "업데이트 주기"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
 msgid "Autostart"
-msgstr "Autostart"
+msgstr "자동시작"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
 msgid "Theme light"
-msgstr "Tema claro"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
 msgid ""
 "You must allow Calendar-Indicator to access your Google Calendar to work"
 msgstr ""
-"Debes permitir el acceso de Calendar-Indicator a Google Calendar para que "
-"funcione correctamente"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Refresh"
-msgstr "Actualizar"
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
-msgstr "Mostrar el calendario"
+msgstr "달력 보기"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
 msgid "Help"
-msgstr "Ayuda"
+msgstr "도움말"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
 msgid "Exit"
-msgstr "Salir"
+msgstr "종료"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
 msgid "New event:"
-msgstr "Nuevo evento:"
+msgstr "새 일정"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
 msgid "Event finished:"
-msgstr "Evento terminó"
+msgstr "일정이 완료 되었습니다."
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
 msgid "Web..."
-msgstr "Web..."
+msgstr ""
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
 msgid "Get help online..."
-msgstr "Obtener ayuda en linea..."
+msgstr "온라인으로 도움받기"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
 msgid "Translate this application..."
-msgstr "Ayuda a traducir esta aplicación..."
+msgstr "이 프로그램 번역하기"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
 msgid "Report a bug..."
-msgstr "Reportar un error..."
+msgstr "버그 보고하기"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
 msgid "About"
-msgstr "Acerca de"
+msgstr "이것에 관하여"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
-msgstr "Un indicador de Google Calendar"
+msgstr ""

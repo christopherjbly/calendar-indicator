@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.3.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
 "POT-Creation-Date: 2012-07-22 21:38+0200\n"
-"PO-Revision-Date: 2012-03-15 03:35+0000\n"
+"PO-Revision-Date: 2012-10-15 12:16+0000\n"
 "Last-Translator: Wang Dianjin <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-07-21 16:20+0000\n"
-"X-Generator: Launchpad (build 15654)\n"
+"X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
+"X-Generator: Launchpad (build 16293)\n"
+"Language: \n"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
@@ -29,14 +29,12 @@ msgid "Login"
 msgstr "登陆"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
-#, fuzzy
 msgid "Allow access to Google Calendar"
-msgstr "Google 日历提示器"
+msgstr "允许访问谷歌日历"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
-#, fuzzy
 msgid "Calendar"
-msgstr "显示日历"
+msgstr "日历"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
 msgid "Options"
@@ -57,11 +55,11 @@ msgstr "浅色主题"
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
 msgid ""
 "You must allow Calendar-Indicator to access your Google Calendar to work"
-msgstr ""
+msgstr "您必须允许 Calendar 指示器访问您的谷歌日历才能工作"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
 msgid "Refresh"
-msgstr ""
+msgstr "刷新"
 
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
 msgid "Show Calendar"
@@ -106,16 +104,3 @@ msgstr "关于"
 #: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
 msgid "An indicator for Google Calendar"
 msgstr "Google 日历提示器"
-
-#~ msgid "User"
-#~ msgstr "用户名"
-
-#~ msgid "Password"
-#~ msgstr "密码"
-
-#~ msgid ""
-#~ "The email or/and the password are incorrect\n"
-#~ "please, try again?"
-#~ msgstr ""
-#~ "邮件地址或(和)密码错误\n"
-#~ "请重试？"
