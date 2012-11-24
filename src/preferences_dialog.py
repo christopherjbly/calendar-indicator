@@ -122,8 +122,8 @@ class Preferences(Gtk.Dialog):
 		self.show_all()
 	def on_switch1_changed(self,widget,data):
 		if self.switch1.get_active():
-			if os.path.exists(comun.COOKIE_FILE):
-				os.remove(comun.COOKIE_FILE)
+			if os.path.exists(comun.TOKEN_FILE):
+				os.remove(comun.TOKEN_FILE)
 				exit(0)
 		gca = GCAService()
 		if gca:
@@ -133,12 +133,12 @@ class Preferences(Gtk.Dialog):
 			self.entry2.set_active(0)
 		
 	def load_preferences(self):
-		self.switch1.set_active(os.path.exists(comun.COOKIE_FILE))
+		self.switch1.set_active(os.path.exists(comun.TOKEN_FILE))
 		configuration = Configuration()
 		time = configuration.get('time')
 		theme = configuration.get('theme')
 		calendar_id = configuration.get('calendar_id')
-		print calendar_id
+		print(calendar_id)
 		self.spin3.set_value(time)
 		if os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
@@ -146,7 +146,7 @@ class Preferences(Gtk.Dialog):
 			self.switch5.set_active(True)
 		else:
 			self.switch5.set_active(False)
-		if os.path.exists(comun.COOKIE_FILE):
+		if os.path.exists(comun.TOKEN_FILE):
 			gca = GCAService()
 			if gca:
 				for calendar in gca.get_calendars():

@@ -57,13 +57,13 @@ def getDay(cadena):
 		return cadena.split('T')[0].split('-')[2]
 
 def getMonth(cadena):
-	print cadena
+	print(cadena)
 	if cadena.find('T') == 0:
 		return int(cadena.split('-')[1])
 	else:
 		return int(cadena.split('T')[0].split('-')[1])
 def getYear(cadena):
-	print cadena
+	print(cadena)
 	if cadena.find('T') == 0:
 		return int(cadena.split('-')[0])
 	else:
@@ -100,9 +100,9 @@ class CalendarDialog(Gtk.Dialog):
 		self.show_all()
 	def on_day_selected(self,widget):
 		date = self.calendar.get_date()
-		print 'day -> %s' %(date[2])
-		print 'month -> %s' %(date[1]+1)
-		print 'year -> %s' %(date[0])
+		print('day -> %s' %(date[2]))
+		print('month -> %s' %(date[1]+1))
+		print('year -> %s' %(date[0]))
 		if date[2] in self.selecteds.keys():
 			self.calendar.set_tooltip_text(self.selecteds[date[2]])
 		else:
@@ -128,7 +128,7 @@ class CalendarDialog(Gtk.Dialog):
 
 	def _mark_days(self):
 		for key in self.selecteds.keys():
-			print key
+			print(key)
 			self.calendar.mark_day(key)
 	def _clear_marks(self):
 		self.calendar.clear_marks()

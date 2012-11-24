@@ -23,25 +23,45 @@
 #
 #
 
+from services import GoogleService
+from logindialog import LoginDialog
+from urllib.parse import quote, urlencode, parse_qs
+import os
+import json
+import io
+import comun 
+import datetime
+import time
+import uuid
 '''
 Dependencies:
 python-gflags
 
 
 '''
-import gflags
-import httplib2
+OAUTH2_URL = 'https://accounts.google.com/o/oauth2/'
+AUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
+TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
+REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+REDIRECT_URI = 'http://localhost'
+CLIENT_ID='906536899599-93lne5t3cb0keptl8fh0o8ghpmt447ls.apps.googleusercontent.com'
+CLIENT_SECRET='x_QgZkRfUJ_08lWvCw4EIK3U'
+SCOPE='https://www.googleapis.com/auth/calendar'
+ITEMS_PER_PAGE = 10
 
-from apiclient.discovery import build
-from oauth2client.file import Storage
-from oauth2client.client import OAuth2WebServerFlow
-from oauth2client.tools import run
+CALENDAR_LIST_URL = 'https://www.googleapis.com/calendar/v3/users/me/calendarList'
+EVENT_LIST_URL = 'https://www.googleapis.com/calendar/v3/calendars/%s/events'
 
-import datetime
-import rfc3339
-import comun 
-FLAGS = gflags.FLAGS
-import datetime
+FREQUENCE_SECONDLY = 'SECONDLY'
+FREQUENCE_MINUTELY = 'MINUTELY'
+FREQUENCE_HOURLY = 'HOURLY'
+FREQUENCE_DAILY = 'DAILY'
+FREQUENCE_WEEKLY = 'WEEKLY'
+FREQUENCE_MONTHLY = 'MONTHLY'
+FREQUENCE_YEARLY = 'YEARLY'
+
+def add_time(minutes=0,hours=0,days=0):
+	return datetime.timedelta(days,0,0,0,minutes,hours,0)
 
 def is_Bisiesto(year):
 	if year % 400 == 0:
@@ -54,6 +74,41 @@ def is_Bisiesto(year):
 		bisiesto = False
 	return bisiesto
 
+def get_utc_offset(date):
+	if date.year < 1970:
+		# We use 1972 because 1970 doesn't have a leap day (feb 29)
+		t = time.mktime(date.replace(year=1972).timetuple())
+	else:
+		t = time.mktime(date.timetuple())
+	if time.localtime(t).tm_isdst: # pragma: no cover
+		utc_offset = -time.altzone
+	else:
+		utc_offset = -time.timezone	
+	hours = abs(utc_offset) // 3600
+	minutes = abs(utc_offset) % 3600 // 60
+	sign = (utc_offset < 0 and '-') or '+'
+	return '%c%02d:%02d' % (sign, hours, minutes)
+
+def get_string_from_datetime(adatetime):
+	return adatetime.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(adatetime)
+	
+def get_datetime_from_string(strdate):
+	if strdate.find('T')==-1:
+		adate = datetime.datetime.strptime(strdate, '%Y-%m-%d')
+		utc_offset = get_utc_offset(adate)
+		strdate = strdate+'T00:00:00'+utc_offset
+	adate,atime = strdate.split('T')
+	if atime.find('+')>-1:
+		a,b = atime.split('+')
+		b = b.replace(':','')
+		atime = a+'+'+b
+	if atime.find('-')>-1:
+		a,b = atime.split('-')
+		b = b.replace(':','')
+		atime = a+'-'+b
+	strdate = adate+'T'+atime
+	return datetime.datetime.strptime(strdate, "%Y-%m-%dT%H:%M:%S%z")	
+	
 def addOneYear(start_date):
 	if start_date.month == 2 and start_date.day == 29 and is_Bisiesto(start_date.year):
 		end_date = datetime.date(start_date.year+1,start_date.month+1,1)
@@ -61,114 +116,387 @@ def addOneYear(start_date):
 		end_date = datetime.date(start_date.year+1,start_date.month,start_date.day)
 	return end_date
 
-# Set up a Flow object to be used if we need to authenticate. This
-# sample uses OAuth 2.0, and we set up the OAuth2WebServerFlow with
-# the information it needs to authenticate. Note that it is called
-# the Web Server Flow, but it can also handle the flow for native
-# applications
-# The client_id and client_secret are copied from the API Access tab on
-# the Google APIs Console
-
-FLOW = OAuth2WebServerFlow(
-    client_id='906536899599.apps.googleusercontent.com',
-    client_secret='DXPZvzgclAR1z1lU9Sh7Qi54',
-    scope='https://www.googleapis.com/auth/calendar',
-    user_agent='Google-Calendar-Indicator/0.0.1.0')
-
-class GCAService():
+class LocalTZ(datetime.tzinfo):
+	"""Fixed offset in minutes east from UTC."""
 	def __init__(self):
-		# To disable the local server feature, uncomment the following line:
-		# FLAGS.auth_local_webserver = False
+		date = datetime.datetime.now()
+		if date.year < 1970:
+			# We use 1972 because 1970 doesn't have a leap day (feb 29)
+			t = time.mktime(date.replace(year=1972).timetuple())
+		else:
+			t = time.mktime(date.timetuple())
+		if time.localtime(t).tm_isdst: # pragma: no cover
+			utc_offset = -time.altzone
+		else:
+			utc_offset = -time.timezone	
+		minutes = abs(utc_offset) // 60
+		self.__offset = datetime.timedelta(minutes = minutes)
 
-		# If the Credentials don't exist or are invalid, run through the native client
-		# flow. The Storage object will ensure that if successful the good
-		# Credentials will get written back to a file.
-		storage = Storage(comun.COOKIE_FILE)
-		credentials = storage.get()
-		if credentials is None or credentials.invalid == True:
-			credentials = run(FLOW, storage)
+	def utcoffset(self, dt):
+		return self.__offset
 
-		# Create an httplib2.Http object to handle our HTTP requests and authorize it
-		# with our good Credentials.
-		http = httplib2.Http()
-		http = credentials.authorize(http)
+	def tzname(self, dt):
+		return 'Local'
 
-		# Build a service object for interacting with the API. Visit
-		# the Google APIs Console
-		# to get a developerKey for your own application.
-		self.service = build(serviceName='calendar', version='v3', http=http,developerKey='AIzaSyAEdFnbOJghHQYy1RYvve-6OccSc7UcyHU')
+	def dst(self, dt):
+		return datetime.timedelta(0)
 
-	def get_settings(self):
-		settings = self.service.settings().list().execute()
-		if 'items' in settings.keys():
-			return settings['items']
-		return []
+	
+class RecurrenceRule(object):
+	def __init__(self,frequence,interval = 0):
+		self.frequence = frequence
+		self.interval = interval
+	def get_rrule(self):
+		rrule = 'RRULE:FREQ=%s'%(self.frequence)
+		if self.interval > 0:
+			rrule += ';INTERVAL=%s'%(self.interval)
+		return rrule
 
-	def get_acl(self,calendar_id):
-		acls = self.service.acl().list(calendarId=calendar_id).execute()
-		if 'items' in acls.keys():
-			return acls['items']
-		return []
+class Event(dict):
+	def __init__(self,entry=None):
+		self.set_from_entry(entry)
+	
+	def set_from_entry(self,entry):
+		if entry:
+			self.update(entry)
 
-	def get_calendars(self):
-		calendars = self.service.calendarList().list().execute()
-		if 'items' in calendars.keys():
-			return calendars['items']
-		return []
-
+	def __str__(self):
+		ans = ''
+		for key in self.keys():
+			ans += '%s: %s\n'%(key,self[key])
+		return ans
 		
-	def get_calendar(self,calendar_id):
-		calendar = self.service.calendars().get(calendarId=calendar_id).execute()
-		return calendar
+	def get_start_date(self):
+		if 'date' in self['start'].keys():
+			return get_datetime_from_string(self['start']['date'])
+		elif 'dateTime' in self['start'].keys():
+			return get_datetime_from_string(self['start']['dateTime'])		
+
+	def get_end_date(self):
+		if 'date' in self['end'].keys():
+			return get_datetime_from_string(self['end']['date'])
+		elif 'dateTime' in self['end'].keys():
+			return get_datetime_from_string(self['end']['dateTime'])		
+	def __eq__(self,other):
+		for key in self.keys():
+			if key in other.keys():
+				if self[key] != other[key]:
+					return False
+			else:
+				return False
+		return True
+
+	def __ne__(self,other):
+		return not self.__eq__(other)
+
+	def __lt__(self,other):
+		return self.get_start_date() < other.get_start_date()
+
+	def __le__(self,other):
+		return self.get_start_date() <= other.get_start_date()
+
+	def __gt__(self,other):
+		return self.get_start_date() > other.get_start_date()
+
+	def __ge__(self,other):
+		return self.get_start_date() >= other.get_start_date()
 	
+class Calendar(dict):
+	def __init__(self,entry=None):
+		self.set_from_entry(entry)
+		self['events'] = []
+	
+	def set_from_entry(self,entry):		
+		if entry:
+			self.update(entry)
+
+	def set_events(self,events):
+		self['events'] = events
+
+	def __str__(self):
+		ans = ''
+		for key in self.keys():
+			ans += '%s: %s\n'%(key,self[key])
+		return ans
+
+class GoogleCalendar(GoogleService):			
+	def __init__(self,token_file):
+		GoogleService.__init__(self,auth_url=AUTH_URL,token_url=TOKEN_URL,redirect_uri=REDIRECT_URI,scope=SCOPE,client_id=CLIENT_ID,client_secret=CLIENT_SECRET,token_file=comun.TOKEN_FILE)
+		self.calendars = {}
+
+	def __do_request(self,method,url,addheaders=None,data=None,params=None,first=True):
+		headers ={'Authorization':'OAuth %s'%self.access_token}
+		if addheaders:
+			headers.update(addheaders)
+		print(headers)
+		if data:
+			if params:
+				response = self.session.request(method,url,data=data,headers=headers,params=params)		
+			else:
+				response = self.session.request(method,url,data=data,headers=headers)		
+		else:
+			if params:
+				response = self.session.request(method,url,headers=headers,params=params)
+			else:		
+				response = self.session.request(method,url,headers=headers)		
+		print(response)
+		if response.status_code == 200 or response.status_code == 201 or response.status_code == 204:
+			return response
+		elif (response.status_code == 401 or response.status_code == 403) and first:
+			ans = self.do_refresh_authorization()
+			print(ans)
+			if ans:
+				return self.__do_request(method,url,addheaders,data,params,first=False)
+		return None
+
+	def add_calendar(self,summary):
+		url = 'https://www.googleapis.com/calendar/v3/calendars'
+		data = {'kind':'calendar#calendar','summary':summary}
+		body = json.dumps(data).encode('utf-8')
+		addheaders={'Content-type':'application/json'}
+		response = self.__do_request('POST',url,addheaders=addheaders,data = body)
+		if response and response.text:
+			try:
+				return Calendar(json.loads(response.text))
+			except Exception as e:
+				print(e)
+		return None
+
+	def remove_calendar(self,calendar_id):
+		url = 'https://www.googleapis.com/calendar/v3/calendars/%s'%(calendar_id)
+		params = {'calendarId':calendar_id}
+		response = self.__do_request('DELETE',url,params = params)
+		return (response is not None)
+
+	def remove_event(self,calendar_id,event_id):
+		url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events/%s'%(calendar_id,event_id)
+		params = {'calendarId':calendar_id,'eventId':event_id}
+		response = self.__do_request('DELETE',url,params = params)
+		return (response is not None)
+
+	def add_event(self,calendar_id,summary,start_date,end_date,reminder=False,reminder_minutes=15,rrule=None):
+		url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events'%(calendar_id)
+		params = {'calendarId':calendar_id}
+		if type(start_date) == datetime.date:
+			start_value = {'date':start_date.strftime('%Y-%m-%d')}
+		else:
+			start_value = {'dateTime':get_string_from_datetime(start_date)}
+		if type(end_date) == datetime.date:
+			end_value = {'date':end_date.strftime('%Y-%m-%d')}
+		else:
+			end_value = {'dateTime':get_string_from_datetime(end_date)}
+		data = {
+			'kind':'calendar#event',
+			'summary':summary,
+			'start': start_value,
+			'end': end_value
+		}
+		if reminder:
+			data['reminders'] = {
+				'useDefault': False,
+				'overrides': [
+					{
+					'method': 'email',
+					'minutes': reminder_minutes
+					}
+				]
+			}
+		if rrule is not None:
+			data['recurrence'] = [rrule.get_rrule()]
+		body = json.dumps(data).encode('utf-8')
+		addheaders={'Content-type':'application/json'}
+		response = self.__do_request('POST',url,addheaders=addheaders,params = params, data = body)
+		if response and response.text:
+			try:
+				aevent = Event(json.loads(response.text))
+				aevent['calendar_id'] = calendar_id
+				return aevent
+			except Exception as e:
+				print(e)
+		return None
+		
+	def edit_event(self,calendar_id,event_id,summary,start_date,end_date,reminder=False,reminder_minutes=15,rrule=None):
+		url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events/%s'%(calendar_id,event_id)
+		params = {'calendarId':calendar_id,'eventId':event_id}
+		if type(start_date) == datetime.date:
+			start_value = {'date':start_date.strftime('%Y-%m-%d')}
+		else:
+			start_value = {'dateTime':get_string_from_datetime(start_date)}
+		if type(end_date) == datetime.date:
+			end_value = {'date':end_date.strftime('%Y-%m-%d')}
+		else:
+			end_value = {'dateTime':get_string_from_datetime(end_date)}
+		data = {
+			'kind':'calendar#event',
+			'summary':summary,
+			'start': start_value,
+			'end': end_value
+		}
+		if reminder:
+			data['reminders'] = {
+				'useDefault': False,
+				'overrides': [
+					{
+					'method': 'email',
+					'minutes': reminder_minutes
+					}
+				]
+			}
+		if rrule is not None:
+			data['recurrence'] = [rrule.get_rrule()]
+		body = json.dumps(data).encode('utf-8')
+		addheaders={'Content-type':'application/json'}
+		response = self.__do_request('PUT',url,addheaders=addheaders,params = params, data = body)
+		if response and response.text:
+			try:
+				aevent = Event(json.loads(response.text))
+				aevent['calendar_id'] = calendar_id
+				return aevent				
+			except Exception as e:
+				print(e)
+		return None		
+		
+	def get_calendars(self):
+		calendars = []
+		response = self.__do_request('GET',CALENDAR_LIST_URL)		
+		if response and response.text:
+			try:
+				answer = json.loads(response.text)
+				if 'items' in answer.keys():
+					for item in answer['items']:
+						calendars.append(Calendar(item))
+			except:
+				pass
+		return calendars
+
 	def get_events(self,calendar_id):
-		events = self.service.events().list(calendarId=calendar_id,
-											singleEvents=True,
-											orderBy='startTime').execute()
-		if 'items' in events.keys():
-			return events['items']
-		return []
+		events = []
+		response = self.__do_request('GET',EVENT_LIST_URL%calendar_id)		
+		if response and response.text:
+			try:
+				answer = json.loads(response.text)
+				if 'items' in answer.keys():
+					for item in answer['items']:
+						aevent = Event(item)
+						aevent['calendar_id'] = calendar_id
+						events.append(aevent)
+			except Exception as e:
+				print(e)
+		return events
+		
+	def read_from_google_calendar(self):
+		calendars = {}
+		for calendar in self.get_calendars():
+			calendar.set_events(self.get_events(calendar['id']))
+			calendars[calendar['id']] = calendar
+		return calendars
+		
+	def backup(self):
+		f = open(comun.BACKUP_FILE,'w')
+		f.write(json.dumps(self.calendars))
+		f.close()
 
-	def getAllEventsOnMonthOnDefaultCalendar(self,calendar_id,month,year):
-		com = datetime.datetime(year, month, 1)
-		start_date = rfc3339.rfc3339(com)
-		events = self.service.events().list(calendarId=calendar_id,
-											timeMin=start_date,
-											singleEvents=True,
-											orderBy='startTime').execute()
-		if 'items' in events.keys():
-			return events['items']
-		return []
+	def restore(self):
+		f = open(comun.BACKUP_FILE,'r')
+		data = f.read()
+		f.close()
+		midata = json.loads(data)
+		self.calendars = {}
+		for key in midata.keys():
+			acalendar = Calendar(midata[key])
+			events = []
+			for event in midata[key]['events']:
+				events.append(Event(event))
+			acalendar['events'] = events
+			self.calendars[key] = acalendar
 
-	def get_next_ten_events(self,calendar_id):
-		start_date = rfc3339.rfc3339(datetime.datetime.now())
-		events = self.service.events().list(calendarId=calendar_id,
-											maxResults=10,
-											timeMin=start_date,
-											singleEvents=True,
-											orderBy='startTime').execute()
-		if 'items' in events.keys():
-			return events['items']
-		return []
+	def getNextTenEvents(self):
+		events = []
+		adatetime = datetime.datetime.now(LocalTZ())
+		for calendar_id in self.calendars.keys():
+			for event in self.calendars[calendar_id]['events']:
+				if event.get_start_date() > adatetime:
+					events.append(event)
+		events.sort()
+		return events[:10]
 
-if __name__ == '__main__':	
-	gca = GCAService()
-	print gca.get_settings()
-	for calendar in gca.get_calendars():
-		print '########################################################'
-		print calendar['id']
-		print gca.get_events(calendar['id']) 
-	
-	
+	def getAllEventsOnMonth(self,date):
+		search = date.strftime('%Y-%m')
+		events = []
+		for calendar_id in self.calendars.keys():
+			for event in self.calendars[calendar_id]['events']:
+				if 'date' in event['start'].keys():
+					if events['start']['date'].startswith(search):
+						events.append(event)
+				elif 'dateTime' in event['start'].keys():		
+					if events['start']['dateTime'].startswith(search):
+						events.append(event)
+				if 'date' in event['end'].keys():
+					if events['end']['date'].startswith(search):
+						events.append(event)
+				elif 'dateTime' in event['end'].keys():		
+					if events['end']['dateTime'].startswith(search):
+						events.append(event)
+		events.sort()
+		return events
+
+if __name__ == '__main__':
+	#gc = GoogleCalendar(token_file = comun.TOKEN_FILE)
 	'''
-	for tasklist in gta.get_tasklists():
-		print tasklist
-
-	#print gta.create_tasklist('desde ubuntu')
-	#print gta.get_tasklist('MDU4MDg5OTIxODI5ODgyMTE0MTg6MDow')
-	print gta.get_tasks()
-	for task in gta.get_tasks():
-		print '%s -> %s'%(task['title'],task['id'])
-	#print gta.create_task(title = 'prueba2 desde ubuntu',notes = 'primera prueba')
-	gta.move_task_first('MDU4MDg5OTIxODI5ODgyMTE0MTg6MDoy')
+	print(gc.do_refresh_authorization())
+	if True and gc.access_token == None or gc.refresh_token == None:
+		authorize_url = gc.get_authorize_url()
+		print(authorize_url)
+		ld = LoginDialog(authorize_url)
+		ld.run()
+		temporary_token = ld.code
+		ld.destroy()
+		print(temporary_token)
+		#webbrowser.open(authorize_url)
+		#temporary_token = input('Introduce the token: ')
+		print(gc.get_authorization(temporary_token))
 	'''
+	'''	
+	for calendar in gc.get_calendars():
+		print('########################################################')
+		print(calendar.params['id'])
+		print(calendar.params['summary'])
+		for event in gc.get_events(calendar.params['id']):
+			print(event.params['summary'],event.params['description'] if 'description' in event.params.keys() else '')
+		#print gca.get_events(calendar['id']) 
+	'''
+	#gc.backup()
+	#gc.restore()
+	#print(gc.getAllEventsOnMonth())
+	'''
+	gc.read_from_google_calendar()
+	print(gc.calendars)
+	#print(gc.getAllEventsOnMonth())	
+	'''
+	'''
+	calendar = gc.add_calendar('la prueba del cañón')
+	print(calendar)
+	gc.add_event(calendar['id'],'cañón',datetime.date.today(),datetime.date.today(),rrule=RecurrenceRule(frequence=FREQUENCE_MONTHLY))
+	ahora = datetime.datetime.now()
+	luego = ahora + add_time(minutes=50,hours=7)
+	gc.add_event(calendar['id'],'prueba2',ahora,luego,True)	
+	mievent = gc.add_event(calendar['id'],'recurrente',ahora,luego,False)
+	print(mievent)
+	gc.edit_event(calendar['id'],mievent['id'],'editando',datetime.datetime.now()+add_time(hours=7),datetime.datetime.now()+add_time(hours=8))
+	#gc.remove_event(calendar['id'],mievent['id'])
+	#print(gc.remove_calendar(calendar['id']))
+	'''
+	'''
+	md = '2009-10-01T11:00:00-02:00'
+	print(get_datetime_from_string(md))
+	md = '2009-10-01'
+	print(get_datetime_from_string(md))
+	print(datetime.datetime.now())
+	print(get_utc_offset(datetime.datetime.now()))
+	print(get_string_from_datetime(datetime.datetime.now()))
+	'''
+	gc = GoogleCalendar(token_file = comun.TOKEN_FILE)
+	gc.restore()
+	for event in gc.getNextTenEvents():
+		print(event.get_start_date(),event['summary'])
+	exit(0)

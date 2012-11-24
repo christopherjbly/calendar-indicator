@@ -34,7 +34,7 @@ from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Notify
 
-import urllib2
+import urllib
 import time
 import dbus
 import locale
@@ -42,7 +42,7 @@ import gettext
 import datetime
 import webbrowser
 from calendardialog import CalendarDialog
-from googlecalendarapi import GCAService
+from googlecalendarapi import GoogleCalendar
 #
 import comun
 from configurator import Configuration
@@ -144,7 +144,7 @@ def add2menu(menu, text = None, icon = None, conector_event = None, conector_act
 class CalendarIndicator():
 	def __init__(self):
 		if dbus.SessionBus().request_name("es.atareao.calendar-indicator") != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
-			print "application already running"
+			print("application already running")
 			exit(0)
 		self.indicator = appindicator.Indicator.new('Calendar-Indicator', 'Calendar-Indicator', appindicator.IndicatorCategory.APPLICATION_STATUS)
 		self.notification = Notify.Notification.new('','', None)
@@ -256,7 +256,7 @@ class CalendarIndicator():
 			else:
 				key_event_time = 'date'		
 			com =getTimeAndDateV2(self.events[0]['start'][key_event_time])
-			print com
+			print(com)
 			if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
 				self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
 			else:
