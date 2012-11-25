@@ -21,7 +21,7 @@ import codecs
 
 DATA_FILES = [
 ('/usr/share/calendar-indicator',glob.glob('src/*')),
-('/usr/share/bin', ['bin/calendar-indicator']),
+('/usr/bin', ['bin/calendar-indicator']),
 ('/usr/share/applications', ['data/Calendar-Indicator.desktop']),
 ('/usr/share/calendar-indicator', ['data/calendar-indicator-autostart.desktop']),
 ('/usr/share/calendar-indicator/icons', glob.glob('data/icons/*.svg')),
