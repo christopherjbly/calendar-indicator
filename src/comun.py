@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 __author__="atareao"
@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.0.3.3'
+__version__ = '0.0.9.0'
 
 import os
 
@@ -58,13 +58,15 @@ if is_package():
     ROOTDIR = '/usr/share/'
     LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
     APPDIR = os.path.join(ROOTDIR, APP)
-    ICONDIR = os.path.join(APPDIR, 'icons')  
+    ICONDIR = os.path.join(APPDIR, 'icons')
+    SOCIALDIR = os.path.join(APPDIR, 'social')  
 else:
     VERSION = VERSION + '-src'
     ROOTDIR = os.path.split(os.path.dirname(__file__))[0]
     LANGDIR = os.path.join(ROOTDIR, 'template1')
     APPDIR = os.path.join(ROOTDIR, APP)
     ICONDIR = os.path.join(ROOTDIR, 'data/icons')
+    SOCIALDIR = os.path.join(ROOTDIR, 'data/social')
 
 ICON = os.path.join(ICONDIR,'calendar-indicator.svg')
 ICON_NEW_EVENT = os.path.join(ICONDIR,'event-new.svg')

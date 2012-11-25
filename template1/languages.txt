@@ -17,3 +17,9 @@ hr
 de
 el
 fi
+fr
+ms
+sk
+pl
+et
+ko

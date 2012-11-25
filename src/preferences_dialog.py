@@ -24,13 +24,14 @@ __date__ ='$19/02/2012$'
 #
 #
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 import os
 import shutil
 import locale
 import gettext
 from configurator import Configuration
 from googlecalendarapi import GoogleCalendar
+from logindialog import LoginDialog
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -40,7 +41,8 @@ _ = gettext.gettext
 
 
 class Preferences(Gtk.Dialog):
-	def __init__(self):
+	def __init__(self,googlecalendar = None):
+		self.googlecalendar = googlecalendar
 		title = comun.APPNAME + ' | '+_('Preferences')
 		Gtk.Dialog.__init__(self,title,None,Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL))
 		self.set_size_request(180, 170)
@@ -84,51 +86,97 @@ class Preferences(Gtk.Dialog):
 		self.entry2.add_attribute(renderer_text, "text", 0)
 		self.entry2.set_active(0)
 		table1.attach(self.entry2,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
-		
 		#
 		frame2 = Gtk.Frame()
-		notebook.append_page(frame2,tab_label = Gtk.Label(_('Options')))
-		table2 = Gtk.Table(rows = 2, columns = 2, homogeneous = False)
-		table2.set_border_width(5)
-		table2.set_col_spacings(5)
-		table2.set_row_spacings(5)
-		frame2.add(table2)
+		notebook.append_page(frame2,tab_label = Gtk.Label(_('Colors')))
+		vbox2 = Gtk.VBox()
+		frame2.add(vbox2)
+		scrolledwindow = Gtk.ScrolledWindow()
+		scrolledwindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+		scrolledwindow.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)		
+		vbox2.pack_start(scrolledwindow,True,True,0)
+		self.store = Gtk.ListStore(str, str,str)
+		self.treeview = Gtk.TreeView(self.store)
+		self.treeview.connect('cursor-changed',self.on_cursor_changed)
+		column1 = Gtk.TreeViewColumn(_('Calendar'),  Gtk.CellRendererText(), text=0)
+		self.treeview.append_column(column1)
+		column2 = Gtk.TreeViewColumn(_('Color'),  Gtk.CellRendererText(), background=1)
+		self.treeview.append_column(column2)
+		scrolledwindow.add(self.treeview)
 		#
-		label21 = Gtk.Label(_('Time between updates')+':')
+		frame3 = Gtk.Frame()
+		notebook.append_page(frame3,tab_label = Gtk.Label(_('Options')))
+		table3 = Gtk.Table(rows = 2, columns = 2, homogeneous = False)
+		table3.set_border_width(5)
+		table3.set_col_spacings(5)
+		table3.set_row_spacings(5)
+		frame3.add(table3)
+		#
+		label21 = Gtk.Label(_('Time between autommatic syncronizations (hours)')+':')
 		label21.set_alignment(0,.5)
-		table2.attach(label21,0,1,0,1, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+		table3.attach(label21,0,1,0,1, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		self.spin3 = Gtk.SpinButton()
-		self.spin3.set_range(5,100)
-		self.spin3.set_increments(5,10)
-		table2.attach(self.spin3,1,2,0,1, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		self.spin3.set_range(12,120)
+		self.spin3.set_increments(12,24)
+		table3.attach(self.spin3,1,2,0,1, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		label22 = Gtk.Label(_('Autostart')+':')
 		label22.set_alignment(0,.5)
-		table2.attach(label22,0,1,1,2, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+		table3.attach(label22,0,1,1,2, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		self.switch4 = Gtk.Switch()		
-		table2.attach(self.switch4,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		table3.attach(self.switch4,1,2,1,2, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		label23 = Gtk.Label(_('Theme light')+':')
 		label23.set_alignment(0,.5)
-		table2.attach(label23,0,1,2,3, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
+		table3.attach(label23,0,1,2,3, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		self.switch5 = Gtk.Switch()		
-		table2.attach(self.switch5,1,2,2,3, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
+		table3.attach(self.switch5,1,2,2,3, xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.SHRINK)
 		#
 		self.load_preferences()
 		#
 		self.show_all()
+	def on_cursor_changed(self,widget):
+		selection = self.treeview.get_selection()
+		if selection is not None:
+			model,aiter = selection.get_selected()
+			print(model[aiter][0],model[aiter][1],model[aiter][2])			
+			colordialog = Gtk.ColorSelectionDialog("Select color")
+			colordialog.get_color_selection().set_current_color(Gdk.color_parse(model[aiter][1]))
+			if colordialog.run() == Gtk.ResponseType.OK:
+				color = colordialog.get_color_selection().get_current_color().to_string()
+				print(color)
+				model[aiter][1] = color
+			colordialog.destroy()
 	def on_switch1_changed(self,widget,data):
 		if self.switch1.get_active():
 			if os.path.exists(comun.TOKEN_FILE):
 				os.remove(comun.TOKEN_FILE)
-				exit(0)
-		gca = GCAService()
-		if gca:
-			self.switch1.set_active(False)
-			for calendar in gca.get_calendars():
+		else:
+			googlecalendar = GoogleCalendar(token_file = comun.TOKEN_FILE)
+			if googlecalendar.do_refresh_authorization() is None:
+				authorize_url = googlecalendar.get_authorize_url()
+				ld = LoginDialog(authorize_url)
+				ld.run()
+				googlecalendar.get_authorization(ld.code)
+				ld.destroy()				
+				if googlecalendar.do_refresh_authorization() is None:
+					md = Gtk.MessageDialog(	parent = self,
+											flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+											type = Gtk.MessageType.ERROR,
+											buttons = Gtk.ButtonsType.OK_CANCEL,
+											message_format = _('You have to authorize Calendar-Indicator to use it, do you want to authorize?'))
+					if md.run() == Gtk.ResponseType.CANCEL:
+						exit(3)				
+				else:
+					if googlecalendar.do_refresh_authorization() is None:
+						exit(3)
+			self.switch1.set_active(True)
+			self.liststore.clear()
+			self.liststore.append([_('All'),None])
+			for calendar in googlecalendar.get_calendars():
 				self.liststore.append([calendar['summary'],calendar['id']])
 			self.entry2.set_active(0)
 		
@@ -138,7 +186,6 @@ class Preferences(Gtk.Dialog):
 		time = configuration.get('time')
 		theme = configuration.get('theme')
 		calendar_id = configuration.get('calendar_id')
-		print(calendar_id)
 		self.spin3.set_value(time)
 		if os.path.exists(os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")):
 			self.switch4.set_active(True)
@@ -147,17 +194,28 @@ class Preferences(Gtk.Dialog):
 		else:
 			self.switch5.set_active(False)
 		if os.path.exists(comun.TOKEN_FILE):
-			gca = GoogleCalendar(token_file = comun.TOKEN_FILE)
-			if gca:
-				for calendar in gca.get_calendars():
-					self.liststore.append([calendar['summary'],calendar['id']])
-				if len(calendar_id)>0:
-					for i,item in enumerate(self.liststore):
-						if calendar_id == item[1]:
-							self.entry2.set_active(i)
-							return
+			if self.googlecalendar is not None:
+				calendars = self.googlecalendar.calendars.values()
+			else:
+				gca = GoogleCalendar(token_file = comun.TOKEN_FILE)
+				calendars = gca.get_calendars().values()
+			self.liststore.clear()
+			self.store.clear()
+			self.liststore.append([_('All'),None])			
+			for calendar in calendars:
+				self.liststore.append([calendar['summary'],calendar['id']])
+				if configuration.has(calendar['id']):
+					color = configuration.get(calendar['id'])
+				else:
+					color = '#EEEEEE'
+				self.store.append([calendar['summary'],color,calendar['id']])
+			if calendar_id is None:
 				self.entry2.set_active(0)
-			
+			else:
+				for i,item in enumerate(self.liststore):
+					if calendar_id == item[1]:
+						self.entry2.set_active(i)
+						return
 	
 	def save_preferences(self):
 		if os.path.exists(comun.TOKEN_FILE):
@@ -173,6 +231,10 @@ class Preferences(Gtk.Dialog):
 				configuration.set('theme','light')
 			else:
 				configuration.set('theme','dark')
+			aiter = self.store.get_iter_first()
+			while(aiter is not None):
+				configuration.set(self.store.get_value(aiter,2),self.store.get_value(aiter,1))
+				aiter = self.store.iter_next(aiter)
 			configuration.save()
 			filestart = os.path.join(os.getenv("HOME"),".config/autostart/calendar-indicator-autostart.desktop")
 			if self.switch4.get_active():

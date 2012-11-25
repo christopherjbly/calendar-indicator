@@ -30,12 +30,10 @@ import json
 import comun
 
 PARAMS = {	'first-time':True,
-			'time':5,
+			'time':12,
 			'theme':'light',
 			'calendar_id':''
 			}
-
-
 
 class Configuration(object):
 	def __init__(self):
@@ -48,6 +46,8 @@ class Configuration(object):
 		except KeyError:
 			self.params[key] = PARAMS[key]
 			return self.params[key]
+	def has(self,key):
+		return (key in self.params.keys())
 		
 	def set(self,key,value):
 		self.params[key] = value
