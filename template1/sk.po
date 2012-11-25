@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calendar-indicator 0.0.3.3\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-11-25 19:57+0100\n"
+"POT-Creation-Date: 2012-11-25 21:07+0100\n"
 "PO-Revision-Date: 2012-10-04 22:49+0000\n"
 "Last-Translator: Štefan Lučivjanský <stefan.lucivjansky@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
 
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendardialog.py:80
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:227
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:227
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:46
 msgid "Preferences"
 msgstr "Nastavenia"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:181
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:181
 #, fuzzy
 msgid ""
 "You have to authorize Calendar-Indicator to manage your Google Calendar.\n"
@@ -33,67 +33,68 @@ msgstr ""
 "Aby aplikácia Calendar-Indicator fungovala správne, musíte jej povoliť "
 "prístup ku vášmu kalendáru Google"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:225
-msgid "Refresh"
-msgstr "Obnoviť"
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:225
+#, fuzzy
+msgid "Sync with google calendar"
+msgstr "Indikátor pre Google Kalendár"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:226
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:226
 msgid "Show Calendar"
 msgstr "Zobraziť kalendár"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:229
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:229
 msgid "Help"
 msgstr "Pomocník"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:232
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:232
 msgid "Exit"
 msgstr "Ukončiť"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:253
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:253
 msgid "New event:"
 msgstr "Nová udalosť:"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:263
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:263
 msgid "Event finished:"
 msgstr "Udalosť skončila:"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:299
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:299
 msgid "In Launchpad"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:300
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:300
 msgid "Get help online..."
 msgstr "Získať pomoc online..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:301
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:301
 msgid "Translate this application..."
 msgstr "Preložiť túto aplikáciu..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:302
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:302
 msgid "Report a bug..."
 msgstr "Nahlásiť chybu..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:304
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:304
 msgid "Homepage"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:305
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:305
 msgid "Follow us in Twitter"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:306
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:306
 msgid "Follow us in Google+"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:307
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:307
 msgid "Follow us in Facebook"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:309
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:309
 msgid "About"
 msgstr "O aplikácii"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendar-indicator.py:359
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:360
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:37
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:38
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:39
@@ -271,6 +272,9 @@ msgstr ""
 #, fuzzy
 msgid "Calendar-Indicator"
 msgstr "Kalendár"
+
+#~ msgid "Refresh"
+#~ msgstr "Obnoviť"
 
 #~ msgid "Time between updates"
 #~ msgstr "Čas medzi aktualizáciami"
