@@ -1,11 +1,11 @@
 [Desktop Entry]
 Encoding = UTF-8
 _Name = Calendar-Indicator
-Version = 0.0.9.0
+Version = 0.0.9.2
 _Comment = An indicator for Google Calendar
 _GenericName = Calendar-Indicator
 Terminal = false
-Icon = /usr/share/calendar-indicator/calendar-indicator.svg
+Icon = /usr/share/calendar-indicator/icons/calendar-indicator.svg
 Type = Application
 Exec = /usr/bin/calendar-indicator
 Categories = GNOME;GTK;Application;Utils;

@@ -1,3 +1,9 @@
+calendar-indicator (0.0.9.2-1ubuntu1) quantal; urgency=low
+
+  * Fixed a bug with launcher
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 26 Nov 2012 07:25:15 +0100
+
 calendar-indicator (0.0.9.1-1ubuntu1) quantal; urgency=low
 
   * /usr/bin/calendar-indicator
