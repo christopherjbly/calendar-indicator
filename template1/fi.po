@@ -5,9 +5,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.9.1\n"
+"Project-Id-Version: calendar-indicator 0.0.9.4\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-11-26 07:25+0100\n"
+"POT-Creation-Date: 2012-11-26 22:13+0100\n"
 "PO-Revision-Date: 2012-08-06 18:35+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -18,81 +18,141 @@ msgstr ""
 "X-Generator: Launchpad (build 16293)\n"
 "X-Launchpad-Export-Date: 2012-11-24 08:56+0000\n"
 
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:42
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:93
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:151
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:78
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:101
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:42
+msgid "Calendar"
+msgstr "Kalenteri"
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:62
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:86
+#, fuzzy
+msgid "To calendar"
+msgstr "Näytä kalenteri"
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:77
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:101
+msgid "Title"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:85
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:109
+msgid "All day event"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:93
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:117
+msgid "Start date"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:104
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:128
+msgid "End date"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addeventwindow.py:115
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/eventwindow.py:139
+msgid "Description"
+msgstr ""
+
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendardialog.py:80
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:227
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:247
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:46
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:181
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:195
 #, fuzzy
 msgid ""
 "You have to authorize Calendar-Indicator to manage your Google Calendar.\n"
 " Do you want to authorize?"
 msgstr "Sinun tulee sallia kalenteri-ilmaisimen pääsy Google-kalenteriisi"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:225
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:242
+#, fuzzy
+msgid "Add new calendar"
+msgstr "Näytä kalenteri"
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:243
+#, fuzzy
+msgid "Add new event"
+msgstr "Uusi tapahtuma:"
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:245
 #, fuzzy
 msgid "Sync with google calendar"
 msgstr "Ilmaisin Google-kalenteria varten"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:226
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:246
 msgid "Show Calendar"
 msgstr "Näytä kalenteri"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:229
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:249
 msgid "Help"
 msgstr "Ohje"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:232
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:252
 msgid "Exit"
 msgstr "Sulje"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:253
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:281
 msgid "New event:"
 msgstr "Uusi tapahtuma:"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:263
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:291
 msgid "Event finished:"
 msgstr "Tapahtuma valmis:"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:299
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:329
 msgid "In Launchpad"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:300
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:330
 msgid "Get help online..."
 msgstr "Hae apua verkosta..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:301
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:331
 msgid "Translate this application..."
 msgstr "Käännä tämä ohjelma..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:302
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:332
 msgid "Report a bug..."
 msgstr "Raportoi ongelmasta..."
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:304
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:334
 msgid "Homepage"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:305
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:335
 msgid "Follow us in Twitter"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:306
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:336
 msgid "Follow us in Google+"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:307
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:337
 msgid "Follow us in Facebook"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:309
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:339
 msgid "About"
 msgstr "Tietoja"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:360
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:377
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:90
+msgid "Are you sure you want to revove this event?"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:398
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:110
+msgid "Are you sure you want to edit this event?"
+msgstr ""
+
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarindicator.py:457
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:37
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:38
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/Calendar-Indicator.desktop.in:39
@@ -121,53 +181,59 @@ msgstr "Tietoja"
 msgid "An indicator for Google Calendar"
 msgstr "Ilmaisin Google-kalenteria varten"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Monday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Tuesday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Wednesday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Thursday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Friday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Saturday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:43
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:45
 msgid "Sunday"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:94
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:78
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:101
-msgid "Calendar"
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/addcalendarwindow.py:113
+#, fuzzy
+msgid "Calendar name"
 msgstr "Kalenteri"
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:113
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:171
 msgid "One year less"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:120
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:178
 msgid "One month less"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:130
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:188
 msgid "One year more"
 msgstr ""
 
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:137
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/calendarwindow.py:195
 msgid "One month more"
 msgstr ""
 
@@ -211,7 +277,7 @@ msgid ""
 msgstr "Sinun tulee sallia kalenteri-ilmaisimen pääsy Google-kalenteriisi"
 
 #: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:178
-#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:204
+#: /home/atareao/Dropbox/tp/quantal/calendar-indicator/src/preferences_dialog.py:205
 msgid "All"
 msgstr ""
 

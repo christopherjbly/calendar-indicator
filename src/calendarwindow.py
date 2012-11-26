@@ -24,7 +24,7 @@ __date__ ='$19/02/2012$'
 #
 #
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GObject
 import os
 import shutil
 import locale
@@ -33,6 +33,8 @@ import datetime
 from configurator import Configuration
 from googlecalendarapi import GoogleCalendar
 from logindialog import LoginDialog
+from eventwindow import EventWindow
+
 import comun
 
 locale.setlocale(locale.LC_ALL, '')
@@ -47,7 +49,11 @@ def first_day_of_month(adatetime):
 	return adatetime.weekday()
 
 class DayWidget(Gtk.VBox):
-	def __init__(self,adate=None):
+	__gsignals__ = {
+		'edited' : (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE,())
+	}
+	
+	def __init__(self,googlecalendar=None,adate=None, callback = None):		
 		Gtk.VBox.__init__(self)
 		self.set_size_request(150, 100)
 		scrolledwindow = Gtk.ScrolledWindow()
@@ -56,12 +62,62 @@ class DayWidget(Gtk.VBox):
 		self.pack_start(scrolledwindow,True,True,0)
 		self.store = Gtk.ListStore(str, object,str)
 		self.treeview = Gtk.TreeView(self.store)
+		#self.treeview.connect('cursor-changed',self.on_cursor_changed)
+		self.treeview.connect('button-release-event',self.on_cursor_changed)
 		self.column = Gtk.TreeViewColumn('',  Gtk.CellRendererText(), text=0, background=2)
 		self.treeview.append_column(self.column)
 		scrolledwindow.add(self.treeview)
 		if adate is not None:
-			self.set_date(adate)		
-
+			self.set_date(adate)
+		self.googlecalendar = googlecalendar
+		self.calendars = googlecalendar.calendars.values()
+		self.callback = callback
+		
+	def on_cursor_changed(self,widget,key):
+		if self.calendars is not None:
+			selection = widget.get_selection()
+			if selection is not None:
+				amodel,aiter = selection.get_selected()
+				aevent = amodel.get_value(aiter,1)
+				ew = EventWindow(self.calendars,aevent)
+				if ew.run() == Gtk.ResponseType.ACCEPT:
+					if ew.get_operation() == 'DELETE':
+						ew.destroy()
+						md = Gtk.MessageDialog(	parent = None,
+												flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+												type = Gtk.MessageType.ERROR,
+												buttons = Gtk.ButtonsType.OK_CANCEL,
+												message_format = _('Are you sure you want to revove this event?'))
+						if md.run() == Gtk.ResponseType.OK:
+							md.destroy()					
+							if self.googlecalendar.remove_event(aevent['calendar_id'],aevent['id']):
+								self.googlecalendar.calendars[aevent['calendar_id']]['events'].pop(aevent['id'],True)
+								self.emit('edited')
+								self.callback()
+						md.destroy()
+					elif ew.get_operation() == 'EDIT':
+						event_id = aevent['id']
+						calendar_id = ew.get_calendar_id()
+						summary = ew.get_summary()
+						start_date = ew.get_start_date()
+						end_date = ew.get_end_date()
+						description = ew.get_description()
+						ew.destroy()
+						md = Gtk.MessageDialog(	parent = None,
+												flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+												type = Gtk.MessageType.ERROR,
+												buttons = Gtk.ButtonsType.OK_CANCEL,
+												message_format = _('Are you sure you want to edit this event?'))
+						if md.run() == Gtk.ResponseType.OK:
+							md.destroy()					
+							edit_event = self.googlecalendar.edit_event(calendar_id, event_id, summary, start_date, end_date, description)
+							if edit_event is not None:
+								self.googlecalendar.calendars[calendar_id]['events'][edit_event['id']] = edit_event
+								self.emit('edited')
+								self.callback()
+						md.destroy()
+				ew.destroy()
+				selection.unselect_all()
 	def set_date(self,adate):
 		self.adate = adate
 		self.column.set_title(str(adate.day))
@@ -83,7 +139,8 @@ class DayWidget(Gtk.VBox):
 				color = configuration.get(event['calendar_id'])
 			else:
 				color = '#AFDEDF'
-			self.store.append([label,event,color])
+			if event is not None:
+				self.store.append([label,event,color])
 	def set_background_color(self,color):
 		self.treeview.modify_bg(Gtk.StateType.NORMAL, color)
 	
@@ -97,6 +154,7 @@ class CalendarWindow(Gtk.Dialog):
 		self.set_resizable(False)
 		self.set_icon_from_file(comun.ICON)
 		self.connect('destroy', self.close_application)
+		self.edited = False
 		#
 		vbox0 = Gtk.VBox(spacing = 5)
 		vbox0.set_border_width(5)
@@ -160,7 +218,8 @@ class CalendarWindow(Gtk.Dialog):
 			table1.attach(Gtk.Label(DAY_OF_WEEK[column-1]),column,column+1,0,1,xoptions = Gtk.AttachOptions.SHRINK, yoptions = Gtk.AttachOptions.SHRINK)
 		for row in range(1,7):
 			for column in range(1,8):
-				self.days[contador] = DayWidget()
+				self.days[contador] = DayWidget(self.googlecalendar,callback=self.update)
+				self.days[contador].connect('edited',self.on_edited)
 				table1.attach(self.days[contador],column,column+1,row,row+1,xoptions = Gtk.AttachOptions.EXPAND, yoptions = Gtk.AttachOptions.EXPAND)
 				contador += 1
 		#
@@ -173,9 +232,15 @@ class CalendarWindow(Gtk.Dialog):
 		#
 		self.show_all()
 
+	def on_edited(self,widget):
+		self.edited = True
+
+	def get_edited(self):
+		return self.edited
+		
 	def close_application(self,widget):
 		self.ok = False
-	
+
 	def set_date(self):
 		self.monthyear.set_text(self.adate.strftime('%B - %Y'))
 		fdom = first_day_of_month(self.adate)
@@ -207,6 +272,18 @@ class CalendarWindow(Gtk.Dialog):
 				else:
 					self.days[contador].clear()
 			
+	def update(self):
+		if self.googlecalendar is not None:
+			events = self.googlecalendar.getAllEventsOnMonth(self.adate)
+			for contador in range(0,42):
+				if self.days[contador].get_date().date() in events.keys():
+					eventsday = events[self.days[contador].get_date().date()]
+					if len(eventsday)>0:
+						self.days[contador].set_events(eventsday)
+					else:
+						self.days[contador].clear()
+				else:
+					self.days[contador].clear()
 		
 	def on_button0_clicked(self,widget):
 		year = self.adate.year - 1

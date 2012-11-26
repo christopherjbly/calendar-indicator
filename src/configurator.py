@@ -32,7 +32,7 @@ import comun
 PARAMS = {	'first-time':True,
 			'time':12,
 			'theme':'light',
-			'calendar_id':''
+			'calendar_id':None
 			}
 
 class Configuration(object):

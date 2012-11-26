@@ -185,27 +185,44 @@ class Event(dict):
 					if dtstart.find('-')>-1:
 						dtstart = dtstart[:dtstart.find('-')]
 					el = 'DTSTART:%s\n'%dtstart+el
-				print('rule :%s'%el)
 				rrule = dateutil.rrule.rrulestr(el)
 				ans = rrule.after(daybefore,inc=True)
-				print('ans =%s'%ans)
 				if ans is not None:
 					return ans
 		if 'date' in self['start'].keys():
 			return get_datetime_from_string(self['start']['date'])
 		elif 'dateTime' in self['start'].keys():
 			return get_datetime_from_string(self['start']['dateTime'])		
+
 	def get_start_date_string(self,daybefore=None):
 		adate = self.get_start_date(daybefore)
 		if 'date' in self['start'].keys():
 			return adate.strftime('%x')
 		else:
 			return adate.strftime('%x')+' - '+adate.strftime('%H:%M')
-	def get_end_date(self):
+	def get_end_date(self,daybefore=None):
+		if 'recurrence' in self.keys():
+			for el in self['recurrence']:
+				if el.find('DTSTART') == -1:
+					if 'date' in self['end'].keys():
+						dtstart = self['end']['date'].replace('-','').replace(':','')
+					elif 'dateTime' in self['end'].keys():
+						dtstart = self['end']['dateTime'].replace('-','').replace(':','')
+					if dtstart.find('.')>-1:
+						dtstart = dtstart[:dtstart.find('.')]
+					if dtstart.find('+')>-1:
+						dtstart = dtstart[:dtstart.find('+')]
+					if dtstart.find('-')>-1:
+						dtstart = dtstart[:dtstart.find('-')]
+					el = 'DTSTART:%s\n'%dtstart+el
+				rrule = dateutil.rrule.rrulestr(el)
+				ans = rrule.after(daybefore,inc=True)
+				if ans is not None:
+					return ans
 		if 'date' in self['end'].keys():
 			return get_datetime_from_string(self['end']['date'])
 		elif 'dateTime' in self['end'].keys():
-			return get_datetime_from_string(self['end']['dateTime'])		
+			return get_datetime_from_string(self['end']['dateTime'])
 	def __eq__(self,other):
 		for key in self.keys():
 			if key in other.keys():
@@ -305,7 +322,7 @@ class GoogleCalendar(GoogleService):
 		response = self.__do_request('DELETE',url,params = params)
 		return (response is not None)
 
-	def add_event(self,calendar_id,summary,start_date,end_date,reminder=False,reminder_minutes=15,rrule=None):
+	def add_event(self,calendar_id,summary,start_date,end_date,description=None,reminder=False,reminder_minutes=15,rrule=None):
 		url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events'%(calendar_id)
 		params = {'calendarId':calendar_id}
 		if type(start_date) == datetime.date:
@@ -322,6 +339,8 @@ class GoogleCalendar(GoogleService):
 			'start': start_value,
 			'end': end_value
 		}
+		if description is not None:
+			data['description'] = description
 		if reminder:
 			data['reminders'] = {
 				'useDefault': False,
@@ -346,7 +365,7 @@ class GoogleCalendar(GoogleService):
 				print(e)
 		return None
 		
-	def edit_event(self,calendar_id,event_id,summary,start_date,end_date,reminder=False,reminder_minutes=15,rrule=None):
+	def edit_event(self,calendar_id,event_id,summary,start_date,end_date,description=None,reminder=False,reminder_minutes=15,rrule=None):
 		url = 'https://www.googleapis.com/calendar/v3/calendars/%s/events/%s'%(calendar_id,event_id)
 		params = {'calendarId':calendar_id,'eventId':event_id}
 		if type(start_date) == datetime.date:
@@ -363,6 +382,8 @@ class GoogleCalendar(GoogleService):
 			'start': start_value,
 			'end': end_value
 		}
+		if description is not None:
+			data['description'] = description
 		if reminder:
 			data['reminders'] = {
 				'useDefault': False,

@@ -43,6 +43,8 @@ import datetime
 import webbrowser
 from calendardialog import CalendarDialog
 from calendarwindow import CalendarWindow
+from addcalendarwindow import AddCalendarWindow
+from eventwindow import EventWindow
 from googlecalendarapi import GoogleCalendar
 #
 import comun
@@ -158,6 +160,17 @@ def add2menu(menu, text = None, icon = None, conector_event = None, conector_act
 	menu.append(menu_item)
 	return menu_item
 
+class EventMenuItem(Gtk.MenuItem):
+	def __init__(self,label):
+		Gtk.MenuItem.__init__(self,label)
+		self.event = None
+
+	def get_event(self):
+		return self.event
+
+	def set_event(self,event):
+		self.event = event
+
 class CalendarIndicator():
 	def __init__(self):
 		if dbus.SessionBus().request_name("es.atareao.calendar-indicator") != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
@@ -173,7 +186,8 @@ class CalendarIndicator():
 				if p.run() == Gtk.ResponseType.ACCEPT:
 					p.save_preferences()
 				p.destroy()
-				if not os.path.exists(comun.TOKEN_FILE) or self.googlecalendar.do_refresh_authorization() is None:
+				self.googlecalendar = GoogleCalendar(token_file = comun.TOKEN_FILE)
+				if (not os.path.exists(comun.TOKEN_FILE)) or (self.googlecalendar.do_refresh_authorization() is None):
 					md = Gtk.MessageDialog(	parent = None,
 											flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
 											type = Gtk.MessageType.ERROR,
@@ -218,9 +232,15 @@ class CalendarIndicator():
 		self.menu = Gtk.Menu()
 		self.menu_events = []
 		for i in range(10):
-			menu_event = add2menu(self.menu, text = '')
+			menu_event = EventMenuItem('')			
+			menu_event.show()
 			menu_event.set_visible(False)
+			menu_event.connect('activate',self.on_menu_event_activate)
+			self.menu.append(menu_event)
 			self.menu_events.append(menu_event)
+		add2menu(self.menu)
+		self.menu_add_new_calendar = add2menu(self.menu, text = _('Add new calendar'), conector_event = 'activate',conector_action = self.on_menu_add_new_calendar)
+		self.menu_add_new_event = add2menu(self.menu, text = _('Add new event'), conector_event = 'activate',conector_action = self.on_menu_add_new_event)
 		add2menu(self.menu)
 		self.menu_refresh = add2menu(self.menu, text = _('Sync with google calendar'), conector_event = 'activate',conector_action = self.on_menu_refresh)
 		self.menu_show_calendar = add2menu(self.menu, text = _('Show Calendar'), conector_event = 'activate',conector_action = self.menu_show_calendar_response)
@@ -232,7 +252,15 @@ class CalendarIndicator():
 		add2menu(self.menu, text = _('Exit'), conector_event = 'activate',conector_action = self.menu_exit_response)
 		self.menu.show()
 		self.indicator.set_menu(self.menu)		
-				
+
+	def set_menu_sensitive(self,sensitive = False):
+		self.menu_add_new_calendar.set_sensitive(sensitive)
+		self.menu_add_new_event.set_sensitive(sensitive)
+		self.menu_refresh.set_sensitive(sensitive)
+		self.menu_show_calendar.set_sensitive(sensitive)
+		self.menu_preferences.set_sensitive(sensitive)
+		self.menu_about.set_sensitive(sensitive)
+		
 	def update_menu(self,check=False):
 		#
 		now = datetime.datetime.now()
@@ -272,7 +300,9 @@ class CalendarIndicator():
 				key_event_time = 'dateTime'
 			else:
 				key_event_time = 'date'
+			print(event['summary'])
 			self.menu_events[i].set_label(event.get_start_date_string(now)+' - '+short_msg(event['summary']))
+			self.menu_events[i].set_event(event)
 			self.menu_events[i].set_visible(True)
 		for i in range(len(self.events),10):
 			self.menu_events[i].set_visible(False)
@@ -319,9 +349,74 @@ class CalendarIndicator():
 		#
 		help_menu.show()
 		return help_menu
+
+	def on_menu_add_new_event(self,widget):
+		ew = EventWindow(self.googlecalendar.calendars.values())
+		if ew.run() == Gtk.ResponseType.ACCEPT:
+			calendar_id = ew.get_calendar_id()
+			summary = ew.get_summary()
+			start_date = ew.get_start_date()
+			end_date = ew.get_end_date()
+			description = ew.get_description()
+			ew.destroy()
+			new_event = self.googlecalendar.add_event(calendar_id, summary, start_date, end_date, description)
+			if new_event is not None:
+				self.googlecalendar.calendars[calendar_id]['events'][new_event['id']] = new_event
+				self.update_menu(check=True)
+		ew.destroy()
+
+	def on_menu_event_activate(self,widget):
+		ew = EventWindow(self.googlecalendar.calendars.values(),widget.get_event())
+		if ew.run() == Gtk.ResponseType.ACCEPT:
+			if ew.get_operation() == 'DELETE':
+				ew.destroy()
+				md = Gtk.MessageDialog(	parent = None,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('Are you sure you want to revove this event?'))
+				if md.run() == Gtk.ResponseType.OK:
+					md.destroy()					
+					event = widget.get_event()
+					if self.googlecalendar.remove_event(event['calendar_id'],event['id']):
+						self.googlecalendar.calendars[event['calendar_id']]['events'].pop(event['id'],True)
+						self.update_menu(check=True)
+				md.destroy()
+			elif ew.get_operation() == 'EDIT':
+				event = widget.get_event()
+				event_id = event['id']
+				calendar_id = ew.get_calendar_id()
+				summary = ew.get_summary()
+				start_date = ew.get_start_date()
+				end_date = ew.get_end_date()
+				description = ew.get_description()
+				ew.destroy()
+				md = Gtk.MessageDialog(	parent = None,
+										flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+										type = Gtk.MessageType.ERROR,
+										buttons = Gtk.ButtonsType.OK_CANCEL,
+										message_format = _('Are you sure you want to edit this event?'))
+				if md.run() == Gtk.ResponseType.OK:
+					md.destroy()					
+					edit_event = self.googlecalendar.edit_event(calendar_id, event_id, summary, start_date, end_date, description)
+					if edit_event is not None:
+						self.googlecalendar.calendars[calendar_id]['events'][edit_event['id']] = edit_event
+						self.update_menu(check=True)
+				md.destroy()
+		ew.destroy()
+		
+	def on_menu_add_new_calendar(self,widget):
+		acw = AddCalendarWindow()
+		if acw.run() == Gtk.ResponseType.ACCEPT:
+			calendar_name = acw.entry.get_text()
+			acw.destroy()
+			new_calendar = self.googlecalendar.add_calendar(calendar_name)
+			if new_calendar is not None:
+				self.googlecalendar.calendars[new_calendar['id']] = new_calendar
+		acw.destroy()		
 		
 	def menu_preferences_response(self,widget):
-		self.menu_preferences.set_sensitive(False)
+		self.set_menu_sensitive(False)
 		p1 = Preferences(self.googlecalendar)
 		if p1.run() == Gtk.ResponseType.ACCEPT:
 			p1.save_preferences()			
@@ -334,15 +429,17 @@ class CalendarIndicator():
 			self.events = []	
 			self.update_menu()		
 		p1.destroy()
-		self.menu_preferences.set_sensitive(True)
+		self.set_menu_sensitive(True)
 					
 	def menu_show_calendar_response(self,widget):
-		self.menu_show_calendar.set_sensitive(False)
-		#cd = CalendarDialog('Calendar',parent = None, googlecalendar = self.gcal,calendar_id = self.calendar_id)
+		self.set_menu_sensitive(False)
 		cd = CalendarWindow(self.googlecalendar)
 		cd.run()
+		edited =cd.get_edited()
 		cd.destroy()
-		self.menu_show_calendar.set_sensitive(True)
+		if edited:
+			self.update_menu(check=True)
+		self.set_menu_sensitive(True)
 
 	def on_menu_refresh(self,widget):
 		self.sync()
@@ -352,7 +449,7 @@ class CalendarIndicator():
 		exit(0)
 
 	def menu_about_response(self,widget):
-		self.menu_about.set_sensitive(False)
+		self.set_menu_sensitive(False)
 		ad=Gtk.AboutDialog()
 		ad.set_name(comun.APPNAME)
 		ad.set_version(comun.VERSION)
@@ -396,7 +493,7 @@ Jiri Grönroos <https://launchpad.net/~jiri-gronroos>\n')
 		ad.set_program_name(comun.APPNAME)
 		ad.run()
 		ad.destroy()
-		self.menu_about.set_sensitive(True)
+		self.set_menu_sensitive(True)
 		
 if __name__ == "__main__":
 	Notify.init("calendar-indicator")

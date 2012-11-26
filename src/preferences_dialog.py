@@ -176,7 +176,7 @@ class Preferences(Gtk.Dialog):
 			self.switch1.set_active(True)
 			self.liststore.clear()
 			self.liststore.append([_('All'),None])
-			for calendar in googlecalendar.get_calendars():
+			for calendar in googlecalendar.get_calendars().values():
 				self.liststore.append([calendar['summary'],calendar['id']])
 			self.entry2.set_active(0)
 		
