@@ -194,10 +194,11 @@ class Preferences(Gtk.Dialog):
 		else:
 			self.switch5.set_active(False)
 		if os.path.exists(comun.TOKEN_FILE):
-			if self.googlecalendar is not None:
+			if self.googlecalendar is not None:				
 				calendars = self.googlecalendar.calendars.values()
 			else:
 				gca = GoogleCalendar(token_file = comun.TOKEN_FILE)
+				gca.read()
 				calendars = gca.get_calendars().values()
 			self.liststore.clear()
 			self.store.clear()
