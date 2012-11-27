@@ -5,9 +5,9 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: calendar-indicator 0.0.9.4\n"
+"Project-Id-Version: calendar-indicator 0.1.0.0\n"
 "Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
-"POT-Creation-Date: 2012-11-26 22:13+0100\n"
+"POT-Creation-Date: 2012-11-27 06:03+0100\n"
 "PO-Revision-Date: 2012-10-04 22:49+0000\n"
 "Last-Translator: Štefan Lučivjanský <stefan.lucivjansky@gmail.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"

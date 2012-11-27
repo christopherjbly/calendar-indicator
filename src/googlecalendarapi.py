@@ -96,6 +96,7 @@ def get_string_from_datetime(adatetime):
 	return adatetime.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(adatetime)
 	
 def get_datetime_from_string(strdate):
+	strdate = strdate.replace('Z','')
 	if strdate.find('T')==-1:
 		adate = datetime.datetime.strptime(strdate, '%Y-%m-%d')
 		utc_offset = get_utc_offset(adate)
@@ -637,13 +638,16 @@ if __name__ == '__main__':
 	print(get_string_from_datetime(datetime.datetime.now()))
 	'''
 	gc = GoogleCalendar(token_file = comun.TOKEN_FILE)
-	gc.restore()
-	gc.backup()
+	gc.read()
+	for calendar in gc.calendars.values():
+		print(calendar['id'],calendar['summary'],calendar['etag'])
+	#gc.restore()
+	#gc.backup()
 	#print(gc.getAllEvents())
 	#for aevent in gc.getNextTenEvents():
 	#	print(aevent['id'],aevent['summary'])
 	#for event in gc.getNextTenEvents():
 	#	print(event.get_start_date(),event['summary'])
-	ans = gc.getAllEventsOnMonth(datetime.datetime.now())
-	print(ans)
+	#ans = gc.getAllEventsOnMonth(datetime.datetime.now())
+	#print(ans)
 	exit(0)

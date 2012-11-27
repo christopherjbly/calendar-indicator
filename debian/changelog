@@ -1,3 +1,10 @@
+calendar-indicator (0.1.0.0-1ubuntu1) quantal; urgency=low
+
+  * Final release
+  * Fixed a Z bug
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 27 Nov 2012 06:03:20 +0100
+
 calendar-indicator (0.0.9.4-1ubuntu1) quantal; urgency=low
 
   * Add, edit and delete events
