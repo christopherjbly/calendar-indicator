@@ -373,9 +373,15 @@ class GoogleService(object):
 				return self.do_request(method,url,addheaders,first=False)
 		return None
 if __name__ == '__main__':
-
-	ds = DropboxService('','','token')
-
+	us = UbuntuOneService('tokenus')
+	session = requests.session()
+	ans = session.request('GET','https://login.ubuntu.com/')
+	print(ans)
+	print(ans.text)
+	#oauth_token,oauth_token_secret = us.get_request_token()
+	
+	
+	#ds = DropboxService('','','token')
 	'''
 	oauth_token,oauth_token_secret = ds.get_request_token()
 	authorize_url = ds.get_authorize_url(oauth_token,oauth_token_secret)
@@ -393,9 +399,10 @@ if __name__ == '__main__':
 		print(ans)
 		print(ds.get_account_info())
 	'''
-
+	'''
 	print(ds.get_account_info())
 	print(ds.get_file('data'))
 	print(ds.put_file('/home/atareao/Escritorio/data'))
+	'''
 	exit(0)
 	

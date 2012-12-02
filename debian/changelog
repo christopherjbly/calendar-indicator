@@ -1,3 +1,13 @@
+calendar-indicator (0.1.0.1-1ubuntu1) quantal; urgency=low
+
+  * Fixed bug #1083611 It is not starting at all during launching of the apps. Crashing during start.
+  * Fixed bug #1083624 Events from all calendars displayed under "Show Calendar", even though only one calendar was selected
+  * Fixed bug #1083625 No calendar events show up for one of my calendars
+  * Fixed bug #1084776 Doesn't autostart
+  * Fixed bug #1084211 At first start calendars not showing up in colors tab
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Sun, 02 Dec 2012 07:50:21 +0100
+
 calendar-indicator (0.1.0.0-1ubuntu1) quantal; urgency=low
 
   * Final release

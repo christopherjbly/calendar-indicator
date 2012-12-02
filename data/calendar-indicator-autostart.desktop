@@ -1,7 +1,7 @@
 
 [Desktop Entry]
 Type=Application
-Exec=/usr/share/calendar-indicator/calendar-indicator.py
+Exec=/usr/bin/calendar-indicator
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

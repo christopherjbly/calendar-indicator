@@ -27,6 +27,7 @@ __date__ ='$19/02/2012$'
 from gi.repository import Gtk, Gdk
 import os
 import shutil
+import random
 import locale
 import gettext
 from configurator import Configuration
@@ -208,7 +209,7 @@ class Preferences(Gtk.Dialog):
 				if configuration.has(calendar['id']):
 					color = configuration.get(calendar['id'])
 				else:
-					color = '#EEEEEE'
+					color = '#%x'%random.randint(0, 16777215)
 				self.store.append([calendar['summary'],color,calendar['id']])
 			if calendar_id is None:
 				self.entry2.set_active(0)

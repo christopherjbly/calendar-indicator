@@ -146,8 +146,9 @@ class DayWidget(Gtk.VBox):
 	
 		
 class CalendarWindow(Gtk.Dialog):
-	def __init__(self,googlecalendar = None, adate = None):
+	def __init__(self,googlecalendar = None, adate = None, calendar_id = None):
 		self.googlecalendar = googlecalendar
+		self.calendar_id = calendar_id
 		title = comun.APPNAME + ' | '+_('Calendar')
 		Gtk.Dialog.__init__(self,title,None,Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
 		self.set_size_request(800, 600)
@@ -261,7 +262,14 @@ class CalendarWindow(Gtk.Dialog):
 			else:
 				self.days[contador].set_background_color(Gdk.color_parse('#FFFFFF'))
 		if self.googlecalendar is not None:
-			events = self.googlecalendar.getAllEventsOnMonth(self.adate)
+			events = self.googlecalendar.getAllEventsOnMonth(self.adate,calendar_id=self.calendar_id)
+			for adate in events.keys():
+				print('###############################################')
+				print(adate)
+				eventsday = events[adate]
+				for aevent in eventsday:
+					print(aevent['summary'])
+				
 			for contador in range(0,42):
 				if self.days[contador].get_date().date() in events.keys():
 					eventsday = events[self.days[contador].get_date().date()]

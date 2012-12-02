@@ -279,7 +279,7 @@ class CalendarIndicator():
 					else:
 						key_event_time = 'date'
 					msg = _('New event:')+'\n'
-					msg += getTimeAndDate(event.get_start_date(now))+' - '+event['summary']
+					msg += getTimeAndDate(event.get_start_date())+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
 					self.notification.show()
 			for event in self.events:
@@ -289,7 +289,7 @@ class CalendarIndicator():
 					else:
 						key_event_time = 'date'
 					msg = _('Event finished:') + '\n'
-					msg += event.get_start_date_string(now)+' - '+event['summary']
+					msg += event.get_start_date_string()+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
 					self.notification.show()
 		self.events = events2
@@ -301,7 +301,7 @@ class CalendarIndicator():
 			else:
 				key_event_time = 'date'
 			print(event['summary'])
-			self.menu_events[i].set_label(event.get_start_date_string(now)+' - '+short_msg(event['summary']))
+			self.menu_events[i].set_label(event.get_start_date_string()+' - '+short_msg(event['summary']))
 			self.menu_events[i].set_event(event)
 			self.menu_events[i].set_visible(True)
 		for i in range(len(self.events),10):
@@ -433,7 +433,7 @@ class CalendarIndicator():
 					
 	def menu_show_calendar_response(self,widget):
 		self.set_menu_sensitive(False)
-		cd = CalendarWindow(self.googlecalendar)
+		cd = CalendarWindow(self.googlecalendar,calendar_id=self.calendar_id)
 		cd.run()
 		edited =cd.get_edited()
 		cd.destroy()

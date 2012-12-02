@@ -167,10 +167,10 @@ class EventWindow(Gtk.Dialog):
 				self.entry7.set_date(event.get_end_date(now).date())
 			else:
 				self.entry3.set_active(False)
-				self.entry4.set_time(event.get_start_date(now).time())
-				self.entry5.set_date(event.get_start_date(now).date())
-				self.entry6.set_time(event.get_end_date(now).time())
-				self.entry7.set_date(event.get_end_date(now).date())
+				self.entry4.set_time(event.get_start_date().time())
+				self.entry5.set_date(event.get_start_date().date())
+				self.entry6.set_time(event.get_end_date().time())
+				self.entry7.set_date(event.get_end_date().date())
 			if 'description' in event.keys():
 				self.entry8.get_buffer().set_text(event['description'])
 		else:

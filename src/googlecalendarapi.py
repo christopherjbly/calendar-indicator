@@ -96,23 +96,27 @@ def get_string_from_datetime(adatetime):
 	return adatetime.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(adatetime)
 	
 def get_datetime_from_string(strdate):
-	strdate = strdate.replace('Z','')
 	if strdate.find('T')==-1:
 		adate = datetime.datetime.strptime(strdate, '%Y-%m-%d')
 		utc_offset = get_utc_offset(adate)
-		strdate = strdate+'T00:00:00'+utc_offset
+		strdate = strdate+'T00:00:00'#+utc_offset
 	adate,atime = strdate.split('T')
+	if atime.find(':') == -1:
+		atime=atime[0:2]+':'+atime[2:4]+':'+atime[4:6]
 	if atime.find('+')>-1:
 		a,b = atime.split('+')
-		b = b.replace(':','')
+		#b = b.replace(':','')
 		atime = a#+'+'+b
 	if atime.find('-')>-1:
 		a,b = atime.split('-')
-		b = b.replace(':','')
+		#b = b.replace(':','')
 		atime = a#+'-'+b
 	strdate = adate+'T'+atime
-	#return datetime.datetime.strptime(strdate, "%Y-%m-%dT%H:%M:%S%z")	
-	return datetime.datetime.strptime(strdate, "%Y-%m-%dT%H:%M:%S")	
+	print(strdate)
+	adatetime = datetime.datetime.strptime(strdate, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=None)	
+	#if adatetime.tzinfo is None:
+	#	datetime.tzinfo = LocalTZ()
+	return adatetime
 	
 def addOneYear(start_date):
 	if start_date.month == 2 and start_date.day == 29 and is_Bisiesto(start_date.year):
@@ -171,37 +175,40 @@ class Event(dict):
 			ans += '%s: %s\n'%(key,self[key])
 		return ans
 		
-	def get_start_date(self,daybefore=None):
+	def get_start_date(self):
+		daybefore = datetime.datetime.now().replace(tzinfo=None)
 		if 'recurrence' in self.keys():
 			for el in self['recurrence']:
 				if el.find('DTSTART') == -1:
 					if 'date' in self['start'].keys():
-						dtstart = self['start']['date'].replace('-','').replace(':','')
+						dtstart = self['start']['date'].replace(':','')
+						print(self['start']['date'])
 					elif 'dateTime' in self['start'].keys():
-						dtstart = self['start']['dateTime'].replace('-','').replace(':','')
-					if dtstart.find('.')>-1:
-						dtstart = dtstart[:dtstart.find('.')]
-					if dtstart.find('+')>-1:
-						dtstart = dtstart[:dtstart.find('+')]
-					if dtstart.find('-')>-1:
-						dtstart = dtstart[:dtstart.find('-')]
-					el = 'DTSTART:%s\n'%dtstart+el
-				rrule = dateutil.rrule.rrulestr(el)
+						dtstart = self['start']['dateTime'].replace(':','')
+						print(self['start']['dateTime'])
+					dtstart = get_datetime_from_string(dtstart).replace(tzinfo=None)
+					el = 'DTSTART:%s\n'%dtstart.strftime('%Y%m%dT%H%M')+el
+					print(el)
+					rrule = dateutil.rrule.rrulestr(el)
+				print(daybefore)
 				ans = rrule.after(daybefore,inc=True)
 				if ans is not None:
 					return ans
-		if 'date' in self['start'].keys():
-			return get_datetime_from_string(self['start']['date'])
-		elif 'dateTime' in self['start'].keys():
-			return get_datetime_from_string(self['start']['dateTime'])		
+		if 'start' in self.keys():
+			if 'date' in self['start'].keys():
+				return get_datetime_from_string(self['start']['date'])
+			elif 'dateTime' in self['start'].keys():
+				return get_datetime_from_string(self['start']['dateTime'])
+		return None		
 
-	def get_start_date_string(self,daybefore=None):
-		adate = self.get_start_date(daybefore)
+	def get_start_date_string(self):
+		adate = self.get_start_date()
 		if 'date' in self['start'].keys():
 			return adate.strftime('%x')
 		else:
 			return adate.strftime('%x')+' - '+adate.strftime('%H:%M')
-	def get_end_date(self,daybefore=None):
+	def get_end_date(self):
+		daybefore = datetime.datetime.now().replace(tzinfo=None)
 		if 'recurrence' in self.keys():
 			for el in self['recurrence']:
 				if el.find('DTSTART') == -1:
@@ -211,19 +218,16 @@ class Event(dict):
 						dtstart = self['end']['dateTime'].replace('-','').replace(':','')
 					if dtstart.find('.')>-1:
 						dtstart = dtstart[:dtstart.find('.')]
-					if dtstart.find('+')>-1:
-						dtstart = dtstart[:dtstart.find('+')]
-					if dtstart.find('-')>-1:
-						dtstart = dtstart[:dtstart.find('-')]
 					el = 'DTSTART:%s\n'%dtstart+el
 				rrule = dateutil.rrule.rrulestr(el)
 				ans = rrule.after(daybefore,inc=True)
 				if ans is not None:
 					return ans
-		if 'date' in self['end'].keys():
-			return get_datetime_from_string(self['end']['date'])
-		elif 'dateTime' in self['end'].keys():
-			return get_datetime_from_string(self['end']['dateTime'])
+		if 'start' in self.keys():
+			if 'date' in self['end'].keys():
+				return get_datetime_from_string(self['end']['date'])
+			elif 'dateTime' in self['end'].keys():
+				return get_datetime_from_string(self['end']['dateTime'])
 	def __eq__(self,other):
 		for key in self.keys():
 			if key in other.keys():
@@ -440,7 +444,8 @@ class GoogleCalendar(GoogleService):
 
 	def get_events(self,calendar_id):
 		events = {}
-		response = self.__do_request('GET',EVENT_LIST_URL%calendar_id)		
+		params = {'calendarId':calendar_id,'maxResults':1000000}
+		response = self.__do_request('GET',EVENT_LIST_URL%calendar_id,params = params)		
 		if response and response.text:
 			try:
 				answer = json.loads(response.text)
@@ -474,13 +479,13 @@ class GoogleCalendar(GoogleService):
 			self.calendars[key] = acalendar	
 	def getNextTenEvents(self,calendar_id=None):
 		events = []
-		adatetime = datetime.datetime.now()#LocalTZ())
+		adatetime = datetime.datetime.now().replace(tzinfo=None)
 		if calendar_id is None:
 			lookinevents = self.getAllEvents()
 		else:
 			lookinevents = self.calendars[calendar_id]['events'].values()
 		for event in lookinevents:
-			sd = event.get_start_date(adatetime)
+			sd = event.get_start_date().replace(tzinfo=None)
 			if sd is not None and sd > adatetime:						
 				events.append({'date':sd,'event':event})					
 		sortedlist = sorted(events, key=lambda x: x['date'])
@@ -494,47 +499,15 @@ class GoogleCalendar(GoogleService):
 	def getAllEventsInCalendar(self,calendar):
 		return calendar['events'].values()
 
+	def getAllCalendars(self):
+		return self.calendars.values()
+
 	def getAllEvents(self):
 		events = []
 		for calendar in self.calendars.values():
 			events.extend(calendar['events'].values())
 		return events
 		
-	def getAllEventsStartOnDay(self,date):
-		search = date.strftime('%Y-%m-%d')
-		events = []
-		daybefore = (date.date()-datetime.timedelta(days=1))
-		for calendar in self.calendars.values():
-			for event in calendar['events'].values():
-				if 'recurrence' in event.keys():
-					for el in event['recurrence']:
-						if el.find('DTSTART') == -1:
-							if 'date' in event['start'].keys():
-								dtstart = event['start']['date'].replace('-','').replace(':','')
-							elif 'dateTime' in event['start'].keys():
-								dtstart = event['start']['dateTime'].replace('-','').replace(':','')
-							if dtstart.find('.')>-1:
-								dtstart = dtstart[:dtstart.find('.')]
-							if dtstart.find('+')>-1:
-								dtstart = dtstart[:dtstart.find('+')]
-							if dtstart.find('-')>-1:
-								dtstart = dtstart[:dtstart.find('-')]
-							el = 'DTSTART:%s\n'%dtstart+el
-						rrule = dateutil.rrule.rrulestr(el)
-						adate = rrule.after(daybefore,inc=True)
-						if adate is not None:
-							if adate.date() == date.date():
-								events.append(event)
-								break
-				elif 'date' in event['start'].keys():
-					if event['start']['date'].startswith(search):
-						events.append(event)
-				elif 'dateTime' in event['start'].keys():		
-					if event['start']['dateTime'].startswith(search):
-						events.append(event)
-		events.sort()
-		return events
-
 	def getAllEventsOnMonth(self,date,calendar_id=None):
 		if calendar_id is None:
 			lookinevents = self.getAllEvents()
@@ -567,6 +540,7 @@ class GoogleCalendar(GoogleService):
 						if dtstart.find('-')>-1:
 							dtstart = dtstart[:dtstart.find('-')]
 						el = 'DTSTART:%s\n'%dtstart+el
+					print(event['summary'],el)
 					el = el.replace('Z','')
 					rrule = dateutil.rrule.rrulestr(el)
 					recurrenceevents = list(rrule.between(firstdayofmonth,lastdayofmonth,inc=True))
@@ -574,7 +548,7 @@ class GoogleCalendar(GoogleService):
 						sortedevents[arecurrenceevent.date()].append(event)
 			elif 'date' in event['start'].keys():
 				if event['start']['date'].startswith(search):
-					adate = datetime.datetime.strptime( event['start']['date'], '%Y-%m-%d').date()
+					adate = datetime.datetime.strptime(event['start']['date'], '%Y-%m-%d').date()
 					sortedevents[adate].append(event)
 			elif 'dateTime' in event['start'].keys():		
 				if event['start']['dateTime'].startswith(search):
@@ -638,16 +612,81 @@ if __name__ == '__main__':
 	print(get_string_from_datetime(datetime.datetime.now()))
 	'''
 	gc = GoogleCalendar(token_file = comun.TOKEN_FILE)
-	gc.read()
-	for calendar in gc.calendars.values():
-		print(calendar['id'],calendar['summary'],calendar['etag'])
-	#gc.restore()
+	#gc.read()
+	#for calendar in gc.calendars.values():
+	#	print(calendar['id'],calendar['summary'],calendar['etag'])
 	#gc.backup()
-	#print(gc.getAllEvents())
+	gc.restore()
+	adate = datetime.datetime.now()
+	firstdayofmonth = datetime.datetime(adate.year,adate.month,1,0,0,0)
+	month = adate.month + 1
+	if month > 12:
+		month = 1
+	ldom = datetime.datetime(adate.year,month,1)-datetime.timedelta(days=1)
+	lastdayofmonth = datetime.datetime(adate.year,adate.month,ldom.day,23,59,59)
+	'''
+	now = datetime.datetime.now()
+	nowplus = now +datetime.timedelta(days=30)
+	for event in gc.getAllEvents():
+		if 'recurrence' in event.keys():			
+			for el in event['recurrence']:
+				if el.find('DTSTART') == -1:
+					if 'date' in event['start'].keys():
+						dtstart = event['start']['date'].replace('-','').replace(':','')+'T000000'
+					elif 'dateTime' in event['start'].keys():
+						dtstart = event['start']['dateTime'].replace('-','').replace(':','')
+						if dtstart.find('.')>-1:
+							dtstart = dtstart[:dtstart.find('.')]
+						if dtstart.find('+')>-1:
+							dtstart = dtstart[:dtstart.find('+')]
+						if dtstart.find('-')>-1:
+							dtstart = dtstart[:dtstart.find('-')]
+					el = 'DTSTART:%s\n'%dtstart+el
+					if dtstart[4:6] == '12':
+						print('#######################################')
+						print(dtstart,event['summary'])
+				arrule = dateutil.rrule.rrulestr(el)
+				occurrences = arrule.between(firstdayofmonth,lastdayofmonth,True)
+			#for aocurrence in occurrences:
+			#	print(aocurrence,event['summary'],event['recurrence'][0])
+	print(firstdayofmonth,lastdayofmonth)
 	#for aevent in gc.getNextTenEvents():
 	#	print(aevent['id'],aevent['summary'])
 	#for event in gc.getNextTenEvents():
 	#	print(event.get_start_date(),event['summary'])
 	#ans = gc.getAllEventsOnMonth(datetime.datetime.now())
 	#print(ans)
+	for calendar in gc.getAllCalendars():
+		print(calendar['id'],calendar['summary'])
+	'''
+	#eventos = (gc.calendars['bjb6gcqkjte62savct9odgqtk0@group.calendar.google.com']['events'].values())
+	eventos = gc.get_events('bjb6gcqkjte62savct9odgqtk0@group.calendar.google.com')
+	print(eventos)
+	f = open('temporal','w')
+	f.write(json.dumps(eventos, sort_keys=True, indent=4))
+	f.close()
+	for event in eventos.values():
+		if 'recurrence' in event.keys():			
+			for el in event['recurrence']:
+				if el.find('DTSTART') == -1:
+					if 'date' in event['start'].keys():
+						dtstart = event['start']['date'].replace('-','').replace(':','')+'T000000'
+					elif 'dateTime' in event['start'].keys():
+						dtstart = event['start']['dateTime'].replace('-','').replace(':','')
+						if dtstart.find('.')>-1:
+							dtstart = dtstart[:dtstart.find('.')]
+						if dtstart.find('+')>-1:
+							dtstart = dtstart[:dtstart.find('+')]
+						if dtstart.find('-')>-1:
+							dtstart = dtstart[:dtstart.find('-')]
+					el = 'DTSTART:%s\n'%dtstart+el
+					if dtstart[4:6] == '12':
+						print('#######################################')
+						print(dtstart,event['summary'])
+					if dtstart[6:8] == '05':
+						print('---------------------------------------')
+						print(dtstart,event['summary'])
+				arrule = dateutil.rrule.rrulestr(el)
+				occurrences = arrule.between(firstdayofmonth,lastdayofmonth,True)
+	print(firstdayofmonth,lastdayofmonth)
 	exit(0)
