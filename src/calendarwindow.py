@@ -78,45 +78,46 @@ class DayWidget(Gtk.VBox):
 			selection = widget.get_selection()
 			if selection is not None:
 				amodel,aiter = selection.get_selected()
-				aevent = amodel.get_value(aiter,1)
-				ew = EventWindow(self.calendars,aevent)
-				if ew.run() == Gtk.ResponseType.ACCEPT:
-					if ew.get_operation() == 'DELETE':
-						ew.destroy()
-						md = Gtk.MessageDialog(	parent = None,
-												flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-												type = Gtk.MessageType.ERROR,
-												buttons = Gtk.ButtonsType.OK_CANCEL,
-												message_format = _('Are you sure you want to revove this event?'))
-						if md.run() == Gtk.ResponseType.OK:
-							md.destroy()					
-							if self.googlecalendar.remove_event(aevent['calendar_id'],aevent['id']):
-								self.googlecalendar.calendars[aevent['calendar_id']]['events'].pop(aevent['id'],True)
-								self.emit('edited')
-								self.callback()
-						md.destroy()
-					elif ew.get_operation() == 'EDIT':
-						event_id = aevent['id']
-						calendar_id = ew.get_calendar_id()
-						summary = ew.get_summary()
-						start_date = ew.get_start_date()
-						end_date = ew.get_end_date()
-						description = ew.get_description()
-						ew.destroy()
-						md = Gtk.MessageDialog(	parent = None,
-												flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-												type = Gtk.MessageType.ERROR,
-												buttons = Gtk.ButtonsType.OK_CANCEL,
-												message_format = _('Are you sure you want to edit this event?'))
-						if md.run() == Gtk.ResponseType.OK:
-							md.destroy()					
-							edit_event = self.googlecalendar.edit_event(calendar_id, event_id, summary, start_date, end_date, description)
-							if edit_event is not None:
-								self.googlecalendar.calendars[calendar_id]['events'][edit_event['id']] = edit_event
-								self.emit('edited')
-								self.callback()
-						md.destroy()
-				ew.destroy()
+				if amodel is not None and aiter is not None:
+					aevent = amodel.get_value(aiter,1)
+					ew = EventWindow(self.calendars,aevent)
+					if ew.run() == Gtk.ResponseType.ACCEPT:
+						if ew.get_operation() == 'DELETE':
+							ew.destroy()
+							md = Gtk.MessageDialog(	parent = None,
+													flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+													type = Gtk.MessageType.ERROR,
+													buttons = Gtk.ButtonsType.OK_CANCEL,
+													message_format = _('Are you sure you want to revove this event?'))
+							if md.run() == Gtk.ResponseType.OK:
+								md.destroy()					
+								if self.googlecalendar.remove_event(aevent['calendar_id'],aevent['id']):
+									self.googlecalendar.calendars[aevent['calendar_id']]['events'].pop(aevent['id'],True)
+									self.emit('edited')
+									self.callback()
+							md.destroy()
+						elif ew.get_operation() == 'EDIT':
+							event_id = aevent['id']
+							calendar_id = ew.get_calendar_id()
+							summary = ew.get_summary()
+							start_date = ew.get_start_date()
+							end_date = ew.get_end_date()
+							description = ew.get_description()
+							ew.destroy()
+							md = Gtk.MessageDialog(	parent = None,
+													flags = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+													type = Gtk.MessageType.ERROR,
+													buttons = Gtk.ButtonsType.OK_CANCEL,
+													message_format = _('Are you sure you want to edit this event?'))
+							if md.run() == Gtk.ResponseType.OK:
+								md.destroy()					
+								edit_event = self.googlecalendar.edit_event(calendar_id, event_id, summary, start_date, end_date, description)
+								if edit_event is not None:
+									self.googlecalendar.calendars[calendar_id]['events'][edit_event['id']] = edit_event
+									self.emit('edited')
+									self.callback()
+							md.destroy()
+					ew.destroy()
 				selection.unselect_all()
 	def set_date(self,adate):
 		self.adate = adate

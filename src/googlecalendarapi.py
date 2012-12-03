@@ -36,6 +36,7 @@ import dateutil.rrule
 import time
 import uuid
 import dateutil
+import rfc3339
 '''
 Dependencies:
 python-gflags
@@ -176,18 +177,38 @@ class Event(dict):
 		return ans
 		
 	def get_start_date(self):
-		daybefore = datetime.datetime.now().replace(tzinfo=None)
+		daybefore = datetime.datetime.now(LocalTZ())
 		if 'recurrence' in self.keys():
 			for el in self['recurrence']:
 				if el.find('DTSTART') == -1:
 					if 'date' in self['start'].keys():
-						dtstart = self['start']['date'].replace(':','')
+						dtstart = self['start']['date']+'T00:00:00'+ get_utc_offset(daybefore)
 						print(self['start']['date'])
 					elif 'dateTime' in self['start'].keys():
-						dtstart = self['start']['dateTime'].replace(':','')
+						dtstart = self['start']['dateTime']
 						print(self['start']['dateTime'])
-					dtstart = get_datetime_from_string(dtstart).replace(tzinfo=None)
-					el = 'DTSTART:%s\n'%dtstart.strftime('%Y%m%dT%H%M')+el
+					#dtstart = get_datetime_from_string(dtstart)
+					print(1,dtstart)
+					dtstart = rfc3339.parse_datetime(dtstart)
+					print(2,dtstart)
+					#rfc3339.parse_datetime()
+					if el.find('UNTIL') != -1:
+						elements = el.split(';')
+						ans = ''
+						for element in elements:
+							if element.startswith('UNTIL='):
+								s,e=element.split("=")
+								if len(e) == 8:
+									e += 'T000000'+ get_utc_offset(daybefore).replace(':','')
+								elif len(e) == 17:
+									e += get_utc_offset(daybefore)
+								element = s+'='+e
+							ans += element+';'
+						if ans.endswith(';'):
+							ans = ans[:-1]
+						el = ans
+						print(3,el)
+					el = 'DTSTART:%s%s\n'%(dtstart.strftime('%Y%m%dT%H%M'),get_utc_offset(daybefore))+el
 					print(el)
 					rrule = dateutil.rrule.rrulestr(el)
 				print(daybefore)
@@ -196,9 +217,11 @@ class Event(dict):
 					return ans
 		if 'start' in self.keys():
 			if 'date' in self['start'].keys():
-				return get_datetime_from_string(self['start']['date'])
+				dtstart = self['start']['date']+'T00:00:00'+ get_utc_offset(daybefore)
+				return rfc3339.parse_datetime(dtstart)
 			elif 'dateTime' in self['start'].keys():
-				return get_datetime_from_string(self['start']['dateTime'])
+				dtstart = self['start']['dateTime']
+				return rfc3339.parse_datetime(dtstart)
 		return None		
 
 	def get_start_date_string(self):
@@ -207,27 +230,55 @@ class Event(dict):
 			return adate.strftime('%x')
 		else:
 			return adate.strftime('%x')+' - '+adate.strftime('%H:%M')
+			
 	def get_end_date(self):
-		daybefore = datetime.datetime.now().replace(tzinfo=None)
+		daybefore = datetime.datetime.now(LocalTZ())
 		if 'recurrence' in self.keys():
 			for el in self['recurrence']:
-				if el.find('DTSTART') == -1:
+				if el.find('DTend') == -1:
 					if 'date' in self['end'].keys():
-						dtstart = self['end']['date'].replace('-','').replace(':','')
+						dtend = self['end']['date']+'T00:00:00'+ get_utc_offset(daybefore)
+						print(self['end']['date'])
 					elif 'dateTime' in self['end'].keys():
-						dtstart = self['end']['dateTime'].replace('-','').replace(':','')
-					if dtstart.find('.')>-1:
-						dtstart = dtstart[:dtstart.find('.')]
-					el = 'DTSTART:%s\n'%dtstart+el
-				rrule = dateutil.rrule.rrulestr(el)
+						dtend = self['end']['dateTime']
+						print(self['end']['dateTime'])
+					#dtend = get_datetime_from_string(dtend)
+					print(1,dtend)
+					dtend = rfc3339.parse_datetime(dtend)
+					print(2,dtend)
+					#rfc3339.parse_datetime()
+					if el.find('UNTIL') != -1:
+						elements = el.split(';')
+						ans = ''
+						for element in elements:
+							if element.endswith('UNTIL='):
+								s,e=element.split("=")
+								if len(e) == 8:
+									e += 'T000000'+ get_utc_offset(daybefore).replace(':','')
+								elif len(e) == 17:
+									e += get_utc_offset(daybefore)
+								element = s+'='+e
+							ans += element+';'
+						if ans.endswith(';'):
+							ans = ans[:-1]
+						el = ans
+						print(3,el)
+					el = 'DTend:%s%s\n'%(dtend.strftime('%Y%m%dT%H%M'),get_utc_offset(daybefore))+el
+					print(el)
+					rrule = dateutil.rrule.rrulestr(el)
+				print(daybefore)
 				ans = rrule.after(daybefore,inc=True)
 				if ans is not None:
 					return ans
-		if 'start' in self.keys():
+		if 'end' in self.keys():
 			if 'date' in self['end'].keys():
-				return get_datetime_from_string(self['end']['date'])
+				dtend = self['end']['date']+'T00:00:00'+ get_utc_offset(daybefore)
+				return rfc3339.parse_datetime(dtend)
 			elif 'dateTime' in self['end'].keys():
-				return get_datetime_from_string(self['end']['dateTime'])
+				dtend = self['end']['dateTime']
+				return rfc3339.parse_datetime(dtend)
+		return None		
+		
 	def __eq__(self,other):
 		for key in self.keys():
 			if key in other.keys():
@@ -479,13 +530,13 @@ class GoogleCalendar(GoogleService):
 			self.calendars[key] = acalendar	
 	def getNextTenEvents(self,calendar_id=None):
 		events = []
-		adatetime = datetime.datetime.now().replace(tzinfo=None)
+		adatetime = datetime.datetime.now(LocalTZ())
 		if calendar_id is None:
 			lookinevents = self.getAllEvents()
 		else:
 			lookinevents = self.calendars[calendar_id]['events'].values()
 		for event in lookinevents:
-			sd = event.get_start_date().replace(tzinfo=None)
+			sd = event.get_start_date()
 			if sd is not None and sd > adatetime:						
 				events.append({'date':sd,'event':event})					
 		sortedlist = sorted(events, key=lambda x: x['date'])
