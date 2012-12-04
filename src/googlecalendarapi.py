@@ -37,12 +37,7 @@ import time
 import uuid
 import dateutil
 import rfc3339
-'''
-Dependencies:
-python-gflags
 
-
-'''
 OAUTH2_URL = 'https://accounts.google.com/o/oauth2/'
 AUTH_URL = 'https://accounts.google.com/o/oauth2/auth'
 TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
@@ -93,32 +88,6 @@ def get_utc_offset(date):
 	sign = (utc_offset < 0 and '-') or '+'
 	return '%c%02d:%02d' % (sign, hours, minutes)
 
-def get_string_from_datetime(adatetime):
-	return adatetime.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(adatetime)
-	
-def get_datetime_from_string(strdate):
-	if strdate.find('T')==-1:
-		adate = datetime.datetime.strptime(strdate, '%Y-%m-%d')
-		utc_offset = get_utc_offset(adate)
-		strdate = strdate+'T00:00:00'#+utc_offset
-	adate,atime = strdate.split('T')
-	if atime.find(':') == -1:
-		atime=atime[0:2]+':'+atime[2:4]+':'+atime[4:6]
-	if atime.find('+')>-1:
-		a,b = atime.split('+')
-		#b = b.replace(':','')
-		atime = a#+'+'+b
-	if atime.find('-')>-1:
-		a,b = atime.split('-')
-		#b = b.replace(':','')
-		atime = a#+'-'+b
-	strdate = adate+'T'+atime
-	print(strdate)
-	adatetime = datetime.datetime.strptime(strdate, "%Y-%m-%dT%H:%M:%S").replace(tzinfo=None)	
-	#if adatetime.tzinfo is None:
-	#	datetime.tzinfo = LocalTZ()
-	return adatetime
-	
 def addOneYear(start_date):
 	if start_date.month == 2 and start_date.day == 29 and is_Bisiesto(start_date.year):
 		end_date = datetime.date(start_date.year+1,start_date.month+1,1)
@@ -187,11 +156,9 @@ class Event(dict):
 					elif 'dateTime' in self['start'].keys():
 						dtstart = self['start']['dateTime']
 						print(self['start']['dateTime'])
-					#dtstart = get_datetime_from_string(dtstart)
 					print(1,dtstart)
 					dtstart = rfc3339.parse_datetime(dtstart)
 					print(2,dtstart)
-					#rfc3339.parse_datetime()
 					if el.find('UNTIL') != -1:
 						elements = el.split(';')
 						ans = ''
@@ -242,11 +209,9 @@ class Event(dict):
 					elif 'dateTime' in self['end'].keys():
 						dtend = self['end']['dateTime']
 						print(self['end']['dateTime'])
-					#dtend = get_datetime_from_string(dtend)
 					print(1,dtend)
 					dtend = rfc3339.parse_datetime(dtend)
 					print(2,dtend)
-					#rfc3339.parse_datetime()
 					if el.find('UNTIL') != -1:
 						elements = el.split(';')
 						ans = ''
@@ -383,12 +348,12 @@ class GoogleCalendar(GoogleService):
 		params = {'calendarId':calendar_id}
 		if type(start_date) == datetime.date:
 			start_value = {'date':start_date.strftime('%Y-%m-%d')}
-		else:
-			start_value = {'dateTime':get_string_from_datetime(start_date)}
+		else:			
+			start_value = {'dateTime':start_date.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(start_date)}
 		if type(end_date) == datetime.date:
 			end_value = {'date':end_date.strftime('%Y-%m-%d')}
-		else:
-			end_value = {'dateTime':get_string_from_datetime(end_date)}
+		else:			
+			end_value = {'dateTime':end_date.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(end_date)}
 		data = {
 			'kind':'calendar#event',
 			'summary':summary,
@@ -426,12 +391,12 @@ class GoogleCalendar(GoogleService):
 		params = {'calendarId':calendar_id,'eventId':event_id}
 		if type(start_date) == datetime.date:
 			start_value = {'date':start_date.strftime('%Y-%m-%d')}
-		else:
-			start_value = {'dateTime':get_string_from_datetime(start_date)}
+		else:			
+			start_value = {'dateTime':start_date.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(start_date)}
 		if type(end_date) == datetime.date:
 			end_value = {'date':end_date.strftime('%Y-%m-%d')}
-		else:
-			end_value = {'dateTime':get_string_from_datetime(end_date)}
+		else:			
+			end_value = {'dateTime':end_date.strftime('%Y-%m-%dT%H:%M:%S')+get_utc_offset(end_date)}
 		data = {
 			'kind':'calendar#event',
 			'summary':summary,
@@ -599,11 +564,11 @@ class GoogleCalendar(GoogleService):
 						sortedevents[arecurrenceevent.date()].append(event)
 			elif 'date' in event['start'].keys():
 				if event['start']['date'].startswith(search):
-					adate = datetime.datetime.strptime(event['start']['date'], '%Y-%m-%d').date()
+					adate = event.get_start_date().date()
 					sortedevents[adate].append(event)
 			elif 'dateTime' in event['start'].keys():		
 				if event['start']['dateTime'].startswith(search):
-					adate = get_datetime_from_string(event['start']['dateTime']).date()
+					adate = event.get_start_date().date()
 					sortedevents[adate].append(event)				
 		return sortedevents
 
@@ -655,12 +620,9 @@ if __name__ == '__main__':
 	'''
 	'''
 	md = '2009-10-01T11:00:00-02:00'
-	print(get_datetime_from_string(md))
 	md = '2009-10-01'
-	print(get_datetime_from_string(md))
 	print(datetime.datetime.now())
 	print(get_utc_offset(datetime.datetime.now()))
-	print(get_string_from_datetime(datetime.datetime.now()))
 	'''
 	gc = GoogleCalendar(token_file = comun.TOKEN_FILE)
 	#gc.read()

@@ -67,8 +67,6 @@ def short_msg(msg,length=50):
 	if len(msg)>length:
 		return msg[:length]
 	return msg
-		
-
 
 def internet_on():
 	try:
@@ -77,60 +75,6 @@ def internet_on():
 	except Exception as e:
 		print(e)
 	return False
-	
-def getTimeAndDateV2(time_string):
-	if time_string.find('T')!=-1:
-		temp = time_string.split('T')
-		com = datetime.datetime.strptime(temp[0],'%Y-%m-%d')
-		if temp[1].find('+')!=-1:
-			temp2 = temp[1].split('+')
-			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
-			#com3 = datetime.datetime.strptime(temp2[1],'%H:%M')
-			thour = com2.hour# + com3.hour
-			tminute = com2.minute# + com3.minute
-			tsecond = com2.second
-		elif temp[1].find('-')!=-1:
-			temp2 = temp[1].split('-')
-			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
-			#com3 = datetime.datetime.strptime(temp2[1],'%H:%M')
-			thour = com2.hour# - com3.hour
-			tminute = com2.minute# - com3.minute
-			tsecond = com2.second
-		else:
-			com2 = datetime.datetime.strptime(temp2[0],'%H:%M:%S')
-			thour = com2.hour
-			tminute = com2.minute
-			tsecond = com2.second
-		com = datetime.datetime(com.year, com.month, com.day, thour,tminute,tsecond)
-	else:
-		com = datetime.datetime.strptime(time_string,'%Y-%m-%d')
-	return com
-
-
-def getTimeAndDate(cadena):
-	'''
-	if cadena.find('T')==-1:
-		date = cadena.split('-')
-		time = datetime.time(0,0,0)
-	else:
-		date = cadena.split('T')[0].split('-')
-		time = cadena.split('T')[1].split(':')
-		time = datetime.time(int(time[0]),int(time[1]),int(time[2][0:2]))
-	adate = datetime.date(int(date[0]),int(date[1]),int(date[2]))
-	return adate.strftime('%x')+' - '+time.strftime('%H:%M')
-	'''
-	return cadena.strftime('%x')+' - '+time.strftime('%H:%M')
-	
-def get_date(event,start=True):
-	if start:
-		key = 'start'
-	else:
-		key = 'end'
-	if 'dateTime' in event[key]:		
-		return event[key]['dateTime']
-	else:
-		return event[key]['date']
-
 
 def check_events(event1,event2):
 	return event1['id'] == event2['id']
@@ -274,33 +218,18 @@ class CalendarIndicator():
 		if check and len(self.events)>0:
 			for event in events2:
 				if not is_event_in_events(event,self.events):
-					if 'dateTime' in event['start']:
-						key_event_time = 'dateTime'
-					else:
-						key_event_time = 'date'
 					msg = _('New event:')+'\n'
-					msg += getTimeAndDate(event.get_start_date())+' - '+event['summary']
+					msg += event.get_start_date_string()+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
 					self.notification.show()
 			for event in self.events:
 				if not is_event_in_events(event,events2):
-					if 'dateTime' in event['start']:
-						key_event_time = 'dateTime'
-					else:
-						key_event_time = 'date'
 					msg = _('Event finished:') + '\n'
 					msg += event.get_start_date_string()+' - '+event['summary']
 					self.notification.update('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
 					self.notification.show()
 		self.events = events2
-		#for menu_event in self.menu_events:
-		#	menu_event.set_visible(False)
 		for i,event in enumerate(self.events):
-			if 'dateTime' in event['start']:
-				key_event_time = 'dateTime'
-			else:
-				key_event_time = 'date'
-			print(event['summary'])
 			self.menu_events[i].set_label(event.get_start_date_string()+' - '+short_msg(event['summary']))
 			self.menu_events[i].set_event(event)
 			self.menu_events[i].set_visible(True)
@@ -308,11 +237,7 @@ class CalendarIndicator():
 			self.menu_events[i].set_visible(False)
 		now = datetime.datetime.now()
 		if len(self.events)>0:
-			if 'dateTime' in self.events[0]['start']:
-				key_event_time = 'dateTime'
-			else:
-				key_event_time = 'date'		
-			com =getTimeAndDateV2(self.events[0]['start'][key_event_time])
+			com = self.events[0].get_start_date()
 			if now.year == com.year and now.month == com.month and now.day == com.day and now.hour == com.hour:
 				self.indicator.set_status(appindicator.IndicatorStatus.ATTENTION)
 			else:
