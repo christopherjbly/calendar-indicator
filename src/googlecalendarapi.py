@@ -144,18 +144,18 @@ class Event(dict):
 		for key in self.keys():
 			ans += '%s: %s\n'%(key,self[key])
 		return ans
-		
-	def get_start_date(self):
+
+	def _get_date(self,typeofdate):
 		daybefore = datetime.datetime.now(LocalTZ())
 		if 'recurrence' in self.keys():
 			for el in self['recurrence']:
 				if el.find('DTSTART') == -1:
-					if 'date' in self['start'].keys():
-						dtstart = self['start']['date']+'T00:00:00'+ get_utc_offset(daybefore)
-						print(self['start']['date'])
-					elif 'dateTime' in self['start'].keys():
-						dtstart = self['start']['dateTime']
-						print(self['start']['dateTime'])
+					if 'date' in self[typeofdate].keys():
+						dtstart = self[typeofdate]['date']+'T00:00:00'+ get_utc_offset(daybefore)
+						print(self[typeofdate]['date'])
+					elif 'dateTime' in self[typeofdate].keys():
+						dtstart = self[typeofdate]['dateTime']
+						print(self[typeofdate]['dateTime'])
 					print(1,dtstart)
 					dtstart = rfc3339.parse_datetime(dtstart)
 					print(2,dtstart)
@@ -182,14 +182,20 @@ class Event(dict):
 				ans = rrule.after(daybefore,inc=True)
 				if ans is not None:
 					return ans
-		if 'start' in self.keys():
-			if 'date' in self['start'].keys():
-				dtstart = self['start']['date']+'T00:00:00'+ get_utc_offset(daybefore)
+		if typeofdate in self.keys():
+			if 'date' in self[typeofdate].keys():
+				dtstart = self[typeofdate]['date']+'T00:00:00'+ get_utc_offset(daybefore)
 				return rfc3339.parse_datetime(dtstart)
-			elif 'dateTime' in self['start'].keys():
-				dtstart = self['start']['dateTime']
+			elif 'dateTime' in self[typeofdate].keys():
+				dtstart = self[typeofdate]['dateTime']
 				return rfc3339.parse_datetime(dtstart)
 		return None		
+	
+	def get_start_date(self):
+		return self._get_date('start')
+	
+	def get_end_date(self):
+		return self._get_date('end')
 
 	def get_start_date_string(self):
 		adate = self.get_start_date()
@@ -197,53 +203,7 @@ class Event(dict):
 			return adate.strftime('%x')
 		else:
 			return adate.strftime('%x')+' - '+adate.strftime('%H:%M')
-			
-	def get_end_date(self):
-		daybefore = datetime.datetime.now(LocalTZ())
-		if 'recurrence' in self.keys():
-			for el in self['recurrence']:
-				if el.find('DTend') == -1:
-					if 'date' in self['end'].keys():
-						dtend = self['end']['date']+'T00:00:00'+ get_utc_offset(daybefore)
-						print(self['end']['date'])
-					elif 'dateTime' in self['end'].keys():
-						dtend = self['end']['dateTime']
-						print(self['end']['dateTime'])
-					print(1,dtend)
-					dtend = rfc3339.parse_datetime(dtend)
-					print(2,dtend)
-					if el.find('UNTIL') != -1:
-						elements = el.split(';')
-						ans = ''
-						for element in elements:
-							if element.endswith('UNTIL='):
-								s,e=element.split("=")
-								if len(e) == 8:
-									e += 'T000000'+ get_utc_offset(daybefore).replace(':','')
-								elif len(e) == 17:
-									e += get_utc_offset(daybefore)
-								element = s+'='+e
-							ans += element+';'
-						if ans.endswith(';'):
-							ans = ans[:-1]
-						el = ans
-						print(3,el)
-					el = 'DTend:%s%s\n'%(dtend.strftime('%Y%m%dT%H%M'),get_utc_offset(daybefore))+el
-					print(el)
-					rrule = dateutil.rrule.rrulestr(el)
-				print(daybefore)
-				ans = rrule.after(daybefore,inc=True)
-				if ans is not None:
-					return ans
-		if 'end' in self.keys():
-			if 'date' in self['end'].keys():
-				dtend = self['end']['date']+'T00:00:00'+ get_utc_offset(daybefore)
-				return rfc3339.parse_datetime(dtend)
-			elif 'dateTime' in self['end'].keys():
-				dtend = self['end']['dateTime']
-				return rfc3339.parse_datetime(dtend)
-		return None		
-		
+					
 	def __eq__(self,other):
 		for key in self.keys():
 			if key in other.keys():
@@ -502,6 +462,7 @@ class GoogleCalendar(GoogleService):
 			lookinevents = self.calendars[calendar_id]['events'].values()
 		for event in lookinevents:
 			sd = event.get_start_date()
+			print(event.get_start_date())
 			if sd is not None and sd > adatetime:						
 				events.append({'date':sd,'event':event})					
 		sortedlist = sorted(events, key=lambda x: x['date'])
@@ -562,11 +523,11 @@ class GoogleCalendar(GoogleService):
 					recurrenceevents = list(rrule.between(firstdayofmonth,lastdayofmonth,inc=True))
 					for arecurrenceevent in recurrenceevents:
 						sortedevents[arecurrenceevent.date()].append(event)
-			elif 'date' in event['start'].keys():
+			elif 'start' in event.keys() and 'date' in event['start'].keys():
 				if event['start']['date'].startswith(search):
 					adate = event.get_start_date().date()
 					sortedevents[adate].append(event)
-			elif 'dateTime' in event['start'].keys():		
+			elif 'start' in event.keys() and 'dateTime' in event['start'].keys():		
 				if event['start']['dateTime'].startswith(search):
 					adate = event.get_start_date().date()
 					sortedevents[adate].append(event)				
