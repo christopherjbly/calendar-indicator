@@ -1,0 +1,366 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2013-08-18 13:03+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:47
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:191
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:191
+msgid "Preferences"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:42
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:42
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:79
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:102
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:153
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:93
+msgid "Calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:62
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:86
+msgid "To calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:77
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:101
+msgid "Title"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:85
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:109
+msgid "All day event"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:93
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:117
+msgid "Start date"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:104
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:128
+msgid "End date"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addeventwindow.py:115
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/eventwindow.py:139
+msgid "Description"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:62
+msgid "Login"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:70
+msgid "Allow access to Google Calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:92
+msgid "Colors"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:104
+msgid "Color"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:109
+msgid "Options"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:116
+msgid "Time between autommatic syncronizations (hours)"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:125
+msgid "Autostart"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:132
+msgid "Theme light"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:171
+msgid ""
+"You have to authorize Calendar-Indicator to use it, do you want to authorize?"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:179
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/preferences_dialog.py:206
+msgid "All"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:139
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:139
+msgid ""
+"You have to authorize Calendar-Indicator to manage your Google Calendar.\n"
+" Do you want to authorize?"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:186
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:186
+msgid "Add new calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:187
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:187
+msgid "Add new event"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:189
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:189
+msgid "Sync with google calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:190
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:190
+msgid "Show Calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:193
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:193
+msgid "Help"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:196
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:196
+msgid "Exit"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:221
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:221
+msgid "New event:"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:227
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:227
+msgid "Event finished:"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:254
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:254
+msgid "In Launchpad"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:255
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:255
+msgid "Get help online..."
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:256
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:256
+msgid "Translate this application..."
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:257
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:257
+msgid "Report a bug..."
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:259
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:259
+msgid "Homepage"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:260
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:260
+msgid "Follow us in Twitter"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:261
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:261
+msgid "Follow us in Google+"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:262
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:262
+msgid "Follow us in Facebook"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:264
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:264
+msgid "About"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:302
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:91
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:302
+msgid "Are you sure you want to revove this event?"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:323
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:111
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:323
+msgid "Are you sure you want to edit this event?"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator_temp.py:382
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarindicator.py:382
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:37
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:38
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:39
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:40
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:41
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:42
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:43
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:44
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:46
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:47
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:48
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:49
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:50
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:51
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:52
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:53
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:54
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:55
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:56
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:57
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:58
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:59
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:60
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:61
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:93
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:94
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:95
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:96
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:97
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:98
+msgid "An indicator for Google Calendar"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Monday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Tuesday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Wednesday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Thursday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Friday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Saturday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:45
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:43
+msgid "Sunday"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:173
+msgid "One year less"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:180
+msgid "One month less"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:190
+msgid "One year more"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/calendarwindow.py:197
+msgid "One month more"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/src/addcalendarwindow.py:113
+msgid "Calendar name"
+msgstr ""
+
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:12
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:13
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:14
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:15
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:16
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:17
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:18
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:19
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:20
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:21
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:22
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:23
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:24
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:25
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:26
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:27
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:28
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:29
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:30
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:31
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:32
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:33
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:34
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:35
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:36
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:62
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:63
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:64
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:65
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:66
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:67
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:68
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:69
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:70
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:71
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:72
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:73
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:74
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:75
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:76
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:77
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:78
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:79
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:80
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:81
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:82
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:83
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:84
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:85
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:86
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:87
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:88
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:89
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:90
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:91
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:92
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:99
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:100
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:101
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:102
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:103
+#: /home/atareao_r/Dropbox/tp/raring/calendar-indicator/extras-calendar-indicator.desktop.in:104
+msgid "Calendar-Indicator"
+msgstr ""

@@ -46,7 +46,7 @@ class LoginDialog(Gtk.Dialog):
 		#
 		self.viewer = WebKit.WebView()
 		self.scrolledwindow1.add(self.viewer)
-		self.scrolledwindow1.set_size_request(600,420)
+		self.scrolledwindow1.set_size_request(600,630)
 		self.viewer.connect('navigation-policy-decision-requested', self.on_navigation_requested)
 		self.viewer.open(url)
 		#		

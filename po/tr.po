@@ -1,0 +1,108 @@
+# Turkish translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the calendar-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
+"PO-Revision-Date: 2013-09-04 18:38+0000\n"
+"Last-Translator: İbrahim Çelik <ibrahimcelik89@gmail.com>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-02-22 07:48+0000\n"
+"X-Generator: Launchpad (build 16926)\n"
+"Language: tr\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+msgid "Login"
+msgstr "Oturum aç"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+msgid "Allow access to Google Calendar"
+msgstr "Goole Takvim erişimi"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+msgid "Calendar"
+msgstr "Takvim"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
+msgid "Options"
+msgstr "Seçenekler"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
+msgid "Time between updates"
+msgstr "Güncellemeler arasındaki süre"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
+msgid "Autostart"
+msgstr "Kendiliğinden Başlat"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
+msgid "Theme light"
+msgstr "Tema ışığı"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
+msgid ""
+"You must allow Calendar-Indicator to access your Google Calendar to work"
+msgstr ""
+"Takvim gösterge uygulamasının çalışması için Goole Takvim erişimine izin "
+"vermelisiniz."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Refresh"
+msgstr "Yenile"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Show Calendar"
+msgstr "Takvimi Göster"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
+msgid "Help"
+msgstr "Yardım"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
+msgid "Exit"
+msgstr "Çıkış"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Yeni etkinlik:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Etkinlik bitimi:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
+msgid "Web..."
+msgstr "Genel ağ..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
+msgid "Get help online..."
+msgstr "Çevrimiçi yardım al..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
+msgid "Translate this application..."
+msgstr "Bu uygulamanın çevirisini yap..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
+msgid "Report a bug..."
+msgstr "Bir hata bildir...."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
+msgid "About"
+msgstr "Hakkında"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
+msgid "An indicator for Google Calendar"
+msgstr "Google Takvim için bir gösterge"

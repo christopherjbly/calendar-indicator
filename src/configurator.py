@@ -29,10 +29,10 @@ import os
 import json
 import comun
 
-PARAMS = {	'first-time':True,
+PARAMS = {	'version':'',
 			'time':12,
 			'theme':'light',
-			'calendar_id':None
+			'calendars':[]
 			}
 
 class Configuration(object):

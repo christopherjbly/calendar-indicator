@@ -1,7 +1,7 @@
 
 [Desktop Entry]
 Type=Application
-Exec=/usr/bin/calendar-indicator
+Exec = /opt/extras.ubuntu.com/calendar-indicator/bin/calendar-indicator
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

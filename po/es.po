@@ -1,0 +1,108 @@
+# Spanish translations for calendar-indicator package.
+# Copyright (C) 2011 Lorenzo Carbonell
+# This file is distributed under the same license as the calendar-indicator package.
+# Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
+"PO-Revision-Date: 2012-07-23 05:04+0000\n"
+"Last-Translator: Lorenzo Carbonell <Unknown>\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-02-22 07:48+0000\n"
+"X-Generator: Launchpad (build 16926)\n"
+"Language: Spanish\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+msgid "Login"
+msgstr "Inicio de sesión"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+msgid "Allow access to Google Calendar"
+msgstr "Permitir el acceso a Google Calendar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+msgid "Calendar"
+msgstr "Calendario"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
+msgid "Options"
+msgstr "Opciones"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
+msgid "Time between updates"
+msgstr "Tiempo entre actualizaciones"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
+msgid "Autostart"
+msgstr "Autostart"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
+msgid "Theme light"
+msgstr "Tema claro"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
+msgid ""
+"You must allow Calendar-Indicator to access your Google Calendar to work"
+msgstr ""
+"Debes permitir el acceso de Calendar-Indicator a Google Calendar para que "
+"funcione correctamente"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Refresh"
+msgstr "Actualizar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Show Calendar"
+msgstr "Mostrar el calendario"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
+msgid "Help"
+msgstr "Ayuda"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
+msgid "Exit"
+msgstr "Salir"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Nuevo evento:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Evento terminó"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
+msgid "Web..."
+msgstr "Web..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
+msgid "Get help online..."
+msgstr "Obtener ayuda en linea..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
+msgid "Translate this application..."
+msgstr "Ayuda a traducir esta aplicación..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
+msgid "Report a bug..."
+msgstr "Reportar un error..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
+msgid "About"
+msgstr "Acerca de"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
+msgid "An indicator for Google Calendar"
+msgstr "Un indicador de Google Calendar"

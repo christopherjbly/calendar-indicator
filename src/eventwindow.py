@@ -163,8 +163,8 @@ class EventWindow(Gtk.Dialog):
 			now = datetime.datetime.now()
 			if 'date' in event['start'].keys():
 				self.entry3.set_active(True)
-				self.entry5.set_date(event.get_start_date(now).date())
-				self.entry7.set_date(event.get_end_date(now).date())
+				self.entry5.set_date(event.get_start_date().date())
+				self.entry7.set_date(event.get_end_date().date())
 			else:
 				self.entry3.set_active(False)
 				self.entry4.set_time(event.get_start_date().time())

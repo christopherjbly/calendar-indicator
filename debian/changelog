@@ -1,3 +1,44 @@
+calendar-indicator (0.2.0-0extras13.10.1) saucy; urgency=low
+
+  * chmod +x calendar-indicator
+
+ -- Lorenzo <atareao_s@saucy>  Sat, 02 Nov 2013 08:46:15 +0100
+
+calendar-indicator (0.2.0-0extras13.10.0) saucy; urgency=low
+
+  * #1089065 Autostart
+  * #1098771 Updated translations
+  * #1173011 Cannot see today's events
+  * #1189100 Fixed calendar size
+  * #1217270 Calendar Indicator doesn't display events in Saucy
+  * #1095177 Allow selecting multiple calendars
+
+ -- Lorenzo <atareao_s@saucy>  Fri, 01 Nov 2013 20:47:29 +0100
+
+calendar-indicator (0.1.1-0extras13.04.3) raring; urgency=low
+
+  * Fixed a bug with directories
+
+ -- Lorenzo <atareao_r@raring>  Sun, 18 Aug 2013 13:03:11 +0200
+
+calendar-indicator (0.1.1-0extras13.04.1) raring; urgency=low
+
+  * To raring ringtail
+
+ -- Lorenzo <atareao_r@raring>  Sat, 17 Aug 2013 19:42:38 +0200
+
+calendar-indicator (0.1.0.8.quantal.2-1ubuntu1) quantal; urgency=low
+
+  * Fixed a bug with dateutil
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Tue, 11 Dec 2012 07:01:05 +0100
+
+calendar-indicator (0.1.0.8.quantal.1-1ubuntu1) quantal; urgency=low
+
+  * using exception with parsing rule
+
+ -- Lorenzo Carbonell <lorenzo.carbonell.cerezo@gmail.com>  Mon, 10 Dec 2012 23:10:49 +0100
+
 calendar-indicator (0.1.0.5-1ubuntu1) quantal; urgency=low
 
   * Fixed bug #1086943

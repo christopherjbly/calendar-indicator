@@ -1,0 +1,107 @@
+# Sinhalese translation for calendar-indicator
+# Copyright (c) 2013 Rosetta Contributors and Canonical Ltd 2013
+# This file is distributed under the same license as the calendar-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
+"PO-Revision-Date: 2013-06-01 12:31+0000\n"
+"Last-Translator: L.R.Ediriweera <sthushara0@gmail.com>\n"
+"Language-Team: Sinhalese <si@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-02-22 07:48+0000\n"
+"X-Generator: Launchpad (build 16926)\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
+msgid "Preferences"
+msgstr "අභිරුචි"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+msgid "Login"
+msgstr "පිවිසුම"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+msgid "Allow access to Google Calendar"
+msgstr "ගූගල් දින දර්ශකය සඳහා පිවිසුම් අවසර ලබා දෙන්න"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+msgid "Calendar"
+msgstr "දින දර්ශනය"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
+msgid "Options"
+msgstr "විකල්ප"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
+msgid "Time between updates"
+msgstr "යාවත් කාලීන කිරීම් අතරමැදි කාලය"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
+msgid "Autostart"
+msgstr "ස්වයංක්‍රීය ඇරඹුම"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
+msgid "Theme light"
+msgstr "තේමා ආලෝකය"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
+msgid ""
+"You must allow Calendar-Indicator to access your Google Calendar to work"
+msgstr ""
+"ක්‍රියාත්මක වීම සඳහා ගූගල් දින දර්ශකයට පිවිසීමට ඔබ විසින් දින දර්ශක සූචකයට "
+"අවසර ලබා දිය යුතු වේ."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Refresh"
+msgstr "නැවුම්"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Show Calendar"
+msgstr "දින දර්ශකය පෙන්වන්න"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
+msgid "Help"
+msgstr "සහාය"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
+msgid "Exit"
+msgstr "ඉවත්වීම"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "නව අංගයක්"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "අංගය අවසානයි"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
+msgid "Web..."
+msgstr "වෙබ්"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
+msgid "Get help online..."
+msgstr "අන්තර්ජාලයේ උදව් ලබා ගැනීම..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
+msgid "Translate this application..."
+msgstr "මෙම යෙදුම පරිවර්තනය කරන්න..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
+msgid "Report a bug..."
+msgstr "දෝෂයක් වාර්තාකිරීම..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
+msgid "About"
+msgstr "මෘදුකාංගය පිළිබඳව"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
+msgid "An indicator for Google Calendar"
+msgstr "ගූගල් දින දර්ශකය සදහා සූචකයක්"

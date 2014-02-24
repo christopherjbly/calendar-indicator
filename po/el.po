@@ -1,0 +1,107 @@
+# Greek translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the calendar-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator 0.0.3.0\n"
+"Report-Msgid-Bugs-To: lorenzo.carbonell.cerezo@gmail.com\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
+"PO-Revision-Date: 2013-05-02 11:44+0000\n"
+"Last-Translator: Manos Nikiforakis <Unknown>\n"
+"Language-Team: Greek <el@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-02-22 07:48+0000\n"
+"X-Generator: Launchpad (build 16926)\n"
+"Language: el\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+msgid "Allow access to Google Calendar"
+msgstr "Να επιτρέπεται η πρόσβαση στο Google Calendar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+msgid "Calendar"
+msgstr "Ημερολόγιο"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
+msgid "Options"
+msgstr "Επιλογές"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
+msgid "Time between updates"
+msgstr "Χρόνος που μεσολαβεί μεταξύ των ενημερώσεων"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
+msgid "Autostart"
+msgstr "Αυτόματη Εκκίνηση"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
+msgid "Theme light"
+msgstr "Φωτεινό θέμα"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
+msgid ""
+"You must allow Calendar-Indicator to access your Google Calendar to work"
+msgstr ""
+"Πρέπει να επιτρέψετε στο Calendar-Indicator την πρόσβαση στο Google Calendar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Refresh"
+msgstr "Ανανέωση"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Show Calendar"
+msgstr "Εμφάνιση Ημερολογίου"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
+msgid "Exit"
+msgstr "Έξοδος"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Νέο συμβάν"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Λήξη συμβάντος"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
+msgid "Web..."
+msgstr "Διαδύκτιο..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
+msgid "Get help online..."
+msgstr "Διαδικτυακή βοήθεια"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
+msgid "Translate this application..."
+msgstr "Μετάφρασε την εφαρμογή..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
+msgid "Report a bug..."
+msgstr "Δήλωσε δυσλειτουργία..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
+msgid "About"
+msgstr "Σχετικά"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
+msgid "An indicator for Google Calendar"
+msgstr "Ένα Indicator για το Google Calendar"

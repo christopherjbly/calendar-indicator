@@ -114,6 +114,10 @@ class EventMenuItem(Gtk.MenuItem):
 
 	def set_event(self,event):
 		self.event = event
+		if 'summary' in event.keys():
+			self.set_label(event.get_start_date_string()+' - '+short_msg(event['summary']))
+		else:
+			self.set_label(event.get_start_date_string())
 
 class CalendarIndicator():
 	def __init__(self):
@@ -162,7 +166,11 @@ class CalendarIndicator():
 		configuration = Configuration()
 		self.time = configuration.get('time')
 		self.theme = configuration.get('theme')
-		self.calendar_id = configuration.get('calendar_id')
+		self.calendars = configuration.get('calendars')
+		self.visible_calendars = []
+		for calendar in self.calendars:
+			if calendar['visible']:
+				self.visible_calendars.append(calendar['id'])
 				
 	def work(self):
 		self.update_menu(check=True)
@@ -176,7 +184,7 @@ class CalendarIndicator():
 		self.menu = Gtk.Menu()
 		self.menu_events = []
 		for i in range(10):
-			menu_event = EventMenuItem('')			
+			menu_event = EventMenuItem('%s'%i)			
 			menu_event.show()
 			menu_event.set_visible(False)
 			menu_event.connect('activate',self.on_menu_event_activate)
@@ -214,7 +222,7 @@ class CalendarIndicator():
 		self.indicator.set_icon(normal_icon)
 		self.indicator.set_attention_icon(starred_icon)		
 		#
-		events2 = self.googlecalendar.getNextTenEvents(self.calendar_id)
+		events2 = self.googlecalendar.getNextTenEvents(self.visible_calendars)
 		if check and len(self.events)>0:
 			for event in events2:
 				if not is_event_in_events(event,self.events):
@@ -230,7 +238,6 @@ class CalendarIndicator():
 					self.notification.show()
 		self.events = events2
 		for i,event in enumerate(self.events):
-			self.menu_events[i].set_label(event.get_start_date_string()+' - '+short_msg(event['summary']))
 			self.menu_events[i].set_event(event)
 			self.menu_events[i].set_visible(True)
 		for i in range(len(self.events),10):
@@ -347,10 +354,7 @@ class CalendarIndicator():
 			p1.save_preferences()			
 			if not os.path.exists(comun.TOKEN_FILE) or self.googlecalendar.do_refresh_authorization() is None:
 				exit(-1)
-			configuration = Configuration()
-			self.time = configuration.get('time')
-			self.theme = configuration.get('theme')
-			self.calendar_id = configuration.get('calendar_id')
+			self.load_preferences()
 			self.events = []	
 			self.update_menu()		
 		p1.destroy()
@@ -358,7 +362,7 @@ class CalendarIndicator():
 					
 	def menu_show_calendar_response(self,widget):
 		self.set_menu_sensitive(False)
-		cd = CalendarWindow(self.googlecalendar,calendar_id=self.calendar_id)
+		cd = CalendarWindow(self.googlecalendar,calendars=self.visible_calendars)
 		cd.run()
 		edited =cd.get_edited()
 		cd.destroy()
@@ -378,7 +382,7 @@ class CalendarIndicator():
 		ad=Gtk.AboutDialog()
 		ad.set_name(comun.APPNAME)
 		ad.set_version(comun.VERSION)
-		ad.set_copyright('Copyrignt (c) 2011,2012\nLorenzo Carbonell')
+		ad.set_copyright('Copyrignt (c) 2011-2013\nLorenzo Carbonell')
 		ad.set_comments(_('An indicator for Google Calendar'))
 		ad.set_license(''+
 		'This program is free software: you can redistribute it and/or modify it\n'+

@@ -29,8 +29,8 @@ from gi.repository import Gtk
 from gi.repository import Notify
 
 if __name__ == '__main__':
-	if __file__.startswith('/usr/bin'):
-		sys.path.insert(1, '/usr/share/calendar-indicator')
+	if __file__.startswith('/opt/extras.ubuntu.com/calendar-indicator') or os.getcwd().startswith('/opt/extras.ubuntu.com/calendar-indicator'):
+		sys.path.insert(1, '/opt/extras.ubuntu.com/calendar-indicator/share/calendar-indicator')
 	else:
 		sys.path.insert(1,os.path.normpath(os.path.join(os.getcwd(), '../src')))
 	####################################################################
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	####################################################################
 	print('Calendar-Indicator version: %s'%comun.VERSION)
 	print('#####################################################')
-	Notify.init("calendar-indicator")
+	Notify.init('calendar-indicator')
 	ci=CalendarIndicator()
 	Gtk.main()
 exit(0)

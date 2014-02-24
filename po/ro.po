@@ -1,0 +1,107 @@
+# Romanian translation for calendar-indicator
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the calendar-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: calendar-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-07-22 21:38+0200\n"
+"PO-Revision-Date: 2012-11-29 17:07+0000\n"
+"Last-Translator: Vlad Paul Paval <Unknown>\n"
+"Language-Team: Romanian <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-02-22 07:48+0000\n"
+"X-Generator: Launchpad (build 16926)\n"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendardialog.py:80
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:44
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:199
+msgid "Preferences"
+msgstr "Preferințe"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:59
+msgid "Login"
+msgstr "Login"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:67
+msgid "Allow access to Google Calendar"
+msgstr "Permite accesul la Calendarul Google"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:76
+msgid "Calendar"
+msgstr "Calendar"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:90
+msgid "Options"
+msgstr "Opțiuni"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:97
+msgid "Time between updates"
+msgstr "Durată între actualizări"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:106
+msgid "Autostart"
+msgstr "Pornire automată"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/preferences_dialog.py:113
+msgid "Theme light"
+msgstr "Temă deschisă"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:172
+msgid ""
+"You must allow Calendar-Indicator to access your Google Calendar to work"
+msgstr ""
+"Trebuie să permiteți Calendar-Indicator să acceseze Calendarul dvs. Google "
+"pentru a funcționa"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:197
+msgid "Refresh"
+msgstr "Reîmprospătare"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:198
+msgid "Show Calendar"
+msgstr "Arată calendarul"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:201
+msgid "Help"
+msgstr "Ajutor"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:204
+msgid "Exit"
+msgstr "Ieșire"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:225
+msgid "New event:"
+msgstr "Eveniment nou:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:235
+msgid "Event finished:"
+msgstr "Eveniment terminat:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:270
+msgid "Web..."
+msgstr "Web..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:271
+msgid "Get help online..."
+msgstr "Ajutor online:"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:272
+msgid "Translate this application..."
+msgstr "Traduceți aplicația..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:273
+msgid "Report a bug..."
+msgstr "Raportați un defect..."
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:275
+msgid "About"
+msgstr "Despre"
+
+#: /home/atareao/Dropbox/tp/calendar-indicator/src/calendar-indicator.py:313
+msgid "An indicator for Google Calendar"
+msgstr "Un indicator pentru Calendarul Google"

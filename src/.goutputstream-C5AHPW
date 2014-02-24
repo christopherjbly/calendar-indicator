@@ -148,7 +148,6 @@ class Event(dict):
 	def _get_date(self,typeofdate):
 		daybefore = datetime.datetime.now(LocalTZ())
 		if 'recurrence' in self.keys():
-			rset = dateutil.rrule.rruleset()
 			for el in self['recurrence']:
 				if el.find('DTSTART') == -1:
 					if 'date' in self[typeofdate].keys():
@@ -178,16 +177,9 @@ class Event(dict):
 						print(3,el)
 					el = 'DTSTART:%s%s\n'%(dtstart.strftime('%Y%m%dT%H%M'),get_utc_offset(daybefore))+el
 					print(el)
-					try:
-						rrule = dateutil.rrule.rrulestr(el)
-						rset.rrule(rrule)
-					except Exception as e:
-						print(e)									
-				try:
-					ans = rset.after(daybefore,inc=True)
-				except Exception as e:
-					print(e)
-					ans = None
+					rrule = dateutil.rrule.rrulestr(el)
+				print(daybefore)
+				ans = rrule.after(daybefore,inc=True)
 				if ans is not None:
 					return ans
 		if typeofdate in self.keys():
@@ -258,7 +250,6 @@ class GoogleCalendar(GoogleService):
 	def __init__(self,token_file):
 		GoogleService.__init__(self,auth_url=AUTH_URL,token_url=TOKEN_URL,redirect_uri=REDIRECT_URI,scope=SCOPE,client_id=CLIENT_ID,client_secret=CLIENT_SECRET,token_file=comun.TOKEN_FILE)
 		self.calendars = {}
-
 	def read(self):
 		self.calendars = self.get_calendars_and_events()
 		
@@ -462,18 +453,16 @@ class GoogleCalendar(GoogleService):
 				events[aevent['id']] = aevent
 			acalendar['events'] = events
 			self.calendars[key] = acalendar	
-
-	def getNextTenEvents(self,calendar_ids):
+	def getNextTenEvents(self,calendar_id=None):
 		events = []
-		lookinevents = []
 		adatetime = datetime.datetime.now(LocalTZ())
-		for calendar_id in calendar_ids:
-			some_events = self.calendars[calendar_id]['events'].values()
-			if some_events:
-				lookinevents.extend(some_events)
+		if calendar_id is None:
+			lookinevents = self.getAllEvents()
+		else:
+			lookinevents = self.calendars[calendar_id]['events'].values()
 		for event in lookinevents:
 			sd = event.get_start_date()
-			#print(event.get_start_date())
+			print(event.get_start_date())
 			if sd is not None and sd > adatetime:						
 				events.append({'date':sd,'event':event})					
 		sortedlist = sorted(events, key=lambda x: x['date'])
@@ -482,9 +471,6 @@ class GoogleCalendar(GoogleService):
 			ans.append(val['event'])
 			if len(ans) > 9:
 				break
-		print('--------------------------------------------------------')
-		print(ans)
-		print('--------------------------------------------------------')
 		return ans
 		
 	def getAllEventsInCalendar(self,calendar):
@@ -499,14 +485,11 @@ class GoogleCalendar(GoogleService):
 			events.extend(calendar['events'].values())
 		return events
 		
-	def getAllEventsOnMonth(self,date,calendars=[]):
-		lookinevents = []
-		for calendar_id in calendars:
-			print([calendar_id])
-			some_events = self.calendars[calendar_id]['events'].values()
-			if some_events:
-				lookinevents.extend(some_events)
-
+	def getAllEventsOnMonth(self,date,calendar_id=None):
+		if calendar_id is None:
+			lookinevents = self.getAllEvents()
+		else:
+			lookinevents = self.calendars[calendar_id]['events'].values()		
 		search = date.strftime('%Y-%m')
 		firstdayofmonth = datetime.datetime(date.year,date.month,1,0,0,0)
 		month = date.month + 1
@@ -521,7 +504,7 @@ class GoogleCalendar(GoogleService):
 			iteratorday += datetime.timedelta(days=1)
 		for event in lookinevents:
 			if 'recurrence' in event.keys():
-				rset = dateutil.rrule.rruleset()
+				rset = dateutil.rruleset()
 				for el in event['recurrence']:
 					if el.find('DTSTART') == -1:
 						if 'date' in event['start'].keys():
@@ -537,17 +520,11 @@ class GoogleCalendar(GoogleService):
 						el = 'DTSTART:%s\n'%dtstart+el
 					print(event['summary'],el)
 					el = el.replace('Z','')
-					try:
-						rrule = dateutil.rrule.rrulestr(el,ignoretz=True)
-						rset.rrule(rrule)
-					except Exception as e:
-						print(e)
-				try:
-					recurrenceevents = list(rset.between(firstdayofmonth,lastdayofmonth,inc=True))
-					for arecurrenceevent in recurrenceevents:
-						sortedevents[arecurrenceevent.date()].append(event)
-				except Exception as e:
-					print(e)
+					rrule = dateutil.rrule.rrulestr(el,ignoretz=True)
+					rset.rrule(rrule)
+				recurrenceevents = list(rset.between(firstdayofmonth,lastdayofmonth,inc=True))
+				for arecurrenceevent in recurrenceevents:
+					sortedevents[arecurrenceevent.date()].append(event)
 			elif 'start' in event.keys() and 'date' in event['start'].keys():
 				if event['start']['date'].startswith(search):
 					adate = event.get_start_date().date()

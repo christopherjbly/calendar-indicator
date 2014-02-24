@@ -29,7 +29,7 @@ __date__ ='$24/09/2011'
 __copyright__ = 'Copyright (c) 2011 Lorenzo Carbonell'
 __license__ = 'GPLV3'
 __url__ = 'http://www.atareao.es'
-__version__ = '0.1.0.5'
+__version__ = '0.1.0.8.quantal.1'
 
 import os
 
@@ -40,8 +40,6 @@ def is_package():
 
 ######################################
 
-
-VERSION = __version__
 APP = 'calendar-indicator'
 APPCONF = APP + '.conf'
 CONFIG_DIR = os.path.join(os.path.expanduser('~'),'.config')
@@ -55,18 +53,29 @@ if not os.path.exists(CONFIG_APP_DIR):
 
 # check if running from source
 if is_package():
-    ROOTDIR = '/usr/share/'
+    ROOTDIR = '/opt/extras.ubuntu.com/calendar-indicator/share/'
     LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
     APPDIR = os.path.join(ROOTDIR, APP)
     ICONDIR = os.path.join(APPDIR, 'icons')
-    SOCIALDIR = os.path.join(APPDIR, 'social')  
+    SOCIALDIR = os.path.join(APPDIR, 'social')
+    CHANGELOG = os.path.join(APPDIR,'changelog')
 else:
-    VERSION = VERSION + '-src'
     ROOTDIR = os.path.split(os.path.dirname(__file__))[0]
     LANGDIR = os.path.join(ROOTDIR, 'template1')
     APPDIR = os.path.join(ROOTDIR, APP)
     ICONDIR = os.path.join(ROOTDIR, 'data/icons')
     SOCIALDIR = os.path.join(ROOTDIR, 'data/social')
+    DEBIANDIR = os.path.normpath(os.path.join(ROOTDIR, 'debian'))
+    CHANGELOG = os.path.join(DEBIANDIR,'changelog')
+
+f = open(CHANGELOG,'r')
+line = f.readline()
+f.close()
+pos=line.find('(')
+posf=line.find(')',pos)
+VERSION = line[pos+1:posf].strip()
+if not is_package():
+	VERSION = VERSION + '-src'
 
 ICON = os.path.join(ICONDIR,'calendar-indicator.svg')
 ICON_NEW_EVENT = os.path.join(ICONDIR,'event-new.svg')
