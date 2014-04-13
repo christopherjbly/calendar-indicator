@@ -220,11 +220,9 @@ class Preferences(Gtk.Dialog):
 					if googlecalendar.do_refresh_authorization() is None:
 						exit(3)
 			self.switch1.set_active(True)
-			self.liststore.clear()
-			self.liststore.append([_('All'),None])
+			self.store.clear()
 			for calendar in googlecalendar.get_calendars().values():
-				self.liststore.append([calendar['summary'],calendar['id']])
-			self.entry2.set_active(0)
+				self.store.append([calendar['summary'],tohex(random.randint(0, 16777215)),tohex(random.randint(0, 16777215)),calendar['id'],True,calendar['summary']])
 		
 	def load_preferences(self):
 		self.switch1.set_active(os.path.exists(comun.TOKEN_FILE))
