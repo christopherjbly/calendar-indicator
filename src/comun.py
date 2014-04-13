@@ -32,11 +32,13 @@ __url__ = 'http://www.atareao.es'
 __version__ = '0.1.0.8.quantal.1'
 
 import os
+import locale
+import gettext
 
 ######################################
 
 def is_package():
-    return __file__.find('src') < 0
+	return not os.path.dirname(os.path.abspath(__file__)).endswith('src')
 
 ######################################
 
@@ -53,20 +55,23 @@ if not os.path.exists(CONFIG_APP_DIR):
 
 # check if running from source
 if is_package():
-    ROOTDIR = '/opt/extras.ubuntu.com/calendar-indicator/share/'
-    LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
-    APPDIR = os.path.join(ROOTDIR, APP)
-    ICONDIR = os.path.join(APPDIR, 'icons')
-    SOCIALDIR = os.path.join(APPDIR, 'social')
-    CHANGELOG = os.path.join(APPDIR,'changelog')
+	ROOTDIR = '/opt/extras.ubuntu.com/calendar-indicator/share/'
+	LANGDIR = os.path.join(ROOTDIR, 'locale-langpack')
+	APPDIR = os.path.join(ROOTDIR, APP)
+	ICONDIR = os.path.join(APPDIR, 'icons')
+	SOCIALDIR = os.path.join(APPDIR, 'social')
+	CHANGELOG = os.path.join(APPDIR,'changelog')
 else:
-    ROOTDIR = os.path.split(os.path.dirname(__file__))[0]
-    LANGDIR = os.path.join(ROOTDIR, 'template1')
-    APPDIR = os.path.join(ROOTDIR, APP)
-    ICONDIR = os.path.join(ROOTDIR, 'data/icons')
-    SOCIALDIR = os.path.join(ROOTDIR, 'data/social')
-    DEBIANDIR = os.path.normpath(os.path.join(ROOTDIR, 'debian'))
-    CHANGELOG = os.path.join(DEBIANDIR,'changelog')
+	ROOTDIR = os.path.dirname(__file__)
+	LANGDIR = os.path.normpath(os.path.join(ROOTDIR, '../template1'))
+	APPDIR = ROOTDIR
+	DATADIR = os.path.normpath(os.path.join(ROOTDIR, '../data'))
+	LOGOSDIR = os.path.normpath(os.path.join(ROOTDIR, '../data/logos'))
+	ICONDIR = os.path.normpath(os.path.join(ROOTDIR, '../data/icons'))
+	IMAGESDIR = os.path.normpath(os.path.join(ROOTDIR, '../data/images'))
+	SOCIALDIR = os.path.normpath(os.path.join(ROOTDIR, '../data/social'))
+	DEBIANDIR = os.path.normpath(os.path.join(ROOTDIR, '../debian'))
+	CHANGELOG = os.path.join(DEBIANDIR,'changelog')
 
 f = open(CHANGELOG,'r')
 line = f.readline()
@@ -80,3 +85,12 @@ if not is_package():
 ICON = os.path.join(ICONDIR,'calendar-indicator.svg')
 ICON_NEW_EVENT = os.path.join(ICONDIR,'event-new.svg')
 ICON_FINISHED_EVENT = os.path.join(ICONDIR,'event-finished.svg')
+
+try:
+	current_locale, encoding = locale.getdefaultlocale()
+	language = gettext.translation(APP, LANGDIR, [current_locale])
+	language.install()
+	_ = language.gettext
+except Exception as e:
+	print(e)
+	_ = str

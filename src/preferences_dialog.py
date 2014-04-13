@@ -59,7 +59,7 @@ class Preferences(Gtk.Dialog):
 		self.googlecalendar = googlecalendar
 		title = comun.APPNAME + ' | '+_('Preferences')
 		Gtk.Dialog.__init__(self,title,None,Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,(Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT,Gtk.STOCK_CANCEL,Gtk.ResponseType.CANCEL))
-		self.set_size_request(500, 300)
+		self.set_size_request(700, 300)
 		self.set_resizable(False)
 		self.set_icon_from_file(comun.ICON)
 		self.connect('destroy', self.close_application)
@@ -99,13 +99,13 @@ class Preferences(Gtk.Dialog):
 		scrolledwindow = Gtk.ScrolledWindow()
 		scrolledwindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 		scrolledwindow.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)		
-		scrolledwindow.set_size_request(600,300)
+		scrolledwindow.set_size_request(700,300)
 		table2.attach(scrolledwindow,0,1,0,1, xoptions = Gtk.AttachOptions.FILL, yoptions = Gtk.AttachOptions.SHRINK)
 		
-		self.store = Gtk.ListStore(str, str,str,str,bool)
+		self.store = Gtk.ListStore(str, str,str,str,bool,str)
 		self.treeview = Gtk.TreeView(self.store)
 		self.treeview.connect ('button-press-event', self.onclick)
-		column1 = Gtk.TreeViewColumn(_('Calendar'),  Gtk.CellRendererText(), text=0,background=1,foreground=2)
+		column1 = Gtk.TreeViewColumn(_('Calendar'),  Gtk.CellRendererText(), text=0)
 		self.treeview.append_column(column1)
 		self.column2 = Gtk.TreeViewColumn(_('Background color'),  Gtk.CellRendererText(), background=1)
 		self.treeview.append_column(self.column2)
@@ -115,6 +115,11 @@ class Preferences(Gtk.Dialog):
 		cellrenderer_toggle.connect("toggled", self.cell_toggled, self.store)
 		self.column4 = Gtk.TreeViewColumn(_('Show calendar'),  cellrenderer_toggle, active=4)
 		self.treeview.append_column(self.column4)
+		renderer_editabletext = Gtk.CellRendererText()
+		renderer_editabletext.set_property("editable", True)		
+		renderer_editabletext.connect("edited", self.text_edited, self.store)
+		self.column5 = Gtk.TreeViewColumn(_('Calendar name'),  renderer_editabletext, text=5,background=1,foreground=2)
+		self.treeview.append_column(self.column5)		
 		scrolledwindow.add(self.treeview)
 		#
 		frame3 = Gtk.Frame()
@@ -152,6 +157,18 @@ class Preferences(Gtk.Dialog):
 		#
 		self.show_all()
 
+	def text_edited(self, widget, path, text, model):
+		print('*******************************************************')
+		print(text)
+		print(model[path][0])
+		print(model[path][1])
+		print(model[path][2])
+		print(model[path][3])
+		print(model[path][4])
+		print(model[path][5])
+		model[path][5] = text
+		print('*******************************************************')
+        
 	def cell_toggled(self, widget, path, model):
 		all_invisible = True
 		model[path][4] = not model[path][4]
@@ -236,11 +253,16 @@ class Preferences(Gtk.Dialog):
 					background_color = calendar_options['background']
 					foreground_color = calendar_options['foreground']
 					visible = calendar_options['visible']
+					if 'name' in calendar_options.keys():
+						calendar_name = calendar_options['name']
+					else:
+						calendar_name = calendar['summary']
 				else:
 					background_color = tohex(random.randint(0, 16777215))
 					foreground_color = tohex(random.randint(0, 16777215))
 					visible = True
-				self.store.append([calendar['summary'],background_color,foreground_color,calendar['id'],visible])
+					calendar_name = calendar['summary']
+				self.store.append([calendar['summary'],background_color,foreground_color,calendar['id'],visible,calendar_name])
 	
 	def save_preferences(self):
 		if os.path.exists(comun.TOKEN_FILE):
@@ -259,6 +281,7 @@ class Preferences(Gtk.Dialog):
 				calendar['background'] = self.store.get_value(aiter,1)
 				calendar['foreground'] = self.store.get_value(aiter,2)
 				calendar['visible'] = self.store.get_value(aiter,4)
+				calendar['name'] = self.store.get_value(aiter,5)
 				calendars.append(calendar)
 				aiter = self.store.iter_next(aiter)
 			configuration.set('calendars',calendars)

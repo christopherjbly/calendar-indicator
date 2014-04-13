@@ -382,7 +382,7 @@ class CalendarIndicator():
 		ad=Gtk.AboutDialog()
 		ad.set_name(comun.APPNAME)
 		ad.set_version(comun.VERSION)
-		ad.set_copyright('Copyrignt (c) 2011-2013\nLorenzo Carbonell')
+		ad.set_copyright('Copyrignt (c) 2011-2014\nLorenzo Carbonell')
 		ad.set_comments(_('An indicator for Google Calendar'))
 		ad.set_license(''+
 		'This program is free software: you can redistribute it and/or modify it\n'+

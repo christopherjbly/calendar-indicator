@@ -67,8 +67,7 @@ class DayWidget(Gtk.EventBox):
 		box2.pack_start(scrolledwindow,True,True,padding=2)
 		self.store = Gtk.ListStore(str, object,str,str)
 		self.treeview = Gtk.TreeView(self.store)
-		#self.treeview.connect('cursor-changed',self.on_cursor_changed)
-		self.treeview.connect('button-release-event',self.on_cursor_changed)
+		self.treeview.connect('button-release-event',self.on_button_released_event)
 		self.column = Gtk.TreeViewColumn('',  Gtk.CellRendererText(), text=0, background=2,foreground=3)
 		self.treeview.append_column(self.column)
 		scrolledwindow.add(self.treeview)
@@ -78,7 +77,7 @@ class DayWidget(Gtk.EventBox):
 		self.calendars = googlecalendar.calendars.values()
 		self.callback = callback
 		
-	def on_cursor_changed(self,widget,key):
+	def on_button_released_event(self,widget,key):
 		if self.calendars is not None:
 			selection = widget.get_selection()
 			if selection is not None:
