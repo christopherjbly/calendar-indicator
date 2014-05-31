@@ -1,10 +1,17 @@
-calendar-indicator (0.3.0-0extras14.04.0) trusty; urgency=medium
+calendar-indicator (0.3.1-0extras14.04.1) trusty; urgency=medium
+
+  * Fixed bug #1312091
+  * Fiexd bug #1234436
+
+ -- Lorenzo Carbonell <atareao@trusty>  Sat, 31 May 2014 20:59:05 +0200
+
+calendar-indicator (0.3.0-0extras14.04.1) trusty; urgency=medium
 
   * Updated translations
   * Improved Calendar Window desing
   * Button in calendar window to go to currend date 
 
- -- Lorenzo Carbonell <atareao@trusty>  Sun, 13 Apr 2014 20:34:57 +0200
+ -- Lorenzo Carbonell <atareao@trusty>  Sun, 13 Apr 2014 21:36:41 +0200
 
 calendar-indicator (0.2.1-0extras14.04.0) trusty; urgency=low
 

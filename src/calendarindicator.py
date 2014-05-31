@@ -227,13 +227,19 @@ class CalendarIndicator():
 			for event in events2:
 				if not is_event_in_events(event,self.events):
 					msg = _('New event:')+'\n'
-					msg += event.get_start_date_string()+' - '+event['summary']
+					if 'summary' in event.keys:
+						msg += event.get_start_date_string() + ' - '+ event['summary']
+					else:
+						msg += event.get_start_date_string()
 					self.notification.update('Calendar Indicator',msg,comun.ICON_NEW_EVENT)
 					self.notification.show()
 			for event in self.events:
 				if not is_event_in_events(event,events2):
 					msg = _('Event finished:') + '\n'
-					msg += event.get_start_date_string()+' - '+event['summary']
+					if 'summary' in event.keys:
+						msg += event.get_start_date_string()+' - '+event['summary']
+					else:
+						msg += event.get_start_date_string()
 					self.notification.update('Calendar Indicator',msg,comun.ICON_FINISHED_EVENT)
 					self.notification.show()
 		self.events = events2
